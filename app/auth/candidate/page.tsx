@@ -5,7 +5,7 @@ import { Mail, Lock, User, ArrowRight, GitBranch, Rocket, ArrowLeft, Eye, EyeOff
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function LoginPage() {
+export default function CandidateAuthPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [userType, setUserType] = useState<"candidato" | "startup" | null>(null);
@@ -62,7 +62,7 @@ export default function LoginPage() {
     try {
       if (!isLogin) {
         // CADASTRO
-        const response = await fetch("/api/users/create-user", {
+        const response = await fetch("http://localhost:8000/users/create-user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -74,13 +74,8 @@ export default function LoginPage() {
 
         if (!response.ok) throw new Error("Erro ao criar usuário.");
 
-        // Segunda etapa de cadastro
-        if (userType === "candidato") {
-          router.push("/auth/candidate");
-        } else {
-          router.push("/auth/startup");
-        }
-
+        // Simular ida para a tela de Onboarding/home pós-cadastro
+        router.push("/home");
       } else {
         // LOGIN
         const response = await fetch(`http://localhost:8000/users/${email}`);
@@ -92,7 +87,7 @@ export default function LoginPage() {
           throw new Error("Senha incorreta.");
         }
 
-
+        router.push("/home");
       }
     } catch (err: any) {
       setErrorMSG(err.message || "Erro de conexão com servidor.");
@@ -242,8 +237,8 @@ export default function LoginPage() {
                       onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
                       placeholder={userType === 'startup' ? "email@suastartup.com" : "seu@email.com"}
                       className={`w-full pl-10 pr-4 py-2.5 bg-zinc-950/50 border rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 transition-all hover:bg-zinc-900/50 ${emailError
-                        ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
-                        : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
+                          ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
+                          : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
                         }`}
                     />
                   </div>
@@ -269,8 +264,8 @@ export default function LoginPage() {
                       onChange={(e) => { setPassword(e.target.value); setPasswordError(""); }}
                       placeholder="••••••••"
                       className={`w-full pl-10 pr-12 py-2.5 bg-zinc-950/50 border rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 transition-all hover:bg-zinc-900/50 ${passwordError
-                        ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
-                        : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
+                          ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
+                          : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
                         }`}
                     />
                     <button
@@ -297,8 +292,8 @@ export default function LoginPage() {
                         onChange={(e) => { setConfirmPassword(e.target.value); setConfirmPasswordError(""); }}
                         placeholder="••••••••"
                         className={`w-full pl-10 pr-4 py-2.5 bg-zinc-950/50 border rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 transition-all hover:bg-zinc-900/50 ${confirmPasswordError
-                          ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
-                          : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
+                            ? 'border-red-500/60 focus:ring-red-500/30 focus:border-red-500/60'
+                            : 'border-white/5 focus:ring-[#CC97FF]/50 focus:border-[#CC97FF]/50'
                           }`}
                       />
                     </div>

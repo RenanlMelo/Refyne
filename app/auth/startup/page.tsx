@@ -5,7 +5,7 @@ import { Mail, Lock, User, ArrowRight, GitBranch, Rocket, ArrowLeft, Eye, EyeOff
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function LoginPage() {
+export default function StartupAuthPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [userType, setUserType] = useState<"candidato" | "startup" | null>(null);
@@ -62,7 +62,7 @@ export default function LoginPage() {
     try {
       if (!isLogin) {
         // CADASTRO
-        const response = await fetch("/api/users/create-user", {
+        const response = await fetch("http://localhost:8000/users/create-user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -74,13 +74,8 @@ export default function LoginPage() {
 
         if (!response.ok) throw new Error("Erro ao criar usuário.");
 
-        // Segunda etapa de cadastro
-        if (userType === "candidato") {
-          router.push("/auth/candidate");
-        } else {
-          router.push("/auth/startup");
-        }
-
+        // Simular ida para a tela de Onboarding/home pós-cadastro
+        router.push("/home");
       } else {
         // LOGIN
         const response = await fetch(`http://localhost:8000/users/${email}`);
@@ -92,7 +87,7 @@ export default function LoginPage() {
           throw new Error("Senha incorreta.");
         }
 
-
+        router.push("/home");
       }
     } catch (err: any) {
       setErrorMSG(err.message || "Erro de conexão com servidor.");
