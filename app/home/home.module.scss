@@ -1,0 +1,1269 @@
+@import "../styles/core";
+
+.homeContainer {
+  min-height: 100vh;
+  background-color: $zinc-950;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Header --- */
+.header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 50;
+  height: 4rem;
+  background-color: rgba($zinc-950, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba($white, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+
+  .logo {
+    color: $white;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    font-size: 1.125rem;
+    width: 3rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    transition: width 0.3s ease;
+    
+    &.collapsed {
+      width: 1.5rem;
+    }
+  }
+
+  .searchWrapper {
+    flex: 1;
+    max-width: 36rem;
+    position: relative;
+
+    .searchIcon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1rem;
+      height: 1rem;
+      color: $zinc-500;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      background-color: rgba($zinc-900, 0.6);
+      border: 1px solid rgba($white, 0.05);
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      color: $white;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: $zinc-600;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($primary-light, 0.4);
+        border-color: rgba($primary-light, 0.3);
+      }
+    }
+  }
+
+  .actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .iconBtn {
+      position: relative;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      color: $zinc-400;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($white, 0.05);
+        color: $white;
+      }
+
+      .badge {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: $primary-light;
+        border-radius: 50%;
+      }
+    }
+
+    .userAvatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, $primary-light, $primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+}
+
+/* --- Body --- */
+.body {
+  display: flex;
+  flex: 1;
+  padding-top: 4rem;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 4rem;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  background-color: #0d0d0d;
+  border-right: 1px solid rgba($white, 0.05);
+  transition: width 0.3s ease;
+  width: 220px;
+
+  &.collapsed {
+    width: 68px;
+  }
+
+  .userSection {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba($white, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    &.collapsed {
+      justify-content: center;
+    }
+
+    .avatar {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, $primary-light, $primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: $white;
+      flex-shrink: 0;
+    }
+
+    .info {
+      overflow: hidden;
+      
+      .name {
+        color: $white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .role {
+        color: $zinc-500;
+        font-size: 0.625rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .matchBanner {
+    margin: 0.75rem 0.75rem 0;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background-color: rgba($primary-light, 0.08);
+    border: 1px solid rgba($primary-light, 0.15);
+
+    .bannerHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      span {
+        color: $zinc-400;
+        font-size: 0.625rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .starIcon {
+        width: 0.75rem;
+        height: 0.75rem;
+        color: $primary-light;
+        fill: $primary-light;
+      }
+    }
+
+    .score {
+      color: $primary-light;
+      font-weight: bold;
+      font-size: 1.25rem;
+      margin-top: 0.125rem;
+    }
+
+    .progressBar {
+      margin-top: 0.5rem;
+      height: 0.25rem;
+      border-radius: 9999px;
+      background-color: rgba($white, 0.05);
+
+      .fill {
+        height: 100%;
+        border-radius: 9999px;
+        background: linear-gradient(to right, $primary-light, $primary-dark);
+      }
+    }
+  }
+
+  .nav {
+    flex: 1;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+
+    .navItem {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 0.75rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      text-align: left;
+
+      &.active {
+        background-color: rgba($primary-light, 0.1);
+        color: $primary-light;
+      }
+
+      &:not(.active) {
+        color: $zinc-500;
+        
+        &:hover {
+          background-color: rgba($white, 0.05);
+          color: $zinc-200;
+        }
+      }
+
+      &.collapsed {
+        justify-content: center;
+      }
+
+      .iconWrapper {
+        position: relative;
+        flex-shrink: 0;
+        
+        .navIcon {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+
+        .itemBadge {
+          position: absolute;
+          top: -0.375rem;
+          right: -0.375rem;
+          width: 0.875rem;
+          height: 0.875rem;
+          background-color: $primary-light;
+          border-radius: 50%;
+          font-size: 0.5rem;
+          font-weight: bold;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .label {
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .chevron {
+        width: 0.875rem;
+        height: 0.875rem;
+        margin-left: auto;
+      }
+    }
+  }
+
+  .bottomNav {
+    padding: 0.5rem;
+    border-top: 1px solid rgba($white, 0.05);
+    
+    .navItem {
+      @extend .navItem;
+      color: $zinc-600;
+
+      &:hover {
+        color: $zinc-300;
+      }
+
+      &.logout {
+        &:hover {
+          color: #f87171;
+          background-color: rgba(#ef4444, 0.05);
+        }
+      }
+    }
+  }
+}
+
+/* --- Main Content --- */
+.main {
+  flex: 1;
+  transition: margin 0.3s ease;
+  margin-left: 220px;
+
+  &.collapsed {
+    margin-left: 68px;
+  }
+
+  .contentWrapper {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* --- Sections --- */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: $white;
+  }
+
+  p {
+    color: $zinc-500;
+    font-size: 0.875rem;
+    margin-top: 0.125rem;
+  }
+
+  .filterBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    background-color: rgba($white, 0.05);
+    border: 1px solid rgba($white, 0.05);
+    color: $zinc-400;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($white, 0.1);
+      color: $white;
+    }
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+.filterPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+
+  .pill {
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    background-color: rgba($white, 0.05);
+    color: $zinc-400;
+
+    &:hover {
+      background-color: rgba($white, 0.1);
+      color: $zinc-200;
+    }
+
+    &.active {
+      background-color: rgba($primary-light, 0.1);
+      border-color: rgba($primary-light, 0.3);
+      color: $primary-light;
+    }
+  }
+}
+
+/* --- JobCard --- */
+.jobCard {
+  background-color: rgba($zinc-900, 0.4);
+  border: 1px solid rgba($white, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba($white, 0.1);
+    background-color: rgba($zinc-900, 0.6);
+  }
+
+  .cardHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .companyInfo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .logo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .titleWrapper {
+        .titleRow {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+
+          h3 {
+            color: $white;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.2;
+          }
+
+          .hotBadge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            background-color: rgba(#f97316, 0.15);
+            color: #fb923c;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+
+            .icon {
+              width: 0.625rem;
+              height: 0.625rem;
+            }
+          }
+        }
+
+        .companySubline {
+          color: $zinc-400;
+          font-size: 0.875rem;
+          margin-top: 0.125rem;
+          display: flex;
+          align-items: center;
+
+          .dot {
+            margin: 0 0.375rem;
+            color: $zinc-700;
+          }
+
+          .stage {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            background-color: rgba($white, 0.05);
+            border: 1px solid rgba($white, 0.05);
+            color: $zinc-400;
+          }
+        }
+      }
+    }
+
+    .matchAndSave {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+      flex-shrink: 0;
+
+      .matchBadge {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        border-radius: 9999px;
+        background-color: rgba($primary-light, 0.1);
+        border: 1px solid rgba($primary-light, 0.2);
+
+        .icon {
+          width: 0.75rem;
+          height: 0.75rem;
+          color: $primary-light;
+          fill: $primary-light;
+        }
+
+        span {
+          color: $primary-light;
+          font-size: 0.75rem;
+          font-weight: bold;
+        }
+      }
+
+      .saveBtn {
+        padding: 0.375rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease;
+        color: $zinc-600;
+
+        &:hover {
+          color: $zinc-300;
+          background-color: rgba($white, 0.05);
+        }
+
+        &.saved {
+          color: $primary-light;
+          background-color: rgba($primary-light, 0.1);
+          
+          .icon {
+            fill: $primary-light;
+          }
+        }
+
+        .icon {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: $zinc-500;
+
+    .metaItem {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+
+      .icon {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+
+    .tag {
+      padding: 0.25rem 0.625rem;
+      border-radius: 0.5rem;
+      background-color: rgba($white, 0.05);
+      border: 1px solid rgba($white, 0.05);
+      color: $zinc-300;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  }
+
+  .description {
+    color: $zinc-400;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    line-height: 1.6;
+    border-top: 1px solid rgba($white, 0.05);
+    padding-top: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($white, 0.05);
+
+    .applyBtn {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, $primary-light, $primary-dark);
+      color: $white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba($primary-light, 0.3);
+      }
+
+      &:active {
+        transform: scale(0.99);
+      }
+    }
+
+    .moreBtn {
+      padding: 0.625rem 1rem;
+      border-radius: 0.75rem;
+      background-color: rgba($white, 0.05);
+      border: 1px solid rgba($white, 0.05);
+      color: $zinc-300;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: rgba($white, 0.1);
+      }
+    }
+
+    .externalBtn {
+      padding: 0.625rem;
+      border-radius: 0.75rem;
+      background-color: rgba($white, 0.05);
+      border: 1px solid rgba($white, 0.05);
+      color: $zinc-400;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $white;
+        background-color: rgba($white, 0.1);
+      }
+
+      .icon {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 1rem;
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    color: $zinc-700;
+    margin: 0 auto 1rem;
+  }
+
+  p {
+    color: $zinc-400;
+    font-size: 0.875rem;
+  }
+}
+
+/* --- Right Aside --- */
+.asideRight {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  width: 18rem;
+  flex-shrink: 0;
+  padding: 1.5rem 1rem;
+
+  @media (min-width: 1280px) {
+    display: flex;
+  }
+
+  .widget {
+    background-color: rgba($zinc-900, 0.4);
+    border: 1px solid rgba($white, 0.05);
+    border-radius: 1rem;
+    padding: 1.25rem;
+
+    h3 {
+      color: $white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .statList {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .statItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .labelGroup {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .icon {
+            width: 1rem;
+            height: 1rem;
+            
+            &.primary { color: $primary-light; }
+            &.emerald { color: #34d399; }
+            &.blue { color: #60a5fa; }
+          }
+
+          span {
+            color: $zinc-400;
+            font-size: 0.75rem;
+          }
+        }
+
+        .value {
+          color: $white;
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .companyList {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .companyItem {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        
+        &:hover {
+          .info .name { color: $white; }
+          .chevron { color: $zinc-400; }
+        }
+
+        .logo {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.75rem;
+          font-weight: bold;
+          flex-shrink: 0;
+        }
+
+        .info {
+          flex: 1;
+          min-width: 0;
+          
+          .name {
+            color: $zinc-200;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .stage {
+            color: $zinc-600;
+            font-size: 0.625rem;
+          }
+        }
+
+        .chevron {
+          width: 0.875rem;
+          height: 0.875rem;
+          color: $zinc-700;
+          transition: color 0.15s ease;
+        }
+      }
+    }
+  }
+}
+
+/* --- ProfileView --- */
+.profileView {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .headerCard {
+    background-color: rgba($zinc-900, 0.4);
+    border: 1px solid rgba($white, 0.05);
+    border-radius: 1rem;
+    overflow: hidden;
+
+    .banner {
+      height: 6rem;
+      background: linear-gradient(135deg, rgba($primary-light, 0.2), rgba($primary-dark, 0.3));
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, rgba($primary-light, 0.1), transparent);
+      }
+    }
+
+    .mainInfo {
+      padding: 0 1.5rem 1.5rem;
+
+      .avatarRow {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-top: -2rem;
+        margin-bottom: 1rem;
+
+        .avatar {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 1rem;
+          background: linear-gradient(135deg, $primary-light, $primary-dark);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $white;
+          font-size: 1.25rem;
+          font-weight: bold;
+          border: 4px solid #0f0f0f;
+        }
+
+        .editBtn {
+          padding: 0.5rem 1rem;
+          border-radius: 0.75rem;
+          background-color: rgba($white, 0.05);
+          border: 1px solid rgba($white, 0.1);
+          color: $zinc-300;
+          font-size: 0.875rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: rgba($white, 0.1);
+          }
+        }
+      }
+
+      h2 {
+        color: $white;
+        font-weight: bold;
+        font-size: 1.25rem;
+      }
+
+      .role {
+        color: $zinc-400;
+        font-size: 0.875rem;
+        margin-top: 0.125rem;
+      }
+
+      .location {
+        color: $zinc-600;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        
+        .icon {
+          width: 0.75rem;
+          height: 0.75rem;
+        }
+      }
+
+      .statsGrid {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1rem;
+
+        .statBox {
+          flex: 1;
+          background-color: rgba($white, 0.05);
+          border: 1px solid rgba($white, 0.05);
+          border-radius: 0.75rem;
+          padding: 0.75rem;
+          text-align: center;
+
+          &.primary {
+            background-color: rgba($primary-light, 0.1);
+            border-color: rgba($primary-light, 0.2);
+            
+            .val { color: $primary-light; }
+          }
+
+          .val {
+            color: $white;
+            font-weight: bold;
+            font-size: 1.125rem;
+          }
+
+          .label {
+            color: $zinc-500;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.125rem;
+          }
+        }
+      }
+    }
+  }
+
+  .skillsCard, .experienceCard {
+    background-color: rgba($zinc-900, 0.4);
+    border: 1px solid rgba($white, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+
+    h3 {
+      color: $white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .skillsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .skillTag {
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      background-color: rgba($white, 0.05);
+      border: 1px solid rgba($white, 0.05);
+      color: $zinc-300;
+      font-size: 0.875rem;
+    }
+  }
+
+  .experienceList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .expItem {
+      display: flex;
+      gap: 1rem;
+
+      .expLogo {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.75rem;
+        background-color: rgba($white, 0.05);
+        border: 1px solid rgba($white, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        
+        .icon {
+          width: 1rem;
+          height: 1rem;
+          color: $zinc-400;
+        }
+      }
+
+      .expInfo {
+        .jobTitle {
+          color: $white;
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+
+        .company {
+          color: $primary-light;
+          font-size: 0.75rem;
+        }
+
+        .period {
+          color: $zinc-500;
+          font-size: 0.75rem;
+          margin-top: 0.125rem;
+        }
+
+        .desc {
+          color: $zinc-400;
+          font-size: 0.75rem;
+          margin-top: 0.375rem;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+
+/* --- ApplicationsView --- */
+.applicationsView {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .header {
+    @extend .sectionHeader;
+    margin-bottom: 0.25rem;
+  }
+
+  .appCard {
+    background-color: rgba($zinc-900, 0.4);
+    border: 1px solid rgba($white, 0.05);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: rgba($white, 0.1);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .logo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .info {
+        flex: 1;
+        min-width: 0;
+        
+        .role {
+          color: $white;
+          font-weight: 600;
+          font-size: 0.875rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .company {
+          color: $zinc-400;
+          font-size: 0.75rem;
+        }
+
+        .stage {
+          color: $zinc-600;
+          font-size: 0.75rem;
+          margin-top: 0.25rem;
+        }
+      }
+
+      .statusCol {
+        text-align: right;
+        flex-shrink: 0;
+
+        .statusBadge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          padding: 0.25rem 0.625rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          font-weight: 500;
+
+          &.pending {
+            color: #fbbf24;
+            background-color: rgba(#fbbf24, 0.1);
+          }
+
+          &.approved {
+            color: #34d399;
+            background-color: rgba(#34d399, 0.1);
+          }
+
+          &.closed {
+            color: $zinc-500;
+            background-color: rgba($zinc-500, 0.1);
+          }
+
+          .icon {
+            width: 0.875rem;
+            height: 0.875rem;
+          }
+        }
+
+        .date {
+          color: $zinc-600;
+          font-size: 10px;
+          margin-top: 0.375rem;
+        }
+      }
+    }
+  }
+}
+
+/* --- NotificationsView --- */
+.notificationsView {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .header {
+    @extend .sectionHeader;
+    margin-bottom: 0.25rem;
+
+    .markAll {
+      color: $primary-light;
+      font-size: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .notifCard {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid;
+    transition: all 0.2s ease;
+
+    &.unread {
+      background-color: rgba($zinc-900, 0.5);
+      border-color: rgba($white, 0.1);
+    }
+
+    &.read {
+      background-color: rgba($zinc-900, 0.2);
+      border-color: rgba($white, 0.05);
+    }
+
+    .iconWrapper {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      .icon {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    .content {
+      flex: 1;
+
+      .topRow {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.5rem;
+
+        .title {
+          font-size: 0.875rem;
+          font-weight: 500;
+          line-height: 1.4;
+
+          &.unread { color: $white; }
+          &.read { color: $zinc-300; }
+        }
+
+        .time {
+          color: $zinc-600;
+          font-size: 0.75rem;
+          flex-shrink: 0;
+        }
+      }
+
+      .desc {
+        color: $zinc-500;
+        font-size: 0.75rem;
+        margin-top: 0.125rem;
+      }
+    }
+
+    .unreadDot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background-color: $primary-light;
+      margin-top: 0.375rem;
+      flex-shrink: 0;
+    }
+  }
+}
+.iconXs {
+  width: $icon-xs;
+  height: $icon-xs;
+}
+
+.iconSm {
+  width: $icon-sm;
+  height: $icon-sm;
+}
+
+.iconMd {
+  width: $icon-md;
+  height: $icon-md;
+}
+
+.iconLg {
+  width: $icon-lg;
+  height: $icon-lg;
+}

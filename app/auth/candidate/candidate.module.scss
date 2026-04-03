@@ -1,0 +1,81 @@
+@use "../../styles/core" as *;
+
+.profilePageWrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.ambientLightTop {
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
+  border-radius: 9999px;
+  background: rgba($purple-light, 0.05);
+  filter: blur(120px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.ambientLightBottom {
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  border-radius: 9999px;
+  background: rgba($purple-dark, 0.1);
+  filter: blur(120px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.profileContent {
+  position: relative;
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.profileCard {
+  background: rgba(24, 24, 27, 0.4);
+  @include backdrop-blur(40px);
+  border: 1px solid rgba($white, 0.1);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.cardShimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba($purple-light, 0.5), transparent);
+  opacity: 0.5;
+}
+
+.errorAlert {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}

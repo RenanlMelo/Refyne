@@ -28,6 +28,7 @@ import {
   AlertCircle,
   Layers,
 } from "lucide-react";
+import styles from "./home.module.scss";
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 
@@ -155,8 +156,7 @@ const MOCK_APPLICATIONS = [
     logoColor: "#CC97FF",
     logoBg: "#1a1030",
     status: "Em análise",
-    statusColor: "text-yellow-400",
-    statusBg: "bg-yellow-400/10",
+    statusVariant: "pending",
     statusIcon: AlertCircle,
     date: "29 Mar 2026",
     stage: "Entrevista técnica",
@@ -169,8 +169,7 @@ const MOCK_APPLICATIONS = [
     logoColor: "#60a5fa",
     logoBg: "#0d1628",
     status: "Aprovado",
-    statusColor: "text-emerald-400",
-    statusBg: "bg-emerald-400/10",
+    statusVariant: "approved",
     statusIcon: CircleCheck,
     date: "25 Mar 2026",
     stage: "Oferta enviada",
@@ -183,8 +182,7 @@ const MOCK_APPLICATIONS = [
     logoColor: "#f59e0b",
     logoBg: "#1a1408",
     status: "Encerrado",
-    statusColor: "text-zinc-500",
-    statusBg: "bg-zinc-500/10",
+    statusVariant: "closed",
     statusIcon: X,
     date: "18 Mar 2026",
     stage: "Não avançou",
@@ -249,82 +247,69 @@ function JobCard({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 hover:border-white/10 hover:bg-zinc-900/60 transition-all group">
+    <div className={styles.jobCard}>
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-4">
+      <div className={styles.cardHeader}>
+        <div className={styles.companyInfo}>
           {/* Company logo */}
           <div
-            className="h-12 w-12 rounded-xl flex items-center justify-center text-lg font-bold shrink-0"
+            className={styles.logo}
             style={{ backgroundColor: job.logoBg, color: job.logoColor }}
           >
             {job.logo}
           </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-white font-semibold text-base leading-tight">
-                {job.title}
-              </h3>
+          <div className={styles.titleWrapper}>
+            <div className={styles.titleRow}>
+              <h3>{job.title}</h3>
               {job.hot && (
-                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-500/15 text-orange-400 text-[10px] font-bold uppercase tracking-wide">
-                  <Flame className="h-2.5 w-2.5" /> Hot
+                <span className={styles.hotBadge}>
+                  <Flame className={styles.icon} /> Hot
                 </span>
               )}
             </div>
-            <p className="text-zinc-400 text-sm mt-0.5">
+            <p className={styles.companySubline}>
               {job.company}
-              <span className="mx-1.5 text-zinc-700">·</span>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-zinc-400">
-                {job.stage}
-              </span>
+              <span className={styles.dot}>·</span>
+              <span className={styles.stage}>{job.stage}</span>
             </p>
           </div>
         </div>
 
         {/* Match + Save */}
-        <div className="flex flex-col items-end gap-2 shrink-0">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#CC97FF]/10 border border-[#CC97FF]/20">
-            <Star className="h-3 w-3 text-[#CC97FF] fill-[#CC97FF]" />
-            <span className="text-[#CC97FF] text-xs font-bold">
-              {job.match}% match
-            </span>
+        <div className={styles.matchAndSave}>
+          <div className={styles.matchBadge}>
+            <Star className={styles.icon} />
+            <span>{job.match}% match</span>
           </div>
           <button
             onClick={() => onSaveToggle(job.id)}
-            className={`p-1.5 rounded-lg transition-all ${
-              job.saved
-                ? "text-[#CC97FF] bg-[#CC97FF]/10"
-                : "text-zinc-600 hover:text-zinc-300 hover:bg-white/5"
-            }`}
+            className={`${styles.saveBtn} ${job.saved ? styles.saved : ""}`}
           >
-            <Bookmark className={`h-4 w-4 ${job.saved ? "fill-[#CC97FF]" : ""}`} />
+            <Bookmark className={styles.icon} />
           </button>
         </div>
       </div>
 
       {/* Meta info */}
-      <div className="flex flex-wrap gap-3 mt-4 text-xs text-zinc-500">
-        <span className="flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5" /> {job.location}
+      <div className={styles.meta}>
+        <span className={styles.metaItem}>
+          <MapPin className={styles.icon} /> {job.location}
         </span>
-        <span className="flex items-center gap-1.5">
-          <DollarSign className="h-3.5 w-3.5" /> {job.salary}
+        <span className={styles.metaItem}>
+          <DollarSign className={styles.icon} /> {job.salary}
         </span>
-        <span className="flex items-center gap-1.5">
-          <TrendingUp className="h-3.5 w-3.5" /> Equity: {job.equity}
+        <span className={styles.metaItem}>
+          <TrendingUp className={styles.icon} /> Equity: {job.equity}
         </span>
-        <span className="flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5" /> {job.posted}
+        <span className={styles.metaItem}>
+          <Clock className={styles.icon} /> {job.posted}
         </span>
       </div>
 
       {/* Tags */}
-      <div className="flex flex-wrap gap-2 mt-3">
+      <div className={styles.tags}>
         {job.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2.5 py-1 rounded-lg bg-white/5 text-zinc-300 text-xs font-medium border border-white/5"
-          >
+          <span key={tag} className={styles.tag}>
             {tag}
           </span>
         ))}
@@ -332,24 +317,24 @@ function JobCard({
 
       {/* Description toggle */}
       {expanded && (
-        <p className="text-zinc-400 text-sm mt-4 leading-relaxed border-t border-white/5 pt-4">
+        <p className={styles.description}>
           {job.description}
         </p>
       )}
 
       {/* Actions */}
-      <div className="flex items-center gap-3 mt-5 pt-4 border-t border-white/5">
-        <button className="flex-1 py-2.5 rounded-xl bg-gradient-to-br from-[#CC97FF] to-[#9C48EA] text-white text-sm font-semibold hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(204,151,255,0.3)] transition-all active:scale-[0.99]">
+      <div className={styles.actions}>
+        <button className={styles.applyBtn}>
           Candidatar-se
         </button>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="py-2.5 px-4 rounded-xl bg-white/5 border border-white/5 text-zinc-300 text-sm font-medium hover:bg-white/10 transition-all"
+          className={styles.moreBtn}
         >
           {expanded ? "Menos" : "Ver mais"}
         </button>
-        <button className="p-2.5 rounded-xl bg-white/5 border border-white/5 text-zinc-400 hover:text-white hover:bg-white/10 transition-all">
-          <ArrowUpRight className="h-4 w-4" />
+        <button className={styles.externalBtn}>
+          <ArrowUpRight className={styles.icon} />
         </button>
       </div>
     </div>
@@ -358,51 +343,49 @@ function JobCard({
 
 function ProfileView() {
   return (
-    <div className="space-y-4">
+    <div className={styles.profileView}>
       {/* Profile header card */}
-      <div className="bg-zinc-900/40 border border-white/5 rounded-2xl overflow-hidden">
+      <div className={styles.headerCard}>
         {/* Banner */}
-        <div className="h-24 bg-gradient-to-br from-[#CC97FF]/20 to-[#9C48EA]/30 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#CC97FF]/10 to-transparent" />
-        </div>
-        <div className="px-6 pb-6">
+        <div className={styles.banner} />
+        <div className={styles.mainInfo}>
           {/* Avatar */}
-          <div className="flex items-end justify-between -mt-8 mb-4">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#CC97FF] to-[#9C48EA] flex items-center justify-center text-white text-xl font-bold border-4 border-[#0f0f0f]">
+          <div className={styles.avatarRow}>
+            <div className={styles.avatar}>
               {MOCK_USER.initials}
             </div>
-            <button className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-sm hover:bg-white/10 transition-all">
+            <button className={styles.editBtn}>
               Editar perfil
             </button>
           </div>
-          <h2 className="text-white font-bold text-xl">{MOCK_USER.name}</h2>
-          <p className="text-zinc-400 text-sm mt-0.5">{MOCK_USER.role}</p>
-          <p className="text-zinc-600 text-xs mt-1 flex items-center gap-1">
-            <MapPin className="h-3 w-3" /> {MOCK_USER.location}
+          <h2>{MOCK_USER.name}</h2>
+          <p className={styles.role}>{MOCK_USER.role}</p>
+          <p className={styles.location}>
+            <MapPin className={styles.icon} /> {MOCK_USER.location}
           </p>
-          <div className="flex gap-3 mt-4">
-            <div className="flex-1 bg-[#CC97FF]/10 rounded-xl p-3 border border-[#CC97FF]/20 text-center">
-              <div className="text-[#CC97FF] font-bold text-lg">{MOCK_USER.matchScore}%</div>
-              <div className="text-zinc-500 text-[10px] uppercase tracking-wide mt-0.5">Match Score</div>
+          <div className={styles.statsGrid}>
+            <div className={`${styles.statBox} ${styles.primary}`}>
+              <div className={styles.val}>{MOCK_USER.matchScore}%</div>
+              <div className={styles.label}>Match Score</div>
             </div>
-            <div className="flex-1 bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-              <div className="text-white font-bold text-lg">{MOCK_USER.profileViews}</div>
-              <div className="text-zinc-500 text-[10px] uppercase tracking-wide mt-0.5">Visualizações</div>
+            <div className={styles.statBox}>
+              <div className={styles.val}>{MOCK_USER.profileViews}</div>
+              <div className={styles.label}>Visualizações</div>
             </div>
-            <div className="flex-1 bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-              <div className="text-white font-bold text-lg">{MOCK_USER.appliedCount}</div>
-              <div className="text-zinc-500 text-[10px] uppercase tracking-wide mt-0.5">Candidaturas</div>
+            <div className={styles.statBox}>
+              <div className={styles.val}>{MOCK_USER.appliedCount}</div>
+              <div className={styles.label}>Candidaturas</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Skills */}
-      <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6">
-        <h3 className="text-white font-semibold mb-4">Habilidades</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className={styles.skillsCard}>
+        <h3>Habilidades</h3>
+        <div className={styles.skillsGrid}>
           {["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Go", "GraphQL", "AWS"].map((skill) => (
-            <span key={skill} className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 text-zinc-300 text-sm">
+            <span key={skill} className={styles.skillTag}>
               {skill}
             </span>
           ))}
@@ -410,24 +393,26 @@ function ProfileView() {
       </div>
 
       {/* Experience */}
-      <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 space-y-5">
-        <h3 className="text-white font-semibold">Experiência</h3>
-        {[
-          { role: "Senior Full Stack Developer", company: "Deco.cx", period: "Jan 2024 – Presente", desc: "Liderança técnica do squad de plataforma. Stack: React, Deno, TypeScript." },
-          { role: "Frontend Engineer", company: "Nuvemshop", period: "Jun 2022 – Dec 2023", desc: "Desenvolvimento de componentes do Design System e features do painel admin." },
-        ].map((exp, i) => (
-          <div key={i} className="flex gap-4">
-            <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center shrink-0">
-              <Building2 className="h-4 w-4 text-zinc-400" />
+      <div className={styles.experienceCard}>
+        <h3>Experiência</h3>
+        <div className={styles.experienceList}>
+          {[
+            { role: "Senior Full Stack Developer", company: "Deco.cx", period: "Jan 2024 – Presente", desc: "Liderança técnica do squad de plataforma. Stack: React, Deno, TypeScript." },
+            { role: "Frontend Engineer", company: "Nuvemshop", period: "Jun 2022 – Dec 2023", desc: "Desenvolvimento de componentes do Design System e features do painel admin." },
+          ].map((exp, i) => (
+            <div key={i} className={styles.expItem}>
+              <div className={styles.expLogo}>
+                <Building2 className={styles.icon} />
+              </div>
+              <div className={styles.expInfo}>
+                <p className={styles.jobTitle}>{exp.role}</p>
+                <p className={styles.company}>{exp.company}</p>
+                <p className={styles.period}>{exp.period}</p>
+                <p className={styles.desc}>{exp.desc}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-white text-sm font-medium">{exp.role}</p>
-              <p className="text-[#CC97FF] text-xs">{exp.company}</p>
-              <p className="text-zinc-500 text-xs mt-0.5">{exp.period}</p>
-              <p className="text-zinc-400 text-xs mt-1.5">{exp.desc}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -435,33 +420,33 @@ function ProfileView() {
 
 function ApplicationsView() {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between mb-1">
-        <h2 className="text-white font-semibold text-lg">Minhas Candidaturas</h2>
-        <span className="text-zinc-500 text-sm">{MOCK_APPLICATIONS.length} total</span>
+    <div className={styles.applicationsView}>
+      <div className={styles.header}>
+        <h1>Minhas Candidaturas</h1>
+        <p>{MOCK_APPLICATIONS.length} total</p>
       </div>
       {MOCK_APPLICATIONS.map((app) => {
         const StatusIcon = app.statusIcon;
         return (
-          <div key={app.id} className="bg-zinc-900/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all">
-            <div className="flex items-center gap-4">
+          <div key={app.id} className={styles.appCard}>
+            <div className={styles.row}>
               <div
-                className="h-12 w-12 rounded-xl flex items-center justify-center text-lg font-bold shrink-0"
+                className={styles.logo}
                 style={{ backgroundColor: app.logoBg, color: app.logoColor }}
               >
                 {app.logo}
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm truncate">{app.title}</p>
-                <p className="text-zinc-400 text-xs">{app.company}</p>
-                <p className="text-zinc-600 text-xs mt-1">{app.stage}</p>
+              <div className={styles.info}>
+                <p className={styles.role}>{app.title}</p>
+                <p className={styles.company}>{app.company}</p>
+                <p className={styles.stage}>{app.stage}</p>
               </div>
-              <div className="text-right shrink-0">
-                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${app.statusColor} ${app.statusBg}`}>
-                  <StatusIcon className="h-3.5 w-3.5" />
+              <div className={styles.statusCol}>
+                <span className={`${styles.statusBadge} ${styles[app.statusVariant]}`}>
+                  <StatusIcon className={styles.icon} />
                   {app.status}
                 </span>
-                <p className="text-zinc-600 text-[10px] mt-1.5">{app.date}</p>
+                <p className={styles.date}>{app.date}</p>
               </div>
             </div>
           </div>
@@ -473,36 +458,46 @@ function ApplicationsView() {
 
 function NotificationsView() {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between mb-1">
-        <h2 className="text-white font-semibold text-lg">Notificações</h2>
-        <button className="text-[#CC97FF] text-xs hover:underline">Marcar todas como lidas</button>
+    <div className={styles.notificationsView}>
+      <div className={styles.header}>
+        <h1>Notificações</h1>
+        <button className={styles.markAll}>Marcar todas como lidas</button>
       </div>
       {MOCK_NOTIFICATIONS.map((notif) => {
         const Icon = notif.icon;
+        // Simple mapping for icon container styling
+        const iconContainerStyle = {
+          backgroundColor: notif.iconBg.includes('CC97FF') ? 'rgba(204, 151, 255, 0.1)' : 
+                           notif.iconBg.includes('yellow') ? 'rgba(234, 179, 8, 0.1)' :
+                           notif.iconBg.includes('emerald') ? 'rgba(16, 185, 129, 0.1)' :
+                           'rgba(251, 146, 60, 0.1)'
+        };
+        const iconStyle = {
+          color: notif.iconColor.includes('CC97FF') ? '#CC97FF' :
+                 notif.iconColor.includes('yellow') ? '#eab308' :
+                 notif.iconColor.includes('emerald') ? '#10b981' :
+                 '#fb923c'
+        };
+
         return (
           <div
             key={notif.id}
-            className={`flex gap-4 p-4 rounded-2xl border transition-all ${
-              notif.read
-                ? "bg-zinc-900/20 border-white/5"
-                : "bg-zinc-900/50 border-white/10"
-            }`}
+            className={`${styles.notifCard} ${notif.read ? styles.read : styles.unread}`}
           >
-            <div className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${notif.iconBg}`}>
-              <Icon className={`h-4 w-4 ${notif.iconColor}`} />
+            <div className={styles.iconWrapper} style={iconContainerStyle}>
+              <Icon className={styles.icon} style={iconStyle} />
             </div>
-            <div className="flex-1">
-              <div className="flex items-start justify-between gap-2">
-                <p className={`text-sm font-medium leading-snug ${notif.read ? "text-zinc-300" : "text-white"}`}>
+            <div className={styles.content}>
+              <div className={styles.topRow}>
+                <p className={`${styles.title} ${notif.read ? styles.read : styles.unread}`}>
                   {notif.title}
                 </p>
-                <span className="text-zinc-600 text-xs shrink-0">{notif.time}</span>
+                <span className={styles.time}>{notif.time}</span>
               </div>
-              <p className="text-zinc-500 text-xs mt-0.5">{notif.desc}</p>
+              <p className={styles.desc}>{notif.desc}</p>
             </div>
             {!notif.read && (
-              <div className="h-2 w-2 rounded-full bg-[#CC97FF] mt-1.5 shrink-0" />
+              <div className={styles.unreadDot} />
             )}
           </div>
         );
@@ -555,76 +550,73 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans flex flex-col">
+    <div className={styles.homeContainer}>
       {/* ── Top Navbar ── */}
-      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/5 flex items-center px-4 gap-4">
+      <header className={styles.header}>
         {/* Logo */}
-        <div className="text-white font-black tracking-[0.2em] text-lg w-12 shrink-0 flex items-center">
+        <div className={`${styles.logo} ${sidebarCollapsed ? styles.collapsed : ""}`}>
           {sidebarCollapsed ? "R" : "REFYNE"}
         </div>
 
         {/* Search */}
-        <div className="flex-1 max-w-xl relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+        <div className={styles.searchWrapper}>
+          <Search className={styles.searchIcon} />
           <input
             type="text"
             placeholder="Buscar vagas, empresas..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-zinc-900/60 border border-white/5 rounded-xl text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#CC97FF]/40 focus:border-[#CC97FF]/30 transition-all"
           />
         </div>
 
         {/* Right actions */}
-        <div className="ml-auto flex items-center gap-2">
-          <button className="relative p-2 rounded-xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all">
-            <Bell className="h-5 w-5" />
+        <div className={styles.actions}>
+          <button className={styles.iconBtn}>
+            <Bell className={styles.iconMd} />
             {unreadNotifications > 0 && (
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-[#CC97FF]" />
+              <span className={styles.badge} />
             )}
           </button>
-          <button className="p-2 rounded-xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all">
-            <Settings className="h-5 w-5" />
+          <button className={styles.iconBtn}>
+            <Settings className={styles.iconMd} />
           </button>
           {/* Avatar */}
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-[#CC97FF] to-[#9C48EA] flex items-center justify-center text-white text-xs font-bold cursor-pointer">
+          <div className={styles.userAvatar}>
             {MOCK_USER.initials}
           </div>
         </div>
       </header>
 
       {/* ── Body ── */}
-      <div className="flex flex-1 pt-16">
+      <div className={styles.body}>
         {/* ── Sidebar ── */}
         <aside
-          className={`fixed left-0 top-16 bottom-0 z-40 flex flex-col bg-[#0d0d0d] border-r border-white/5 transition-all duration-300 ${
-            sidebarCollapsed ? "w-[68px]" : "w-[220px]"
-          }`}
+          className={`${styles.sidebar} ${sidebarCollapsed ? styles.collapsed : ""}`}
         >
           {/* User mini profile */}
-          <div className={`p-3 border-b border-white/5 flex items-center gap-3 ${sidebarCollapsed ? "justify-center" : ""}`}>
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#CC97FF] to-[#9C48EA] flex items-center justify-center text-white text-xs font-bold shrink-0">
+          <div className={`${styles.userSection} ${sidebarCollapsed ? styles.collapsed : ""}`}>
+            <div className={styles.avatar}>
               {MOCK_USER.initials}
             </div>
             {!sidebarCollapsed && (
-              <div className="overflow-hidden">
-                <p className="text-white text-xs font-semibold truncate">{MOCK_USER.name}</p>
-                <p className="text-zinc-500 text-[10px] truncate">{MOCK_USER.role}</p>
+              <div className={styles.info}>
+                <p className={styles.name}>{MOCK_USER.name}</p>
+                <p className={styles.role}>{MOCK_USER.role}</p>
               </div>
             )}
           </div>
 
           {/* Match score banner */}
           {!sidebarCollapsed && (
-            <div className="mx-3 mt-3 p-3 rounded-xl bg-[#CC97FF]/8 border border-[#CC97FF]/15">
-              <div className="flex items-center justify-between">
-                <span className="text-zinc-400 text-[10px] uppercase tracking-wider">Match Score</span>
-                <Star className="h-3 w-3 text-[#CC97FF] fill-[#CC97FF]" />
+            <div className={styles.matchBanner}>
+              <div className={styles.bannerHeader}>
+                <span>Match Score</span>
+                <Star className={styles.starIcon} />
               </div>
-              <div className="text-[#CC97FF] font-bold text-xl mt-0.5">{MOCK_USER.matchScore}%</div>
-              <div className="mt-2 h-1 rounded-full bg-white/5">
+              <div className={styles.score}>{MOCK_USER.matchScore}%</div>
+              <div className={styles.progressBar}>
                 <div
-                  className="h-1 rounded-full bg-gradient-to-r from-[#CC97FF] to-[#9C48EA]"
+                  className={styles.fill}
                   style={{ width: `${MOCK_USER.matchScore}%` }}
                 />
               </div>
@@ -632,89 +624,79 @@ export default function HomePage() {
           )}
 
           {/* Nav items */}
-          <nav className="flex-1 p-2 mt-2 space-y-0.5">
+          <nav className={styles.nav}>
             {NAV_ITEMS.map(({ id, label, icon: Icon, badge }) => (
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-left group ${
-                  activeTab === id
-                    ? "bg-[#CC97FF]/10 text-[#CC97FF]"
-                    : "text-zinc-500 hover:text-zinc-200 hover:bg-white/5"
-                } ${sidebarCollapsed ? "justify-center" : ""}`}
+                className={`${styles.navItem} ${activeTab === id ? styles.active : ""} ${sidebarCollapsed ? styles.collapsed : ""}`}
               >
-                <div className="relative shrink-0">
-                  <Icon className="h-5 w-5" />
+                <div className={styles.iconWrapper}>
+                  <Icon className={styles.navIcon} />
                   {badge ? (
-                    <span className="absolute -top-1.5 -right-1.5 h-3.5 w-3.5 rounded-full bg-[#CC97FF] text-[8px] font-bold text-white flex items-center justify-center">
+                    <span className={styles.itemBadge}>
                       {badge}
                     </span>
                   ) : null}
                 </div>
                 {!sidebarCollapsed && (
-                  <span className="text-sm font-medium">{label}</span>
+                  <span className={styles.label}>{label}</span>
                 )}
                 {!sidebarCollapsed && activeTab === id && (
-                  <ChevronRight className="h-3.5 w-3.5 ml-auto" />
+                  <ChevronRight className={styles.chevron} />
                 )}
               </button>
             ))}
           </nav>
 
           {/* Collapse toggle + Logout */}
-          <div className="p-2 border-t border-white/5 space-y-0.5">
+          <div className={styles.bottomNav}>
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-600 hover:text-zinc-300 hover:bg-white/5 transition-all ${sidebarCollapsed ? "justify-center" : ""}`}
+              className={`${styles.navItem} ${sidebarCollapsed ? styles.collapsed : ""}`}
             >
-              <MessageSquare className="h-5 w-5 shrink-0" />
-              {!sidebarCollapsed && <span className="text-sm font-medium">Recolher</span>}
+              <MessageSquare className={styles.navIcon} />
+              {!sidebarCollapsed && <span className={styles.label}>Recolher</span>}
             </button>
-            <button className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-600 hover:text-red-400 hover:bg-red-500/5 transition-all ${sidebarCollapsed ? "justify-center" : ""}`}>
-              <LogOut className="h-5 w-5 shrink-0" />
-              {!sidebarCollapsed && <span className="text-sm font-medium">Sair</span>}
+            <button className={`${styles.navItem} ${styles.logout} ${sidebarCollapsed ? styles.collapsed : ""}`}>
+              <LogOut className={styles.navIcon} />
+              {!sidebarCollapsed && <span className={styles.label}>Sair</span>}
             </button>
           </div>
         </aside>
 
         {/* ── Main Content ── */}
         <main
-          className={`flex-1 transition-all duration-300 ${
-            sidebarCollapsed ? "ml-[68px]" : "ml-[220px]"
-          }`}
+          className={`${styles.main} ${sidebarCollapsed ? styles.collapsed : ""}`}
         >
-          <div className="max-w-3xl mx-auto px-4 py-6">
+          <div className={styles.contentWrapper}>
 
             {/* Feed & Saved: header + filter bar */}
             {(activeTab === "feed" || activeTab === "saved") && (
               <>
-                <div className="flex items-center justify-between mb-5">
+                <div className={styles.sectionHeader}>
                   <div>
-                    <h1 className="text-white font-bold text-xl">
+                    <h1>
                       {activeTab === "feed" ? "Vagas Recomendadas" : "Vagas Salvas"}
                     </h1>
-                    <p className="text-zinc-500 text-sm mt-0.5">
+                    <p>
                       {activeTab === "feed"
                         ? `${filteredJobs.length} vagas com alto match para você`
                         : `${filteredJobs.length} vaga${filteredJobs.length !== 1 ? "s" : ""} salva${filteredJobs.length !== 1 ? "s" : ""}`}
                     </p>
                   </div>
-                  <button className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/5 text-zinc-400 text-sm hover:text-white hover:bg-white/10 transition-all">
-                    <Filter className="h-4 w-4" /> Filtros
+                  <button className={styles.filterBtn}>
+                    <Filter className={styles.icon} /> Filtros
                   </button>
                 </div>
 
                 {/* Quick filter pills */}
                 {activeTab === "feed" && (
-                  <div className="flex gap-2 flex-wrap mb-5">
+                  <div className={styles.filterPills}>
                     {["Todos", "Remote", "Series A", "Series B", "Seed", "Full-time"].map((f) => (
                       <button
                         key={f}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                          f === "Todos"
-                            ? "bg-[#CC97FF]/10 border-[#CC97FF]/30 text-[#CC97FF]"
-                            : "bg-white/5 border-white/5 text-zinc-400 hover:text-zinc-200 hover:bg-white/10"
-                        }`}
+                        className={`${styles.pill} ${f === "Todos" ? styles.active : ""}`}
                       >
                         {f}
                       </button>
@@ -723,15 +705,15 @@ export default function HomePage() {
                 )}
 
                 {/* Job list */}
-                <div className="space-y-4">
+                <div className={styles.jobList}>
                   {filteredJobs.length > 0 ? (
                     filteredJobs.map((job) => (
                       <JobCard key={job.id} job={job} onSaveToggle={handleSaveToggle} />
                     ))
                   ) : (
-                    <div className="text-center py-16">
-                      <Bookmark className="h-12 w-12 text-zinc-700 mx-auto mb-4" />
-                      <p className="text-zinc-400 text-sm">
+                    <div className={styles.emptyState}>
+                      <Bookmark className={styles.icon} />
+                      <p>
                         {activeTab === "saved"
                           ? "Você ainda não salvou nenhuma vaga."
                           : "Nenhuma vaga encontrada."}
@@ -750,24 +732,24 @@ export default function HomePage() {
 
         {/* ── Right Column (only on feed/saved) ── */}
         {(activeTab === "feed" || activeTab === "saved") && (
-          <aside className="hidden xl:flex flex-col gap-4 w-72 shrink-0 p-4 pt-6">
+          <aside className={styles.asideRight}>
             {/* Activity card */}
-            <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-5">
-              <h3 className="text-white text-sm font-semibold mb-4">Sua Atividade</h3>
-              <div className="space-y-3">
+            <div className={styles.widget}>
+              <h3>Sua Atividade</h3>
+              <div className={styles.statList}>
                 {[
-                  { label: "Candidaturas", value: MOCK_USER.appliedCount, icon: Layers, color: "text-[#CC97FF]" },
-                  { label: "Vagas salvas", value: savedJobs.length, icon: Bookmark, color: "text-emerald-400" },
-                  { label: "Visualizações", value: MOCK_USER.profileViews, icon: Globe, color: "text-blue-400" },
+                  { label: "Candidaturas", value: MOCK_USER.appliedCount, icon: Layers, variant: "primary" },
+                  { label: "Vagas salvas", value: savedJobs.length, icon: Bookmark, variant: "emerald" },
+                  { label: "Visualizações", value: MOCK_USER.profileViews, icon: Globe, variant: "blue" },
                 ].map((stat) => {
                   const Icon = stat.icon;
                   return (
-                    <div key={stat.label} className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Icon className={`h-4 w-4 ${stat.color}`} />
-                        <span className="text-zinc-400 text-xs">{stat.label}</span>
+                    <div key={stat.label} className={styles.statItem}>
+                      <div className={styles.labelGroup}>
+                        <Icon className={`${styles.icon} ${styles[stat.variant]}`} />
+                        <span>{stat.label}</span>
                       </div>
-                      <span className="text-white text-sm font-semibold">{stat.value}</span>
+                      <span className={styles.value}>{stat.value}</span>
                     </div>
                   );
                 })}
@@ -775,39 +757,42 @@ export default function HomePage() {
             </div>
 
             {/* Top companies */}
-            <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-5">
-              <h3 className="text-white text-sm font-semibold mb-4">Empresas em Destaque</h3>
-              <div className="space-y-3">
+            <div className={styles.widget}>
+              <h3>Empresas em Destaque</h3>
+              <div className={styles.companyList}>
                 {MOCK_JOBS.slice(0, 3).map((job) => (
-                  <div key={job.id} className="flex items-center gap-3 group cursor-pointer">
+                  <div key={job.id} className={styles.companyItem}>
                     <div
-                      className="h-8 w-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0"
+                      className={styles.logo}
                       style={{ backgroundColor: job.logoBg, color: job.logoColor }}
                     >
                       {job.logo}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-zinc-200 text-xs font-medium group-hover:text-white transition-colors truncate">
+                    <div className={styles.info}>
+                      <p className={styles.name}>
                         {job.company}
                       </p>
-                      <p className="text-zinc-600 text-[10px]">{job.stage}</p>
+                      <p className={styles.stage}>{job.stage}</p>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 text-zinc-700 group-hover:text-zinc-400 transition-colors" />
+                    <ChevronRight className={styles.chevron} />
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Skill tip */}
-            <div className="bg-gradient-to-br from-[#CC97FF]/10 to-[#9C48EA]/5 border border-[#CC97FF]/15 rounded-2xl p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-4 w-4 text-[#CC97FF]" />
-                <span className="text-[#CC97FF] text-xs font-bold uppercase tracking-wide">Dica Refyne</span>
+            <div className={`${styles.widget} ${styles.skillTip}`} style={{ 
+              background: 'linear-gradient(135deg, rgba(204, 151, 255, 0.1), rgba(156, 72, 234, 0.05))',
+              borderColor: 'rgba(204, 151, 255, 0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <Zap className="h-4 w-4" style={{ color: '#CC97FF' }} />
+                <span style={{ color: '#CC97FF', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dica Refyne</span>
               </div>
-              <p className="text-zinc-300 text-xs leading-relaxed">
-                Candidatos com perfil completo têm <strong className="text-white">3x mais chances</strong> de serem contactados pelas startups.
+              <p style={{ color: '#d4d4d8', fontSize: '0.75rem', lineHeight: '1.5' }}>
+                Candidatos com perfil completo têm <strong style={{ color: '#fff' }}>3x mais chances</strong> de serem contactados pelas startups.
               </p>
-              <button className="mt-3 text-[#CC97FF] text-xs font-semibold hover:underline">
+              <button style={{ marginTop: '0.75rem', color: '#CC97FF', fontSize: '0.75rem', fontWeight: '600', border: 'none', background: 'none', cursor: 'pointer' }}>
                 Completar perfil →
               </button>
             </div>
