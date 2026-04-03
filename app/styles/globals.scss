@@ -1,0 +1,65 @@
+@use "core" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $background;
+  color: $foreground;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+// Global selection style
+::selection {
+  background: rgba($purple-light, 0.3);
+  color: $white;
+}
+
+// Global utilities that might still be needed in modules but defined globally if simple
+.hidden { display: none; }
+
+.root-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,71 @@
+@use "../../styles/core" as *;
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 4.5rem;
+  row-gap: 1rem;
+
+  @include media-up('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+
+  @include media-up('md') {
+    &:not(:last-child) {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0%;
+        right: -1.25rem;
+        bottom: 0%;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, $purple-light, transparent);
+        box-shadow: 0 0 30px rgba($purple-light, .5);
+        opacity: .7;
+      }
+    }
+  }
+}
+
+.columnTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $purple-light;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $zinc-300;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.375rem;
+}
+
+.submitWrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+.twoColGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.resizeNone {
+  resize: none;
+}

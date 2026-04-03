@@ -1,0 +1,196 @@
+/* Custom styles for the candidate profile page */
+
+.profile-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0a0a;
+  overflow-x: hidden;
+  position: relative;
+  font-family: sans-serif;
+}
+
+.ambient-light-top {
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
+  border-radius: 9999px;
+  background: rgba(204, 151, 255, 0.05);
+  filter: blur(120px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.ambient-light-bottom {
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  border-radius: 9999px;
+  background: rgba(156, 72, 234, 0.1);
+  filter: blur(120px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.profile-card {
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(204, 151, 255, 0.5), transparent);
+  opacity: 0.5;
+}
+
+.form-scroll-area {
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Custom Scrollbar Styles */
+.form-scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(204, 151, 255, 0.3) transparent;
+}
+
+.form-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.form-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.form-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(204, 151, 255, 0.3);
+  border-radius: 10px;
+}
+
+.input-field-wrapper {
+  margin-bottom: 1rem;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.375rem;
+}
+
+.input-relative {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1rem;
+  width: 1rem;
+  color: #71717a;
+  transition: color 0.2s;
+  pointer-events: none;
+}
+
+.input-relative:has(textarea.input-control) .input-icon {
+  left: 0.75rem;
+  top: 15%;
+}
+
+.input-control {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  background: rgba(9, 9, 11, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  color: white;
+  transition: all 0.2s;
+}
+
+.input-control:focus {
+  outline: none;
+  border-color: rgba(204, 151, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(204, 151, 255, 0.2);
+}
+
+.input-error {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.input-error:focus {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.error-message {
+  font-size: 0.625rem;
+  color: #f87171;
+  margin-top: 0.25rem;
+}
+
+.error-alert {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.submit-button {
+  width: 100%;
+  max-width: 200px;
+  margin: 1.5rem auto 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #CC97FF, #9C48EA);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 20px rgba(204, 151, 255, 0.4);
+}
+
+.submit-button:active {
+  transform: scale(0.99);
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

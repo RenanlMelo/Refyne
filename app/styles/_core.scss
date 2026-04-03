@@ -1,0 +1,112 @@
+@use "sass:map";
+
+// Colors
+$background: #0a0a0a;
+$foreground: #ededed;
+$white: #ffffff;
+$black: #000000;
+$zinc-300: #d4d4d8;
+$zinc-400: #a1a1aa;
+$zinc-500: #71717a;
+$zinc-600: #505050;
+$zinc-900: #18181b;
+
+// Brand Colors
+$purple-light: #CC97FF;
+$purple-dark: #9C48EA;
+$accent-gradient: linear-gradient(to bottom right, $purple-light, $purple-dark);
+
+// Spacing & Sizes
+$container-max-width: 80rem;
+$header-height: 5rem;
+
+// Icon Sizes
+$icon-xs: 0.75rem;
+$icon-sm: 0.875rem;
+$icon-md: 1rem;
+$icon-lg: 1.25rem;
+$icon-xl: 1.5rem;
+$icon-xxl: 2rem;
+$icon-xxxl: 3rem;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin absolute-inset-0 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@mixin backdrop-blur($amount: 10px) {
+  backdrop-filter: blur($amount);
+  -webkit-backdrop-filter: blur($amount);
+}
+
+// Media Queries - Tailwind Reference
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px,
+);
+
+@mixin media-up($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  @else {
+    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}
+
+// Animations
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@mixin animate-in($name, $duration: 0.5s, $delay: 0s) {
+  animation: $name $duration ease forwards;
+  animation-delay: $delay;
+  opacity: 0;
+}

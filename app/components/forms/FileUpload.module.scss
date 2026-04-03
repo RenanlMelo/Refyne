@@ -1,0 +1,176 @@
+.fileUploadWrapper {
+  width: 100%;
+}
+
+.uploadLabel {
+  display: block;
+  font-size: 0.875rem;
+  height: fit-content;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.requiredAsterisk {
+  color: #ff4d4d;
+  margin-left: 0.25rem;
+}
+
+.dropZone {
+  position: relative;
+  min-height: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  &:hover {
+    border-color: rgba(236, 72, 153, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &.dragging {
+    border-color: #ec4899;
+    background: rgba(236, 72, 153, 0.1);
+    transform: scale(1.02);
+  }
+
+  &.hasFile {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: default;
+  }
+
+  &.errorZone {
+    border-color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.05);
+  }
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.iconCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(236, 72, 153, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadIcon {
+  color: #ec4899;
+  width: 24px;
+  height: 24px;
+}
+
+.primaryText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.secondaryText {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.fileState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fileIconCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileIcon {
+  color: rgba(255, 255, 255, 0.8);
+  width: 20px;
+}
+
+.fileName {
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin: 0;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileSize {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.successText {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.removeButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+
+  &:hover {
+    background: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+  }
+}
+
+.checkIcon {
+  display: none;
+  /* Substituted by design icon logic if needed */
+}
+
+.errorMessage {
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
