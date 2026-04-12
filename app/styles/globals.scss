@@ -28,7 +28,8 @@ a {
   transition: color 0.2s ease;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -44,7 +45,9 @@ img {
   display: block;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   color: inherit;
 }
@@ -56,7 +59,9 @@ input, textarea, select {
 }
 
 // Global utilities that might still be needed in modules but defined globally if simple
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
 .root-layout {
   min-height: 100vh;

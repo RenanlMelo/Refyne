@@ -1,0 +1,34 @@
+@use "../../../styles/core" as *;
+
+.socialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background-color: rgba(9, 9, 11, 0.3);
+  border: 1px solid rgba($white, 0.05);
+  border-radius: 0.75rem;
+  color: $zinc-300;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(39, 39, 42, 0.5);
+    color: $white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.icon {
+  height: $icon-md;
+  width: $icon-md;
+}
