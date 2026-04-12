@@ -1,5 +1,5 @@
 import React from "react";
-import { User, GitBranch, Briefcase, FileText, Globe, IdCard, AlignLeft, Link, Clock } from "lucide-react";
+import { User, GitBranch, Briefcase, Globe, IdCard, AlignLeft, Link } from "lucide-react";
 import { InputField } from "./InputField";
 import { FileUpload } from "./FileUpload";
 import { SubmitButton } from "./SubmitButton";

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Briefcase,
   Bookmark,
@@ -11,6 +12,7 @@ import {
   Clock,
   Building2,
   ChevronRight,
+  ChevronLeft,
   Star,
   Zap,
   Filter,
@@ -467,16 +469,16 @@ function NotificationsView() {
         const Icon = notif.icon;
         // Simple mapping for icon container styling
         const iconContainerStyle = {
-          backgroundColor: notif.iconBg.includes('CC97FF') ? 'rgba(204, 151, 255, 0.1)' : 
-                           notif.iconBg.includes('yellow') ? 'rgba(234, 179, 8, 0.1)' :
-                           notif.iconBg.includes('emerald') ? 'rgba(16, 185, 129, 0.1)' :
-                           'rgba(251, 146, 60, 0.1)'
+          backgroundColor: notif.iconBg.includes('CC97FF') ? 'rgba(204, 151, 255, 0.1)' :
+            notif.iconBg.includes('yellow') ? 'rgba(234, 179, 8, 0.1)' :
+              notif.iconBg.includes('emerald') ? 'rgba(16, 185, 129, 0.1)' :
+                'rgba(251, 146, 60, 0.1)'
         };
         const iconStyle = {
           color: notif.iconColor.includes('CC97FF') ? '#CC97FF' :
-                 notif.iconColor.includes('yellow') ? '#eab308' :
-                 notif.iconColor.includes('emerald') ? '#10b981' :
-                 '#fb923c'
+            notif.iconColor.includes('yellow') ? '#eab308' :
+              notif.iconColor.includes('emerald') ? '#10b981' :
+                '#fb923c'
         };
 
         return (
@@ -509,6 +511,15 @@ function NotificationsView() {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/auth");
+    }
+  }, [router]);
+
   const [activeTab, setActiveTab] = useState<Tab>("feed");
   const [jobs, setJobs] = useState(MOCK_JOBS);
   const [searchQuery, setSearchQuery] = useState("");
@@ -520,15 +531,15 @@ export default function HomePage() {
   const filteredJobs =
     activeTab === "saved"
       ? savedJobs.filter(
-          (j) =>
-            j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            j.company.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        (j) =>
+          j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          j.company.toLowerCase().includes(searchQuery.toLowerCase())
+      )
       : jobs.filter(
-          (j) =>
-            j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            j.company.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        (j) =>
+          j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          j.company.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
   const handleSaveToggle = (id: number) => {
     setJobs((prev) =>
@@ -542,12 +553,12 @@ export default function HomePage() {
     icon: React.ElementType;
     badge?: number;
   }[] = [
-    { id: "feed", label: "Vagas", icon: Briefcase },
-    { id: "saved", label: "Salvos", icon: Bookmark, badge: savedJobs.length },
-    { id: "applications", label: "Candidaturas", icon: Layers },
-    { id: "notifications", label: "Notificações", icon: Bell, badge: unreadNotifications },
-    { id: "profile", label: "Meu Perfil", icon: User },
-  ];
+      { id: "feed", label: "Vagas", icon: Briefcase },
+      { id: "saved", label: "Salvos", icon: Bookmark, badge: savedJobs.length },
+      { id: "applications", label: "Candidaturas", icon: Layers },
+      { id: "notifications", label: "Notificações", icon: Bell, badge: unreadNotifications },
+      { id: "profile", label: "Meu Perfil", icon: User },
+    ];
 
   return (
     <div className={styles.homeContainer}>
@@ -593,6 +604,19 @@ export default function HomePage() {
         <aside
           className={`${styles.sidebar} ${sidebarCollapsed ? styles.collapsed : ""}`}
         >
+          {/* Collapse toggle */}
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className={styles.collapseBtn}
+            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? (
+              <ChevronRight className={styles.collapseBtnIcon} />
+            ) : (
+              <ChevronLeft className={styles.collapseBtnIcon} />
+            )}
+          </button>
+
           {/* User mini profile */}
           <div className={`${styles.userSection} ${sidebarCollapsed ? styles.collapsed : ""}`}>
             <div className={styles.avatar}>
@@ -651,14 +675,13 @@ export default function HomePage() {
 
           {/* Collapse toggle + Logout */}
           <div className={styles.bottomNav}>
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={`${styles.navItem} ${sidebarCollapsed ? styles.collapsed : ""}`}
+            <button 
+              onClick={() => {
+                localStorage.removeItem("token");
+                router.push("/auth");
+              }}
+              className={`${styles.navItem} ${styles.logout} ${sidebarCollapsed ? styles.collapsed : ""}`}
             >
-              <MessageSquare className={styles.navIcon} />
-              {!sidebarCollapsed && <span className={styles.label}>Recolher</span>}
-            </button>
-            <button className={`${styles.navItem} ${styles.logout} ${sidebarCollapsed ? styles.collapsed : ""}`}>
               <LogOut className={styles.navIcon} />
               {!sidebarCollapsed && <span className={styles.label}>Sair</span>}
             </button>
@@ -781,7 +804,7 @@ export default function HomePage() {
             </div>
 
             {/* Skill tip */}
-            <div className={`${styles.widget} ${styles.skillTip}`} style={{ 
+            <div className={`${styles.widget} ${styles.skillTip}`} style={{
               background: 'linear-gradient(135deg, rgba(204, 151, 255, 0.1), rgba(156, 72, 234, 0.05))',
               borderColor: 'rgba(204, 151, 255, 0.15)'
             }}>

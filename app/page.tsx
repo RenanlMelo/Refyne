@@ -14,12 +14,12 @@ export default function Home() {
             <span>REFYNE</span>
           </Link>
           <div className={styles.navLinks}>
-            <a href="#sobre">Visão Geral</a>
-            <a href="#pilares">Pilares</a>
-            <a href="#funcionalidades">Plataforma</a>
+            <a href="#sobre">Overview</a>
+            <a href="#pilares">Pillars</a>
+            <a href="#funcionalidades">Platform</a>
           </div>
           <Link href="/auth" className={styles.authButton}>
-            Acessar Plataforma
+            Access Platform
           </Link>
         </div>
       </nav>
@@ -44,22 +44,22 @@ export default function Home() {
           <div className={styles.textContent}>
             <div className={styles.heroBadge}>
               <Star />
-              <span>MATCHMAKING INTELIGENTE</span>
+              <span>INTELLIGENT MATCHMAKING</span>
             </div>
             <h1 className={styles.heroTitle}>
-              Onde a cultura <br className={`${styles.hidden} ${styles['md-block']}`} />
-              encontra a <span className={styles.gradientText}>performance.</span>
+              Where culture <br className={`${styles.hidden} ${styles['md-block']}`} />
+              meets <span className={styles.gradientText}>performance.</span>
             </h1>
             <p className={styles.heroDescription}>
-              Uma plataforma que vai muito além do currículo técnico. A REFYNE garante o alinhamento de brilho nos olhos e o perfil "hands-on" exigido pelas startups que mais crescem.
+              A platform that goes far beyond the technical resume. REFYNE ensures the alignment of intrinsic motivation and the &quot;hands-on&quot; profile demanded by the fastest-growing startups.
             </p>
             <div className={styles.heroActions}>
               <Link href="/auth" className={styles.primaryBtn}>
-                Criar uma conta
+                Create an account
                 <ArrowRight />
               </Link>
               <a href="#sobre" className={styles.secondaryBtn}>
-                Descobrir como funciona
+                Discover how it works
               </a>
             </div>
           </div>
@@ -72,13 +72,13 @@ export default function Home() {
           <div className={styles.gridTwoCol}>
             <div>
               <div className={styles.sectionHeader} style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
-                <div className={styles.badge}>A Revolução do Recrutamento</div>
+                <div className={styles.badge}>The Recruiting Revolution</div>
               </div>
               <h2 className={styles.sectionHeader} style={{ textAlign: 'left', fontSize: '2rem', marginBottom: '1.5rem' }}>
-                O recrutamento tradicional falha com startups.
+                Traditional recruiting fails with startups.
               </h2>
               <p style={{ color: '#a1a1aa', lineHeight: '1.6', fontSize: '1.125rem', marginBottom: '1.5rem' }}>
-                Candidatos brilhantes de grandes corporações nem sempre se adaptam à cultura ágil e caótica do early stage. Enquanto isso, fundadores e startups perdem tempo precioso filtrando currículos, em vez de focar no que importa: <strong style={{ color: 'white' }}>soft skills, adaptabilidade e brilho nos olhos</strong>.
+                Brilliant candidates from large corporations don&apos;t always adapt to the agile and chaotic culture of early-stage startups. Meanwhile, founders and startups waste precious time filtering resumes, instead of focusing on what matters: <strong style={{ color: 'white' }}>soft skills, adaptability, and a hands-on drive</strong>.
               </p>
             </div>
 
@@ -88,10 +88,10 @@ export default function Home() {
                 <div className={styles.iconWrapper}>
                   <Target className={styles.icon} />
                 </div>
-                <h3 className={styles.title}>A Solução Refyne</h3>
+                <h3 className={styles.title}>The Refyne Solution</h3>
               </div>
               <p className={styles.text}>
-                Focamos em alinhar a missão e cultura da startup com o perfil comportamental do profissional. Garantimos conexões de longo prazo, menor turnover e um time focado em crescer um negócio do zero.
+                We focus on aligning the startup&apos;s mission and culture with the professional&apos;s behavioral profile. We ensure long-term connections, lower turnover, and a team focused on growing a business from scratch.
               </p>
             </div>
           </div>
@@ -102,9 +102,9 @@ export default function Home() {
       <section id="pilares" className={`${styles.section} ${styles.darker}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.title}>Nossos Pilares Estratégicos</h2>
+            <h2 className={styles.title}>Our Strategic Pillars</h2>
             <p className={styles.description}>
-              A base da nossa metodologia desenhada para conectar as oportunidades mais promissoras aos talentos mais vorazes do mercado.
+              The foundation of our methodology designed to connect the most promising opportunities with the most hungry talents in the market.
             </p>
           </div>
 
@@ -113,9 +113,9 @@ export default function Home() {
               <div className={`${styles.iconWrapper} ${styles.purple}`}>
                 <Flame />
               </div>
-              <h3 className={styles.cardTitle}>Match de Cultura</h3>
+              <h3 className={styles.cardTitle}>Culture Match</h3>
               <p className={styles.cardText}>
-                Nosso algoritmo avalia intrinsecamente se o candidato reflete o perfil "mão na massa" (hands-on), vital para escalar e resolver problemas rápidos.
+                Our algorithm intrinsically evaluates if the candidate reflects the hands-on profile, vital for scaling and solving problems quickly.
               </p>
             </div>
 
@@ -123,9 +123,9 @@ export default function Home() {
               <div className={`${styles.iconWrapper} ${styles.deepPurple}`}>
                 <ShieldCheck />
               </div>
-              <h3 className={styles.cardTitle}>Transparência Total</h3>
+              <h3 className={styles.cardTitle}>Total Transparency</h3>
               <p className={styles.cardText}>
-                As propostas são claras desde o início, cobrindo modelos de atração arrojados, formato de trabalho presencial, híbrido, pacote de Equity ou Stock Options.
+                Proposals are clear from the start, covering bold attraction models, working formats (on-site, hybrid), and Equity or Stock Options packages.
               </p>
             </div>
 
@@ -133,9 +133,9 @@ export default function Home() {
               <div className={`${styles.iconWrapper} ${styles.purple}`}>
                 <Zap />
               </div>
-              <h3 className={styles.cardTitle}>Agilidade no Processo</h3>
+              <h3 className={styles.cardTitle}>Process Agility</h3>
               <p className={styles.cardText}>
-                Ambiente de ponta pensado exclusivamente para que os fundadores – frequentemente os maiores recrutadores da empresa – tomem decisões em tempo recorde.
+                Cutting-edge environment created exclusively for founders—often the company&apos;s biggest recruiters—to make decisions in record time.
               </p>
             </div>
           </div>
@@ -146,18 +146,18 @@ export default function Home() {
       <section id="funcionalidades" className={styles.section}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.title}>Experiência da Plataforma</h2>
+            <h2 className={styles.title}>Platform Experience</h2>
             <p className={styles.description}>
-              Funcionalidades construídas no foco da experiência direta entre Startups de Alto Crescimento e Talentos de Elite.
+              Features built with a focus on the direct experience between High-Growth Startups and Elite Talent.
             </p>
           </div>
 
           <div className={styles.featureGrid}>
             <div className={styles.featureCard}>
               <Building className={`${styles.icon} ${styles.deepPurple}`} />
-              <h3 className={styles.cardTitle}>Perfil da Startup</h3>
+              <h3 className={styles.cardTitle}>Startup Profile</h3>
               <p className={styles.cardText}>
-                A vitrine oficial da startup. O espaço definitivo de "pitch" para vender seu negócio, seu propósito e sua cultura aos candidatos.
+                The startup&apos;s official storefront. The definitive space to pitch and sell your business, purpose, and culture to candidates.
               </p>
             </div>
 
@@ -165,23 +165,23 @@ export default function Home() {
               <Filter className={`${styles.icon} ${styles.purple}`} />
               <h3 className={styles.cardTitle}>Smart Filtering</h3>
               <p className={styles.cardText}>
-                Navegação cirúrgica através de filtros complexos por estágio da startup (Seed, Series A, B, etc.) e o modelo específico de contratação desejado.
+                Surgical navigation through complex filters by startup stage (Seed, Series A, B, etc.) and the specific desired hiring model.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <LayoutDashboard className={`${styles.icon} ${styles.deepPurple}`} />
-              <h3 className={styles.cardTitle}>Dashboard Simples</h3>
+              <h3 className={styles.cardTitle}>Simple Dashboard</h3>
               <p className={styles.cardText}>
-                O candidato conta com um ambiente transparente para visualização em tempo real de seu status individual em cada processo seletivo aplicável.
+                Candidates count on a transparent environment to view their individual real-time status in each applicable recruitment process.
               </p>
             </div>
 
             <div className={`${styles.featureCard} ${styles.highlighted}`}>
               <CheckCircle className={`${styles.icon} ${styles.purple}`} />
-              <h3 className={styles.cardTitle}>Curadoria Refyne</h3>
+              <h3 className={styles.cardTitle}>Refyne Curation</h3>
               <p className={styles.cardText}>
-                Destaque com os melhores "Top Picks" do mercado, com validações suportadas através de sistemas exclusivos de Badges de competência.
+                Highlight the market&apos;s &quot;Top Picks&quot;, fully validated through exclusive competency Badge systems.
               </p>
             </div>
           </div>
@@ -192,12 +192,12 @@ export default function Home() {
       <section className={styles.ctaSection}>
         <div className={styles.glow} />
         <div className={styles.content}>
-          <h2 className={styles.title}>Pronto para redefinir o mercado de talentos?</h2>
+          <h2 className={styles.title}>Ready to redefine the talent market?</h2>
           <p className={styles.description}>
-            Dê o primeiro passo para uma jornada conectada pelos propósitos certos.
+            Take the first step toward a journey connected by the right purposes.
           </p>
           <Link href="/auth" className={styles.ctaBtn}>
-            Acessar Plataforma Refyne
+            Access Refyne Platform
           </Link>
         </div>
       </section>
@@ -207,7 +207,7 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.logo}>REFYNE</div>
           <p className={styles.copyright}>
-            &copy; {new Date().getFullYear()} Refyne Inc. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Refyne Inc. All rights reserved.
           </p>
         </div>
       </footer>

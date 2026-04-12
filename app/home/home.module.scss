@@ -1,4 +1,4 @@
-@import "../styles/core";
+@use "../styles/core" as *;
 
 .homeContainer {
   min-height: 100vh;
@@ -21,19 +21,19 @@
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  gap: 1rem;
+  gap: 2rem;
+  justify-content: space-between;
 
   .logo {
     color: $white;
     font-weight: 900;
     letter-spacing: 0.2em;
     font-size: 1.125rem;
-    width: 3rem;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     transition: width 0.3s ease;
-    
+
     &.collapsed {
       width: 1.5rem;
     }
@@ -77,10 +77,10 @@
   }
 
   .actions {
-    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: fit-content;
 
     .iconBtn {
       position: relative;
@@ -147,6 +147,37 @@
     width: 68px;
   }
 
+  .collapseBtn {
+    position: absolute;
+    top: 0.75rem;
+    right: -0.875rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $black;
+    border: 1px solid rgba($white, 0.2);
+    color: $zinc-200;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+    flex-shrink: 0;
+    transform: translateX(1rem);
+
+    &:hover {
+      background-color: rgba($white, 0.1);
+      color: $white;
+      border-color: rgba($white, 0.3);
+    }
+  }
+
+  .collapseBtnIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
   .userSection {
     padding: 0.75rem;
     border-bottom: 1px solid rgba($white, 0.05);
@@ -174,7 +205,7 @@
 
     .info {
       overflow: hidden;
-      
+
       .name {
         color: $white;
         font-size: 0.75rem;
@@ -205,7 +236,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      
+
       span {
         color: $zinc-400;
         font-size: 0.625rem;
@@ -255,6 +286,7 @@
       padding: 0.625rem 0.75rem;
       border-radius: 0.75rem;
       transition: all 0.2s ease;
+
       cursor: pointer;
       border: none;
       background: transparent;
@@ -267,7 +299,7 @@
 
       &:not(.active) {
         color: $zinc-500;
-        
+
         &:hover {
           background-color: rgba($white, 0.05);
           color: $zinc-200;
@@ -281,7 +313,7 @@
       .iconWrapper {
         position: relative;
         flex-shrink: 0;
-        
+
         .navIcon {
           width: 1.25rem;
           height: 1.25rem;
@@ -320,7 +352,9 @@
   .bottomNav {
     padding: 0.5rem;
     border-top: 1px solid rgba($white, 0.05);
-    
+    gap: 0.5rem;
+    flex-direction: column;
+
     .navItem {
       @extend .navItem;
       color: $zinc-600;
@@ -566,7 +600,7 @@
         &.saved {
           color: $primary-light;
           background-color: rgba($primary-light, 0.1);
-          
+
           .icon {
             fill: $primary-light;
           }
@@ -643,7 +677,7 @@
       font-size: 0.875rem;
       font-weight: 600;
       transition: all 0.2s ease;
-      
+
       &:hover {
         transform: scale(1.02);
         box-shadow: 0 0 20px rgba($primary-light, 0.3);
@@ -751,10 +785,18 @@
           .icon {
             width: 1rem;
             height: 1rem;
-            
-            &.primary { color: $primary-light; }
-            &.emerald { color: #34d399; }
-            &.blue { color: #60a5fa; }
+
+            &.primary {
+              color: $primary-light;
+            }
+
+            &.emerald {
+              color: #34d399;
+            }
+
+            &.blue {
+              color: #60a5fa;
+            }
           }
 
           span {
@@ -781,10 +823,15 @@
         align-items: center;
         gap: 0.75rem;
         cursor: pointer;
-        
+
         &:hover {
-          .info .name { color: $white; }
-          .chevron { color: $zinc-400; }
+          .info .name {
+            color: $white;
+          }
+
+          .chevron {
+            color: $zinc-400;
+          }
         }
 
         .logo {
@@ -802,7 +849,7 @@
         .info {
           flex: 1;
           min-width: 0;
-          
+
           .name {
             color: $zinc-200;
             font-size: 0.75rem;
@@ -913,7 +960,7 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
-        
+
         .icon {
           width: 0.75rem;
           height: 0.75rem;
@@ -936,8 +983,10 @@
           &.primary {
             background-color: rgba($primary-light, 0.1);
             border-color: rgba($primary-light, 0.2);
-            
-            .val { color: $primary-light; }
+
+            .val {
+              color: $primary-light;
+            }
           }
 
           .val {
@@ -958,7 +1007,8 @@
     }
   }
 
-  .skillsCard, .experienceCard {
+  .skillsCard,
+  .experienceCard {
     background-color: rgba($zinc-900, 0.4);
     border: 1px solid rgba($white, 0.05);
     border-radius: 1rem;
@@ -1005,7 +1055,7 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        
+
         .icon {
           width: 1rem;
           height: 1rem;
@@ -1084,7 +1134,7 @@
       .info {
         flex: 1;
         min-width: 0;
-        
+
         .role {
           color: $white;
           font-weight: 600;
@@ -1166,7 +1216,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      
+
       &:hover {
         text-decoration: underline;
       }
@@ -1220,8 +1270,13 @@
           font-weight: 500;
           line-height: 1.4;
 
-          &.unread { color: $white; }
-          &.read { color: $zinc-300; }
+          &.unread {
+            color: $white;
+          }
+
+          &.read {
+            color: $zinc-300;
+          }
         }
 
         .time {
@@ -1248,6 +1303,7 @@
     }
   }
 }
+
 .iconXs {
   width: $icon-xs;
   height: $icon-xs;
