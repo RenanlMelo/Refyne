@@ -11,6 +11,8 @@ interface ProfileFormProps {
 }
 
 export const ProfileForm: React.FC<ProfileFormProps> = ({ state, actions }) => {
+  const token = localStorage.getItem("token");
+  console.log("TOKEN3: " + token)
   return (
     <form onSubmit={actions.handleSubmit}>
       <div className={styles.formGrid}>

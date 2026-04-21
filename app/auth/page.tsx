@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
 import { PathwaySelector } from "../components/auth/PathwaySelector/PathwaySelector";
 import { AuthForm } from "../components/auth/AuthForm/AuthForm";
@@ -10,14 +8,6 @@ import styles from "./auth.module.scss";
 
 export default function LoginPage() {
   const { state, actions } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      router.push("/home");
-    }
-  }, [router]);
 
   return (
     <div className={styles.authContainer}>
