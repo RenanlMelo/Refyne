@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export function useCandidateProfile() {
   const router = useRouter();
@@ -73,16 +74,22 @@ export function useCandidateProfile() {
 
       console.log("Submitting Profile Payload:", payload);
 
-      const response = await fetch("http://localhost:8000/api/candidates/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post("http://localhost:8000/api/candidates/create", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       });
 
-      if (!response.ok) throw new Error("Error finishing registration.");
       router.push("/home");
     } catch (err: any) {
-      setErrorMSG(err.message || "Server connection error.");
+      if (err.response?.status === 409) {
+        setErrorMSG("This CPF is already registered.");
+      } else {
+        setErrorMSG(err.response?.data?.message || err.message || "Server connection error.");
+      }
     } finally {
       setLoading(false);
     }

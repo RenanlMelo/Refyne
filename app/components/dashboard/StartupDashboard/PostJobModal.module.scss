@@ -1,0 +1,233 @@
+@use "../../../../app/styles/core" as *;
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(#050508, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.modalContent {
+  background: $zinc-900;
+  border: 1px solid rgba($purple-light, 0.1);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 48rem;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+.header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid $zinc-700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    color: $white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .closeBtn {
+    background: transparent;
+    border: none;
+    color: $zinc-400;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $zinc-800;
+      color: $white;
+    }
+  }
+}
+
+.body {
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.threeCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: $zinc-300;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    background: $zinc-800;
+    border: 1px solid $zinc-700;
+    border-radius: 0.5rem;
+    color: $white;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    outline: none;
+
+    &:focus {
+      border-color: $purple-light;
+      box-shadow: 0 0 0 2px rgba($purple-light, 0.1);
+    }
+
+    &::placeholder {
+      color: $zinc-500;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  // Markdown editor global overrides
+  :global(.w-md-editor) {
+    background-color: $zinc-800 !important;
+    border: 1px solid $zinc-700 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: none !important;
+    color: $white !important;
+
+    :global(.w-md-editor-text-pre > code),
+    :global(.w-md-editor-text-input) {
+      color: $white !important;
+      font-size: 0.875rem !important;
+    }
+
+    :global(.w-md-editor-toolbar) {
+      background-color: transparent !important;
+      border-bottom: 1px solid $zinc-700 !important;
+      border-radius: 0.5rem 0.5rem 0 0 !important;
+
+      li > button {
+        color: $zinc-300 !important;
+
+        &:hover {
+          color: $white !important;
+          background-color: $zinc-700 !important;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid $zinc-700;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  background: rgba($zinc-900, 0.9);
+}
+
+.cancelBtn {
+  background: transparent;
+  border: 1px solid $zinc-600;
+  color: $zinc-300;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $zinc-800;
+    color: $white;
+  }
+}
+
+.submitBtn {
+  background: $purple-dark;
+  border: none;
+  color: $white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: lighten($purple-dark, 5%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($purple-dark, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  background: rgba(#ef4444, 0.1);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(#ef4444, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

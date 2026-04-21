@@ -9,10 +9,17 @@ interface ProfileHeaderProps {
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ type = "candidate" }) => {
   const router = useRouter();
-  
+
+  const handleBack = () => {
+    router.push('/auth');
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("profileCompleted");
+  }
+
   return (
     <>
-      <button type="button" onClick={() => router.push('/auth')} className={styles.backButton} title="Go back to authentication">
+      <button type="button" onClick={() => handleBack()} className={styles.backButton} title="Go back to authentication">
         <ArrowLeft className={styles.icon} />
       </button>
 

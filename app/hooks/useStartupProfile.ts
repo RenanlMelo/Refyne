@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export function useStartupProfile() {
   const router = useRouter();
@@ -74,16 +75,27 @@ export function useStartupProfile() {
 
       console.log("Submitting Startup Profile Payload:", payload);
 
-      const response = await fetch("http://localhost:8000/api/startups/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      const token = localStorage.getItem("token");
+
+      console.log("TOKEN: " + token)
+
+      const response = await axios.post("http://localhost:8000/api/startups/create", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       });
 
-      if (!response.ok) throw new Error("Error finishing registration.");
+      const data = response.data;
+      console.log("TESTE: " + data.message);
+
       router.push("/home");
     } catch (err: any) {
-      setErrorMSG(err.message || "Server connection error.");
+      if (err.response?.status === 409) {
+        setErrorMSG("This CNPJ is already registered.");
+      } else {
+        setErrorMSG(err.response?.data?.message || err.message || "Server connection error.");
+      }
     } finally {
       setLoading(false);
     }

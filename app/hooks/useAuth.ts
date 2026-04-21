@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import axios from "axios";
 
 type UserType = "candidato" | "startup" | null;
 type SocialProvider = "github" | "google" | "linkedin";
@@ -74,17 +75,18 @@ export function useAuth() {
     try {
       if (!isLogin) {
         // SIGN UP
-        const response = await fetch("http://localhost:8000/api/auth/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",
-          }),
+        const response = await axios.post("http://localhost:8000/api/auth/create", {
+          email: email,
+          password: password,
+          userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",
         });
 
-        if (!response.ok) throw new Error("Error creating user.");
+        const data = response.data;
+        // Save token immediately so the user stays authenticated
+        console.log(data)
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
 
         if (userType === "candidato") {
           router.push("/auth/candidate");
@@ -93,26 +95,37 @@ export function useAuth() {
         }
       } else {
         // LOGIN
-        const response = await fetch("http://localhost:8000/api/auth/login", {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",
-          })
+        const response = await axios.post("http://localhost:8000/api/auth/login", {
+          email: email,
+          password: password,
+          userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",
         });
 
-        if (!response.ok) throw new Error("Invalid email or password.");
+        const data = response.data;
 
-        const data = await response.json();
-        console.log(data);
-
-        router.push("/home");
+        // Save token and user info BEFORE navigating
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userType", data.userType);
+        localStorage.setItem("profileCompleted", data.profileCompleted);
+
+        if (data.profileCompleted === false) {
+          if (data.userType === "CANDIDATE") {
+            router.push("/auth/candidate");
+          } else {
+            router.push("/auth/startup");
+          }
+        } else {
+          router.push("/home");
+        }
       }
     } catch (err: any) {
-      setErrorMSG(err.message || "Server connection error.");
+      if (err.response?.status === 409) {
+        setErrorMSG("This E-mail is already registered.");
+      } else if (err.response?.status === 401 || err.response?.status === 400) {
+        setErrorMSG("Invalid email or password.");
+      } else {
+        setErrorMSG(err.response?.data?.message || err.message || "Server connection error.");
+      }
     } finally {
       setLoading(false);
     }
