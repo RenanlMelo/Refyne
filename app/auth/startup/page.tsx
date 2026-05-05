@@ -1,13 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useStartupProfile } from "../../hooks/useStartupProfile";
 import { ProfileHeader } from "../../components/forms/FormHeader";
 import { StartupForm } from "../../components/forms/StartupForm";
+import { useAuthContext } from "../../context/AuthContext";
 import styles from "./startup.module.scss";
 
 export default function StartupProfilePage() {
+  const router = useRouter();
   const { state, actions } = useStartupProfile();
+  const { user, loading } = useAuthContext();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (!user || user.userType !== "STARTUP") {
+      router.push("/auth");
+    } else {
+      setIsAuthorized(true);
+    }
+  }, [router, user, loading]);
+
+  if (!isAuthorized) {
+    return null;
+  }
 
   return (
     <div className={styles.profilePageWrapper}>

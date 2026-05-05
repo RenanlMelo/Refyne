@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { eraseCookie } from "../../utils/cookies";
 import styles from "./FormHeader.module.scss";
 
 interface ProfileHeaderProps {
@@ -11,10 +12,8 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ type = "candidate"
   const router = useRouter();
 
   const handleBack = () => {
+    eraseCookie("token");
     router.push('/auth');
-    localStorage.removeItem("token");
-    localStorage.removeItem("userType");
-    localStorage.removeItem("profileCompleted");
   }
 
   return (

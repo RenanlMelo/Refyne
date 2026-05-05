@@ -3,6 +3,7 @@ import { User, GitBranch, Briefcase, Globe, IdCard, AlignLeft, Link } from "luci
 import { InputField } from "./InputField";
 import { FileUpload } from "./FileUpload";
 import { SubmitButton } from "./SubmitButton";
+import { getCookie } from "../../utils/cookies";
 import styles from "./CandidateForm.module.scss";
 
 interface ProfileFormProps {
@@ -11,7 +12,7 @@ interface ProfileFormProps {
 }
 
 export const ProfileForm: React.FC<ProfileFormProps> = ({ state, actions }) => {
-  const token = localStorage.getItem("token");
+  const token = getCookie("token");
   console.log("TOKEN3: " + token)
   return (
     <form onSubmit={actions.handleSubmit}>

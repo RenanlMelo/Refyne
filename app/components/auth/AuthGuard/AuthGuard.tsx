@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useAuthContext } from "../../../context/AuthContext";
+import { getCookie } from "../../../utils/cookies";
 import styles from "./AuthGuard.module.scss";
 
 // Routes that don't require any authentication
@@ -13,43 +15,51 @@ const TOKEN_ONLY_ROUTES = ["/auth/candidate", "/auth/startup"];
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { user, loading } = useAuthContext();
   const [isReady, setIsReady] = useState(false);
-  const prevPathname = useRef(pathname);
 
   useEffect(() => {
-    // Reset on route change
-    if (prevPathname.current !== pathname) {
-      setIsReady(false);
-      prevPathname.current = pathname;
-    }
-
-    // Public routes — no checks needed
+    console.log("[AuthGuard.tsx] useEffect triggered. pathname:", pathname, "loading:", loading, "user:", user?.email);
+    // Public routes — always accessible, no check needed
     if (PUBLIC_ROUTES.includes(pathname)) {
+      console.log("[AuthGuard.tsx] Public route detected. Setting isReady = true");
       setIsReady(true);
       return;
     }
 
-    const token = localStorage.getItem("token");
+    // While AuthContext is still resolving, wait
+    if (loading) {
+      console.log("[AuthGuard.tsx] AuthContext is loading. Setting isReady = false");
+      setIsReady(false);
+      return;
+    }
 
-    // No token at all → go to login
+    const token = getCookie("token");
+
+    // No token → redirect to login
     if (!token) {
       router.push("/auth");
       return;
     }
 
-    // Token-only routes (profile registration pages) → just need a token
+    // Token present but user null means /me failed
+    if (!user) {
+      router.push("/auth");
+      return;
+    }
+
+    // Token-only routes (profile registration pages)
     if (TOKEN_ONLY_ROUTES.includes(pathname)) {
       setIsReady(true);
       return;
     }
 
-    // All other routes → require token + completed profile
-    const profileCompleted = localStorage.getItem("profileCompleted");
-    if (profileCompleted !== "true") {
-      const userType = localStorage.getItem("userType");
-      if (userType === "CANDIDATE") {
+    // Profile not yet completed → send to registration
+    if (user.profileCompleted === false) {
+      console.log("[AuthGuard.tsx] Profile not completed. Redirecting to registration.");
+      if (user.userType === "CANDIDATE") {
         router.push("/auth/candidate");
-      } else if (userType === "STARTUP") {
+      } else if (user.userType === "STARTUP") {
         router.push("/auth/startup");
       } else {
         router.push("/auth");
@@ -58,8 +68,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     }
 
     // All checks passed
+    console.log("[AuthGuard.tsx] All checks passed. Setting isReady = true");
     setIsReady(true);
-  }, [pathname, router]);
+  }, [pathname, router, user, loading]);
+
+  console.log("[AuthGuard.tsx] Rendering. isReady:", isReady);
 
   if (!isReady) {
     const logoLetters = "REFYNE".split("");

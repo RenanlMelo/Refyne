@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLatestJobs, Job } from "../../../hooks/useLatestJobs";
+import { useSearchSuggestions } from "../../../hooks/useSearchSuggestions";
+import { useAuthContext } from "../../../context/AuthContext";
 import {
   Briefcase,
   Bookmark,
@@ -136,6 +138,10 @@ const MOCK_NOTIFICATIONS = [
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Tab = "feed" | "saved" | "applications" | "profile" | "notifications";
 
+interface CandidateDashboardProps {
+  activeTab: string;
+}
+
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function JobCard({
@@ -148,7 +154,11 @@ function JobCard({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className={styles.jobCard}>
+    <div
+      className={styles.jobCard}
+      onClick={() => window.location.href = `/jobs/${job.publicId}`}
+      style={{ cursor: 'pointer' }}
+    >
       {/* Header */}
       <div className={styles.cardHeader}>
         <div className={styles.companyInfo}>
@@ -192,52 +202,81 @@ function JobCard({
       </div>
 
       {/* Meta info */}
-      <div className={styles.meta}>
-        <span className={styles.metaItem}>
-          <MapPin className={styles.icon} /> {job.location}
-        </span>
-        <span className={styles.metaItem}>
-          <DollarSign className={styles.icon} /> {job.salary}
-        </span>
-        {job.equity && (
-          <span className={styles.metaItem}>
-            <TrendingUp className={styles.icon} /> {job.equity}
-          </span>
-        )}
-        <span className={styles.metaItem}>
-          <Clock className={styles.icon} /> {job.posted}
-        </span>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem 1rem', marginTop: '0.75rem', marginBottom: '0.75rem', fontSize: '0.8rem', color: '#d4d4d8' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <Clock size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Postado:</strong> {job.posted}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <MapPin size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Local:</strong> {job.location}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <Briefcase size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Modelo:</strong> {job.tags.join(', ')}</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <DollarSign size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Salário:</strong> {job.salary}</span>
+        </div>
       </div>
 
-      {/* Tags */}
-      <div className={styles.tags}>
-        {job.tags.map((tag) => (
-          <span key={tag} className={styles.tag}>
-            {tag}
-          </span>
-        ))}
-      </div>
+      {/* Skills */}
+      {job.skills && job.skills.length > 0 && (
+        <div className={styles.tags} style={{ gap: '0.35rem', alignItems: 'center', marginBottom: "0.5rem" }}>
+          <span style={{ fontSize: '0.7rem', color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 'bold', marginRight: '0.25rem' }}>Skills:</span>
+          {job.skills.map((skill) => (
+            <span key={`skill-${skill}`} className={styles.tag} style={{ padding: '0.15rem 0.5rem', fontSize: '0.7rem', background: "rgba(204, 151, 255, 0.1)", color: "#CC97FF", borderColor: "rgba(204, 151, 255, 0.2)" }}>
+              {skill}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Description toggle */}
       {expanded && (
-        <p className={styles.description}>
-          {job.description}
-        </p>
+        <div className={styles.expandedContent} style={{ marginTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1.5rem" }}>
+          {job.equity && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <strong style={{ color: "#CC97FF", fontSize: "0.9rem", display: "block", marginBottom: "0.25rem" }}>Equity</strong>
+              <span style={{ fontSize: "0.9rem", color: "#fff" }}>{job.equity}</span>
+            </div>
+          )}
+          <div style={{ marginBottom: "1.5rem" }}>
+            <h4 style={{ color: "#CC97FF", marginBottom: "0.5rem", fontSize: "0.9rem" }}>Descrição</h4>
+            <p className={styles.description} style={{ marginTop: 0 }}>
+              {job.description}
+            </p>
+          </div>
+          {job.requirements && (
+            <div>
+              <h4 style={{ color: "#CC97FF", marginBottom: "0.5rem", fontSize: "0.9rem" }}>Requisitos</h4>
+              <p className={styles.description} style={{ marginTop: 0 }}>
+                {job.requirements}
+              </p>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Actions */}
-      <div className={styles.actions}>
+      <div className={styles.actions} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginTop: '0.25rem' }}>
         <button className={styles.applyBtn}>
           Candidatar-se
         </button>
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className={styles.moreBtn}
-        >
-          {expanded ? "Menos" : "Ver mais"}
-        </button>
         <button className={styles.externalBtn}>
           <ArrowUpRight className={styles.icon} />
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            window.location.href = `/jobs/${job.publicId}`;
+          }}
+          className={styles.moreBtn}
+          style={{ marginLeft: 'auto', background: "transparent", border: "none", color: "#CC97FF", cursor: "pointer", fontWeight: "600", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.25rem" }}
+        >
+          Ver detalhes
+          <ChevronRight size={16} />
         </button>
       </div>
     </div>
@@ -411,13 +450,14 @@ function NotificationsView() {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export function CandidateDashboard() {
+export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
   const router = useRouter();
+  const { logout } = useAuthContext();
 
-  const [activeTab, setActiveTab] = useState<Tab>("feed");
   const { jobs, loading, error, setJobs } = useLatestJobs();
   const [searchQuery, setSearchQuery] = useState("");
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const { suggestions, loading: suggestionsLoading } = useSearchSuggestions({ q: searchQuery });
 
   const unreadNotifications = MOCK_NOTIFICATIONS.filter((n) => !n.read).length;
 
@@ -455,277 +495,146 @@ export function CandidateDashboard() {
     ];
 
   return (
-    <div className={styles.homeContainer}>
-      {/* ── Top Navbar ── */}
-      <header className={styles.header}>
-        {/* Logo */}
-        <div className={`${styles.logo} ${sidebarCollapsed ? styles.collapsed : ""}`}>
-          {sidebarCollapsed ? "R" : "REFYNE"}
-        </div>
+    <div className={styles.body} style={{ paddingTop: 0 }}>
+      {/* ── Main Content ── */}
+      <main className={styles.main} style={{ marginLeft: 0 }}>
+        <div className={styles.contentWrapper}>
 
-        {/* Search */}
-        <div className={styles.searchWrapper}>
-          <Search className={styles.searchIcon} />
-          <input
-            type="text"
-            placeholder="Buscar vagas, empresas..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-
-        {/* Right actions */}
-        <div className={styles.actions}>
-          <button className={styles.iconBtn}>
-            <Bell className={styles.iconMd} />
-            {unreadNotifications > 0 && (
-              <span className={styles.badge} />
-            )}
-          </button>
-          <button className={styles.iconBtn}>
-            <Settings className={styles.iconMd} />
-          </button>
-          {/* Avatar */}
-          <div className={styles.userAvatar}>
-            {MOCK_USER.initials}
-          </div>
-        </div>
-      </header>
-
-      {/* ── Body ── */}
-      <div className={styles.body}>
-        {/* ── Sidebar ── */}
-        <aside
-          className={`${styles.sidebar} ${sidebarCollapsed ? styles.collapsed : ""}`}
-        >
-          {/* Collapse toggle */}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className={styles.collapseBtn}
-            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {sidebarCollapsed ? (
-              <ChevronRight className={styles.collapseBtnIcon} />
-            ) : (
-              <ChevronLeft className={styles.collapseBtnIcon} />
-            )}
-          </button>
-
-          {/* User mini profile */}
-          <div className={`${styles.userSection} ${sidebarCollapsed ? styles.collapsed : ""}`}>
-            <div className={styles.avatar}>
-              {MOCK_USER.initials}
-            </div>
-            {!sidebarCollapsed && (
-              <div className={styles.info}>
-                <p className={styles.name}>{MOCK_USER.name}</p>
-                <p className={styles.role}>{MOCK_USER.role}</p>
+          {/* Feed & Saved: header + filter bar */}
+          {(activeTab === "feed" || activeTab === "saved") && (
+            <>
+              <div className={styles.sectionHeader}>
+                <div>
+                  <h1>
+                    {activeTab === "feed" ? "Vagas Recomendadas" : "Vagas Salvas"}
+                  </h1>
+                  <p>
+                    {activeTab === "feed"
+                      ? `${filteredJobs.length} vagas com alto match para você`
+                      : `${filteredJobs.length} vaga${filteredJobs.length !== 1 ? "s" : ""} salva${filteredJobs.length !== 1 ? "s" : ""}`}
+                  </p>
+                </div>
+                <button className={styles.filterBtn}>
+                  <Filter className={styles.icon} /> Filtros
+                </button>
               </div>
-            )}
-          </div>
 
-          {/* Match score banner */}
-          {!sidebarCollapsed && (
-            <div className={styles.matchBanner}>
-              <div className={styles.bannerHeader}>
-                <span>Match Score</span>
-                <Star className={styles.starIcon} />
+              {/* Quick filter pills */}
+              {activeTab === "feed" && (
+                <div className={styles.filterPills}>
+                  {["Todos", "Remote", "Series A", "Series B", "Seed", "Full-time"].map((f) => (
+                    <button
+                      key={f}
+                      className={`${styles.pill} ${f === "Todos" ? styles.active : ""}`}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Job list */}
+              <div className={styles.jobList}>
+                {loading ? (
+                  <div className={styles.emptyState}>
+                    <p>Carregando vagas...</p>
+                  </div>
+                ) : error ? (
+                  <div className={styles.emptyState}>
+                    <p>{error}</p>
+                  </div>
+                ) : filteredJobs.length > 0 ? (
+                  filteredJobs.map((job) => (
+                    <JobCard key={job.id} job={job} onSaveToggle={handleSaveToggle} />
+                  ))
+                ) : (
+                  <div className={styles.emptyState}>
+                    <Bookmark className={styles.icon} />
+                    <p>
+                      {activeTab === "saved"
+                        ? "Você ainda não salvou nenhuma vaga."
+                        : "Nenhuma vaga encontrada."}
+                    </p>
+                  </div>
+                )}
               </div>
-              <div className={styles.score}>{MOCK_USER.matchScore}%</div>
-              <div className={styles.progressBar}>
-                <div
-                  className={styles.fill}
-                  style={{ width: `${MOCK_USER.matchScore}%` }}
-                />
-              </div>
-            </div>
+            </>
           )}
 
-          {/* Nav items */}
-          <nav className={styles.nav}>
-            {NAV_ITEMS.map(({ id, label, icon: Icon, badge }) => (
-              <button
-                key={id}
-                onClick={() => setActiveTab(id)}
-                className={`${styles.navItem} ${activeTab === id ? styles.active : ""} ${sidebarCollapsed ? styles.collapsed : ""}`}
-              >
-                <div className={styles.iconWrapper}>
-                  <Icon className={styles.navIcon} />
-                  {badge ? (
-                    <span className={styles.itemBadge}>
-                      {badge}
-                    </span>
-                  ) : null}
-                </div>
-                {!sidebarCollapsed && (
-                  <span className={styles.label}>{label}</span>
-                )}
-                {!sidebarCollapsed && activeTab === id && (
-                  <ChevronRight className={styles.chevron} />
-                )}
-              </button>
-            ))}
-          </nav>
+          {activeTab === "applications" && <ApplicationsView />}
+          {activeTab === "notifications" && <NotificationsView />}
+          {activeTab === "profile" && <ProfileView />}
+        </div>
+      </main>
 
-          {/* Collapse toggle + Logout */}
-          <div className={styles.bottomNav}>
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("userType");
-                localStorage.removeItem("profileCompleted");
-                router.push("/auth");
-              }}
-              className={`${styles.navItem} ${styles.logout} ${sidebarCollapsed ? styles.collapsed : ""}`}
-            >
-              <LogOut className={styles.navIcon} />
-              {!sidebarCollapsed && <span className={styles.label}>Sair</span>}
+      {/* ── Right Column (only on feed/saved) ── */}
+      {(activeTab === "feed" || activeTab === "saved") && (
+        <aside className={styles.asideRight}>
+          {/* Activity card */}
+          <div className={styles.widget}>
+            <h3>Sua Atividade</h3>
+            <div className={styles.statList}>
+              {[
+                { label: "Candidaturas", value: MOCK_USER.appliedCount, icon: Layers, variant: "primary" },
+                { label: "Vagas salvas", value: savedJobs.length, icon: Bookmark, variant: "emerald" },
+                { label: "Visualizações", value: MOCK_USER.profileViews, icon: Globe, variant: "blue" },
+              ].map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className={styles.statItem}>
+                    <div className={styles.labelGroup}>
+                      <Icon className={`${styles.icon} ${styles[stat.variant]}`} />
+                      <span>{stat.label}</span>
+                    </div>
+                    <span className={styles.value}>{stat.value}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Top companies */}
+          <div className={styles.widget}>
+            <h3>Empresas em Destaque</h3>
+            <div className={styles.companyList}>
+              {jobs.slice(0, 3).map((job) => (
+                <div key={job.id} className={styles.companyItem}>
+                  <div
+                    className={styles.logo}
+                    style={{ backgroundColor: job.logoBg, color: job.logoColor }}
+                  >
+                    {job.logo}
+                  </div>
+                  <div className={styles.info}>
+                    <p className={styles.name}>
+                      {job.company}
+                    </p>
+                    <p className={styles.stage}>{job.stage}</p>
+                  </div>
+                  <ChevronRight className={styles.chevron} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Skill tip */}
+          <div className={`${styles.widget} ${styles.skillTip}`} style={{
+            background: 'linear-gradient(135deg, rgba(204, 151, 255, 0.1), rgba(156, 72, 234, 0.05))',
+            borderColor: 'rgba(204, 151, 255, 0.15)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+              <Zap className="h-4 w-4" style={{ color: '#CC97FF' }} />
+              <span style={{ color: '#CC97FF', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dica Refyne</span>
+            </div>
+            <p style={{ color: '#d4d4d8', fontSize: '0.75rem', lineHeight: '1.5' }}>
+              Candidatos com perfil completo têm <strong style={{ color: '#fff' }}>3x mais chances</strong> de serem contactados pelas startups.
+            </p>
+            <button style={{ marginTop: '0.75rem', color: '#CC97FF', fontSize: '0.75rem', fontWeight: '600', border: 'none', background: 'none', cursor: 'pointer' }}>
+              Completar perfil →
             </button>
           </div>
         </aside>
-
-        {/* ── Main Content ── */}
-        <main
-          className={`${styles.main} ${sidebarCollapsed ? styles.collapsed : ""}`}
-        >
-          <div className={styles.contentWrapper}>
-
-            {/* Feed & Saved: header + filter bar */}
-            {(activeTab === "feed" || activeTab === "saved") && (
-              <>
-                <div className={styles.sectionHeader}>
-                  <div>
-                    <h1>
-                      {activeTab === "feed" ? "Vagas Recomendadas" : "Vagas Salvas"}
-                    </h1>
-                    <p>
-                      {activeTab === "feed"
-                        ? `${filteredJobs.length} vagas com alto match para você`
-                        : `${filteredJobs.length} vaga${filteredJobs.length !== 1 ? "s" : ""} salva${filteredJobs.length !== 1 ? "s" : ""}`}
-                    </p>
-                  </div>
-                  <button className={styles.filterBtn}>
-                    <Filter className={styles.icon} /> Filtros
-                  </button>
-                </div>
-
-                {/* Quick filter pills */}
-                {activeTab === "feed" && (
-                  <div className={styles.filterPills}>
-                    {["Todos", "Remote", "Series A", "Series B", "Seed", "Full-time"].map((f) => (
-                      <button
-                        key={f}
-                        className={`${styles.pill} ${f === "Todos" ? styles.active : ""}`}
-                      >
-                        {f}
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {/* Job list */}
-                <div className={styles.jobList}>
-                  {loading ? (
-                    <div className={styles.emptyState}>
-                      <p>Carregando vagas...</p>
-                    </div>
-                  ) : error ? (
-                    <div className={styles.emptyState}>
-                      <p>{error}</p>
-                    </div>
-                  ) : filteredJobs.length > 0 ? (
-                    filteredJobs.map((job) => (
-                      <JobCard key={job.id} job={job} onSaveToggle={handleSaveToggle} />
-                    ))
-                  ) : (
-                    <div className={styles.emptyState}>
-                      <Bookmark className={styles.icon} />
-                      <p>
-                        {activeTab === "saved"
-                          ? "Você ainda não salvou nenhuma vaga."
-                          : "Nenhuma vaga encontrada."}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-
-            {activeTab === "applications" && <ApplicationsView />}
-            {activeTab === "notifications" && <NotificationsView />}
-            {activeTab === "profile" && <ProfileView />}
-          </div>
-        </main>
-
-        {/* ── Right Column (only on feed/saved) ── */}
-        {(activeTab === "feed" || activeTab === "saved") && (
-          <aside className={styles.asideRight}>
-            {/* Activity card */}
-            <div className={styles.widget}>
-              <h3>Sua Atividade</h3>
-              <div className={styles.statList}>
-                {[
-                  { label: "Candidaturas", value: MOCK_USER.appliedCount, icon: Layers, variant: "primary" },
-                  { label: "Vagas salvas", value: savedJobs.length, icon: Bookmark, variant: "emerald" },
-                  { label: "Visualizações", value: MOCK_USER.profileViews, icon: Globe, variant: "blue" },
-                ].map((stat) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div key={stat.label} className={styles.statItem}>
-                      <div className={styles.labelGroup}>
-                        <Icon className={`${styles.icon} ${styles[stat.variant]}`} />
-                        <span>{stat.label}</span>
-                      </div>
-                      <span className={styles.value}>{stat.value}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Top companies */}
-            <div className={styles.widget}>
-              <h3>Empresas em Destaque</h3>
-              <div className={styles.companyList}>
-                {jobs.slice(0, 3).map((job) => (
-                  <div key={job.id} className={styles.companyItem}>
-                    <div
-                      className={styles.logo}
-                      style={{ backgroundColor: job.logoBg, color: job.logoColor }}
-                    >
-                      {job.logo}
-                    </div>
-                    <div className={styles.info}>
-                      <p className={styles.name}>
-                        {job.company}
-                      </p>
-                      <p className={styles.stage}>{job.stage}</p>
-                    </div>
-                    <ChevronRight className={styles.chevron} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Skill tip */}
-            <div className={`${styles.widget} ${styles.skillTip}`} style={{
-              background: 'linear-gradient(135deg, rgba(204, 151, 255, 0.1), rgba(156, 72, 234, 0.05))',
-              borderColor: 'rgba(204, 151, 255, 0.15)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                <Zap className="h-4 w-4" style={{ color: '#CC97FF' }} />
-                <span style={{ color: '#CC97FF', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dica Refyne</span>
-              </div>
-              <p style={{ color: '#d4d4d8', fontSize: '0.75rem', lineHeight: '1.5' }}>
-                Candidatos com perfil completo têm <strong style={{ color: '#fff' }}>3x mais chances</strong> de serem contactados pelas startups.
-              </p>
-              <button style={{ marginTop: '0.75rem', color: '#CC97FF', fontSize: '0.75rem', fontWeight: '600', border: 'none', background: 'none', cursor: 'pointer' }}>
-                Completar perfil →
-              </button>
-            </div>
-          </aside>
-        )}
-      </div>
+      )}
     </div>
   );
 }

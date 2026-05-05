@@ -17,6 +17,7 @@ export default function SimpleMDEditor({ value, onChange, placeholder }: SimpleM
       onChange={onChange}
       height={200}
       preview="edit"
+      data-color-mode="dark"
       textareaProps={{
         placeholder: placeholder,
       }}

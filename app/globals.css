@@ -24,3 +24,25 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ── @uiw/react-md-editor dark theme overrides ───────────────────────────────
+   These must live in globals.css because the editor imports its stylesheet
+   globally. CSS Module :global() cannot reliably win the specificity battle
+   against a globally-loaded stylesheet.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* The <textarea> handles keyboard input — must be transparent so the
+   pre/code layer on top is the only visible text. Caret stays white. */
+.w-md-editor .w-md-editor-text-input {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  caret-color: #ffffff !important;
+}
+
+/* The pre/code layer is what the user actually reads — force white text. */
+.w-md-editor .w-md-editor-text-pre,
+.w-md-editor .w-md-editor-text-pre > code,
+.w-md-editor .w-md-editor-text-pre > code * {
+  color: #ffffff !important;
+  background: transparent !important;
+}

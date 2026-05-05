@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getCookie } from "../utils/cookies";
 
 export interface Job {
   id: number;
+  publicId: string;
   title: string;
   company: string;
   stage: string;
@@ -20,6 +22,7 @@ export interface Job {
   saved: boolean;
   description: string;
   requirements: string;
+  skills: string[];
 }
 
 export function useLatestJobs() {
@@ -31,7 +34,7 @@ export function useLatestJobs() {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
       // Fallback assumption: GET /api/jobs/latest will fetch the last 5 jobs
       const response = await axios.get("http://localhost:8000/api/jobs", {
         headers: {
@@ -52,11 +55,15 @@ export function useLatestJobs() {
 
         const companyName = apiJob.startupName || "Company";
 
-        let salaryStr = "To be discussed";
-        if (apiJob.salaryMin && apiJob.salaryMax) {
-          salaryStr = `$${(apiJob.salaryMin / 1000).toFixed(0)}k – ${(apiJob.salaryMax / 1000).toFixed(0)}k`;
+        let salaryStr = "A combinar";
+        if (apiJob.salaryMin && apiJob.salaryMax && apiJob.salaryMin !== apiJob.salaryMax) {
+          salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k – ${(apiJob.salaryMax / 1000).toFixed(0)}k`;
+        } else if (apiJob.salaryMin && apiJob.salaryMin === apiJob.salaryMax) {
+          salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k (Exato)`;
         } else if (apiJob.salaryMin) {
-          salaryStr = `From $${(apiJob.salaryMin / 1000).toFixed(0)}k`;
+          salaryStr = `A partir de R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k`;
+        } else if (apiJob.exactSalary) {
+          salaryStr = `R$ ${(apiJob.exactSalary / 1000).toFixed(0)}k (Exato)`;
         }
 
         const formatEnum = (str?: string) => {
@@ -71,14 +78,21 @@ export function useLatestJobs() {
         const locationStr = [locationParts, workModel].filter(Boolean).join(" · ");
 
         let equityStr = "";
-        if (apiJob.equityMin !== undefined && apiJob.equityMax !== undefined && (apiJob.equityMin > 0 || apiJob.equityMax > 0)) {
+        if (apiJob.equityMin !== undefined && apiJob.equityMax !== undefined && apiJob.equityMin > 0 && apiJob.equityMin !== apiJob.equityMax) {
           equityStr = `${apiJob.equityMin}% – ${apiJob.equityMax}% equity`;
+        } else if (apiJob.equityMin !== undefined && apiJob.equityMin === apiJob.equityMax && apiJob.equityMin > 0) {
+          equityStr = `${apiJob.equityMin}% equity`;
         } else if (apiJob.equityMin !== undefined && apiJob.equityMin > 0) {
           equityStr = `${apiJob.equityMin}% equity`;
         }
 
+        const extractedSkills = Array.isArray(apiJob.skills) 
+          ? apiJob.skills.map((s: any) => typeof s === 'string' ? s : s.skill?.name || s.name || "Skill")
+          : [];
+
         return {
           id: apiJob.jobPostingId || Math.random(),
+          publicId: apiJob.publicId || "",
           title: apiJob.title || "Job",
           company: companyName,
           stage: "",
@@ -96,6 +110,7 @@ export function useLatestJobs() {
           saved: false,
           description: apiJob.description || "",
           requirements: apiJob.requirements || "",
+          skills: extractedSkills,
         };
       });
 

@@ -1,0 +1,447 @@
+@use "../styles/core" as *;
+
+/* ── Page wrapper ── */
+.pageContainer {
+  padding: 1.5rem 2rem 2rem;
+  min-height: calc(100vh - 4rem);
+  background-color: $zinc-950;
+  color: $white;
+}
+
+/* ── Back button ── */
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.625rem;
+  border-radius: 0.75rem;
+  background: rgba($white, 0.04);
+  border: 1px solid rgba($white, 0.06);
+  color: $zinc-400;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1.75rem;
+
+  &:hover {
+    background: rgba($white, 0.08);
+    color: $white;
+    border-color: rgba($white, 0.12);
+  }
+
+  .backIcon {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+/* ── Main two-column grid ── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+
+  @media (min-width: 1100px) {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
+/* ── Left column content area ── */
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* ── Right sidebar column ── */
+.sidebarCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+  @media (min-width: 1100px) {
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+/* ── Hero card (company + title + actions) ── */
+.heroCard {
+  background: rgba($zinc-900, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba($white, 0.07);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.companySection {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.companyLogo {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, $primary-light, $primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: $white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba($primary-light, 0.25);
+}
+
+.titleBlock {
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $white;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+  }
+
+  .companyName {
+    color: $primary-light;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+.heroActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+
+  .applyBtn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, $primary-light, $primary-dark);
+    color: $white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba($primary-light, 0.25);
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba($primary-light, 0.4);
+    }
+  }
+
+  .saveBtn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: rgba($white, 0.05);
+    border: 1px solid rgba($white, 0.08);
+    color: $zinc-400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba($white, 0.1);
+      color: $white;
+    }
+  }
+}
+
+/* ── Stats row ── */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  background: rgba($white, 0.03);
+  border: 1px solid rgba($white, 0.06);
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba($white, 0.05);
+  }
+
+  .statIcon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: rgba($primary-light, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      color: $primary-light;
+    }
+  }
+
+  .statInfo {
+    min-width: 0;
+
+    .statLabel {
+      font-size: 0.65rem;
+      color: $zinc-500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .statValue {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $zinc-100;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/* ── Content sections ── */
+.section {
+  background: rgba($zinc-900, 0.4);
+  border: 1px solid rgba($white, 0.06);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $white;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 1rem;
+      background: linear-gradient(to bottom, $primary-light, $primary-dark);
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+  }
+
+  .content {
+    color: $zinc-400;
+    line-height: 1.75;
+    font-size: 0.9375rem;
+    white-space: pre-wrap;
+  }
+}
+
+/* ── Right sidebar widgets ── */
+.widget {
+  background: rgba($zinc-900, 0.5);
+  border: 1px solid rgba($white, 0.06);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+
+  h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $zinc-400;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 1rem;
+  }
+}
+
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skillTag {
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  background: rgba($primary-light, 0.08);
+  border: 1px solid rgba($primary-light, 0.15);
+  color: $primary-light;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba($primary-light, 0.15);
+  }
+}
+
+.companyInfoList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.companyInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem;
+  border-radius: 0.625rem;
+  color: $zinc-300;
+  font-size: 0.8rem;
+  transition: background 0.15s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($white, 0.04);
+    color: $white;
+  }
+
+  .ciIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    background: rgba($white, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 0.8rem;
+      height: 0.8rem;
+      color: $zinc-400;
+    }
+  }
+
+  .ciLabel {
+    font-size: 0.65rem;
+    color: $zinc-500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ciValue {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: $zinc-200;
+  }
+}
+
+.tipWidget {
+  background: linear-gradient(135deg, rgba(204, 151, 255, 0.08), rgba(156, 72, 234, 0.04));
+  border: 1px solid rgba(204, 151, 255, 0.15);
+
+  .tipHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+
+    .tipIcon {
+      color: $primary-light;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: $primary-light;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: $zinc-400;
+    line-height: 1.6;
+
+    strong {
+      color: $white;
+    }
+  }
+}
+
+/* ── States ── */
+.loadingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4rem);
+  color: $zinc-500;
+  font-size: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+
+  .spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid rgba($primary-light, 0.2);
+    border-top-color: $primary-light;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+.errorWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4rem);
+  gap: 1rem;
+  text-align: center;
+
+  h1 { color: $white; font-size: 1.5rem; font-weight: 700; }
+  p { color: $zinc-500; }
+
+  .backBtn {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    background: rgba($white, 0.05);
+    border: 1px solid rgba($white, 0.08);
+    color: $white;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover { background: rgba($white, 0.1); }
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

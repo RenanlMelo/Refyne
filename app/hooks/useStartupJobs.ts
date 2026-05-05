@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Job } from "./useLatestJobs";
+import { getCookie } from "../utils/cookies";
 
 export function useStartupJobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -11,12 +12,13 @@ export function useStartupJobs() {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
       const response = await axios.get("http://localhost:8000/api/jobs/my-jobs", {
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
       });
+      console.log("API RESPONSE:", response.data);
 
       let rawJobs = [];
       const data = response.data;
@@ -28,12 +30,16 @@ export function useStartupJobs() {
 
       const mappedJobs: Job[] = rawJobs.map((apiJob: any) => {
         const companyName = apiJob.startupName || "Company";
-        
-        let salaryStr = "To be discussed";
-        if (apiJob.salaryMin && apiJob.salaryMax) {
-          salaryStr = `$${(apiJob.salaryMin / 1000).toFixed(0)}k – ${(apiJob.salaryMax / 1000).toFixed(0)}k`;
+
+        let salaryStr = "A combinar";
+        if (apiJob.salaryMin && apiJob.salaryMax && apiJob.salaryMin !== apiJob.salaryMax) {
+          salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k – ${(apiJob.salaryMax / 1000).toFixed(0)}k`;
+        } else if (apiJob.salaryMin && apiJob.salaryMin === apiJob.salaryMax) {
+          salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k (Exato)`;
         } else if (apiJob.salaryMin) {
-          salaryStr = `From $${(apiJob.salaryMin / 1000).toFixed(0)}k`;
+          salaryStr = `A partir de R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k`;
+        } else if (apiJob.exactSalary) {
+          salaryStr = `R$ ${(apiJob.exactSalary / 1000).toFixed(0)}k (Exato)`;
         }
 
         const formatEnum = (str?: string) => {
@@ -48,31 +54,39 @@ export function useStartupJobs() {
         const locationStr = [locationParts, workModel].filter(Boolean).join(" · ");
 
         let equityStr = "";
-        if (apiJob.equityMin !== undefined && apiJob.equityMax !== undefined && (apiJob.equityMin > 0 || apiJob.equityMax > 0)) {
+        if (apiJob.equityMin !== undefined && apiJob.equityMax !== undefined && apiJob.equityMin > 0 && apiJob.equityMin !== apiJob.equityMax) {
           equityStr = `${apiJob.equityMin}% – ${apiJob.equityMax}% equity`;
+        } else if (apiJob.equityMin !== undefined && apiJob.equityMin === apiJob.equityMax && apiJob.equityMin > 0) {
+          equityStr = `${apiJob.equityMin}% equity`;
         } else if (apiJob.equityMin !== undefined && apiJob.equityMin > 0) {
           equityStr = `${apiJob.equityMin}% equity`;
         }
 
+        const extractedSkills = Array.isArray(apiJob.skills)
+          ? apiJob.skills.map((s: any) => typeof s === 'string' ? s : s.skill?.name || s.name || "Skill")
+          : [];
+
         return {
           id: apiJob.jobPostingId || Math.random(),
+          publicId: apiJob.publicId || "",
           title: apiJob.title || "Job",
           company: companyName,
           stage: "",
           logo: companyName.charAt(0).toUpperCase() || "C",
-          logoColor: "#CC97FF", 
-          logoBg: "#1a1030", 
+          logoColor: "#CC97FF",
+          logoBg: "#1a1030",
           location: locationStr || "Remote",
           salary: salaryStr,
           type: employmentType || "Full-time",
           equity: equityStr,
           tags: [workModel, employmentType].filter(Boolean),
           posted: apiJob.createdAt ? new Date(apiJob.createdAt).toLocaleDateString() : "Recent",
-          match: 100, 
+          match: 100,
           hot: apiJob.jobStatus === "OPEN",
           saved: false,
           description: apiJob.description || "",
           requirements: apiJob.requirements || "",
+          skills: extractedSkills,
         };
       });
 

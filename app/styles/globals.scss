@@ -1,5 +1,33 @@
 @use "core" as *;
 
+:root {
+  --primary-light: #10e4f3;
+  --primary-dark: #19b5c0;
+  --primary-light-rgb: 16, 228, 243;
+  --primary-dark-rgb: 25, 181, 192;
+}
+
+[data-theme="purple"] {
+  --primary-light: #9333ea;
+  --primary-dark: #7e22ce;
+  --primary-light-rgb: 147, 51, 234;
+  --primary-dark-rgb: 126, 34, 206;
+}
+
+[data-theme="orange"] {
+  --primary-light: #ff5a1f;
+  --primary-dark: #d03801;
+  --primary-light-rgb: 255, 90, 31;
+  --primary-dark-rgb: 208, 56, 1;
+}
+
+[data-theme="green"] {
+  --primary-light: #22c55e;
+  --primary-dark: #16a34a;
+  --primary-light-rgb: 34, 197, 94;
+  --primary-dark-rgb: 22, 163, 74;
+}
+
 *,
 *::before,
 *::after {
@@ -54,7 +82,7 @@ select {
 
 // Global selection style
 ::selection {
-  background: rgba($purple-light, 0.3);
+  background: rgba($purple-light-rgb, 0.3);
   color: $white;
 }
 

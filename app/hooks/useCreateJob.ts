@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { getCookie } from "../utils/cookies";
 
 export interface CreateJobPayload {
   title: string;
   description: string;
   requirements: string;
+  skillIds: number[];
   employmentType: string;
   workModel: string;
   city: string;
@@ -25,7 +27,7 @@ export function useCreateJob() {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
 
       await axios.post("http://localhost:8000/api/jobs/create", payload, {
         headers: {

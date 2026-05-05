@@ -7,7 +7,7 @@
   overflow-x: hidden;
   
   &::selection {
-    background: rgba($purple-light, 0.3);
+    background: rgba($purple-light-rgb, 0.3);
   }
 }
 
@@ -124,7 +124,7 @@
     width: 40%;
     height: 40%;
     border-radius: 9999px;
-    background-color: rgba($purple-light, 0.1);
+    background-color: rgba($primary-light-rgb, 0.1);
     filter: blur(150px);
     mix-blend-mode: screen;
     pointer-events: none;
@@ -138,7 +138,7 @@
     width: 40%;
     height: 40%;
     border-radius: 9999px;
-    background-color: rgba($purple-dark, 0.2);
+    background-color: rgba($primary-dark-rgb, 0.2);
     filter: blur(150px);
     mix-blend-mode: screen;
     pointer-events: none;
@@ -238,7 +238,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        box-shadow: 0 0 30px rgba($purple-light, 0.3);
+        box-shadow: 0 0 30px rgba($primary-light-rgb, 0.3);
         transition: all 0.3s ease;
 
         svg {
@@ -353,7 +353,7 @@
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba($purple-light, 0.2);
+    border-color: rgba($purple-light-rgb, 0.2);
     
     .iconWrapper {
       transform: scale(1.1);
@@ -376,12 +376,12 @@
     }
 
     &.purple {
-      background-color: rgba($purple-light, 0.1);
+      background-color: rgba($primary-light-rgb, 0.1);
       color: $purple-light;
     }
     
     &.deepPurple {
-      background-color: rgba($purple-dark, 0.1);
+      background-color: rgba($primary-dark-rgb, 0.1);
       color: $purple-dark;
     }
   }
@@ -422,11 +422,11 @@
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba($purple-light, 0.2);
+    border-color: rgba($primary-light-rgb, 0.2);
   }
 
   &.highlighted {
-    border-color: rgba($purple-light, 0.2);
+    border-color: rgba($purple-light-rgb, 0.2);
     position: relative;
     overflow: hidden;
 
@@ -437,7 +437,7 @@
       right: 0;
       width: 6rem;
       height: 6rem;
-      background-color: rgba($purple-light, 0.1);
+      background-color: rgba($primary-light-rgb, 0.1);
       filter: blur(32px);
       border-radius: 9999px;
       transition: transform 0.5s ease;
@@ -487,7 +487,7 @@
 
   .glow {
     @include absolute-inset-0;
-    background: linear-gradient(to bottom, transparent, rgba($purple-dark, 0.05));
+    background: linear-gradient(to bottom, transparent, rgba($primary-dark-rgb, 0.05));
     opacity: 0.5;
   }
 
@@ -601,11 +601,11 @@
   padding: 2rem;
   border-radius: 1.875rem;
   background-color: rgba($zinc-900, 0.4);
-  border: 1px solid rgba($purple-light, 0.2);
+  border: 1px solid rgba($primary-light-rgb, 0.2);
   position: relative;
   overflow: hidden;
   @include backdrop-blur(4px);
-  box-shadow: 0 0 40px rgba($purple-light, 0.05);
+  box-shadow: 0 0 40px rgba($primary-light-rgb, 0.05);
 
   @include media-up('md') {
     padding: 2.5rem;
@@ -617,7 +617,7 @@
     right: -2.5rem;
     width: 10rem;
     height: 10rem;
-    background-color: rgba($purple-light, 0.1);
+    background-color: rgba($primary-light-rgb, 0.1);
     filter: blur(48px);
     border-radius: 9999px;
   }
@@ -635,7 +635,7 @@
     height: 3rem;
     width: 3rem;
     border-radius: 9999px;
-    background-color: rgba($purple-light, 0.1);
+    background-color: rgba($primary-light-rgb, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;

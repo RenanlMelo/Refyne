@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { getCookie } from "../utils/cookies";
+import { useAuthContext } from "../context/AuthContext";
 
 export function useStartupProfile() {
   const router = useRouter();
+  const { refreshUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [errorMSG, setErrorMSG] = useState("");
 
@@ -73,11 +76,7 @@ export function useStartupProfile() {
         cnpj
       };
 
-      console.log("Submitting Startup Profile Payload:", payload);
-
-      const token = localStorage.getItem("token");
-
-      console.log("TOKEN: " + token)
+      const token = getCookie("token");
 
       const response = await axios.post("http://localhost:8000/api/startups/create", payload, {
         headers: {
@@ -86,9 +85,8 @@ export function useStartupProfile() {
         },
       });
 
-      const data = response.data;
-      console.log("TESTE: " + data.message);
-
+      // Refresh user context so AuthGuard sees profileCompleted: true
+      await refreshUser();
       router.push("/home");
     } catch (err: any) {
       if (err.response?.status === 409) {

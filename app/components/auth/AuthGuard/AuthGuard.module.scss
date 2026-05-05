@@ -18,7 +18,7 @@
     height: 120%;
     background: radial-gradient(
       ellipse at 50% 50%,
-      rgba($primary-dark, 0.08) 0%,
+      rgba($primary-dark-rgb, 0.08) 0%,
       transparent 60%
     );
     animation: bgPulse 4s ease-in-out infinite;
@@ -51,9 +51,9 @@
   border-radius: 50%;
   background: radial-gradient(circle, $primary-light 0%, $primary-dark 70%, transparent 100%);
   box-shadow:
-    0 0 20px rgba($primary-light, 0.6),
-    0 0 60px rgba($primary-light, 0.2),
-    0 0 100px rgba($primary-dark, 0.15);
+    0 0 20px rgba($primary-light-rgb, 0.6),
+    0 0 60px rgba($primary-light-rgb, 0.2),
+    0 0 100px rgba($primary-dark-rgb, 0.15);
   animation: corePulse 2s ease-in-out infinite;
 }
 
@@ -64,7 +64,7 @@
   border-radius: 50%;
 
   &.ring1 {
-    border: 1px solid rgba($primary-light, 0.15);
+    border: 1px solid rgba($primary-light-rgb, 0.15);
     animation: orbitSpin 3s linear infinite;
 
     &::after {
@@ -76,13 +76,13 @@
       height: 6px;
       border-radius: 50%;
       background: $primary-light;
-      box-shadow: 0 0 10px rgba($primary-light, 0.8), 0 0 20px rgba($primary-light, 0.4);
+      box-shadow: 0 0 10px rgba($primary-light-rgb, 0.8), 0 0 20px rgba($primary-light-rgb, 0.4);
     }
   }
 
   &.ring2 {
     inset: -0.75rem;
-    border: 1px solid rgba($primary-dark, 0.1);
+    border: 1px solid rgba($primary-dark-rgb, 0.1);
     animation: orbitSpin 5s linear infinite reverse;
 
     &::after {
@@ -94,13 +94,13 @@
       height: 4px;
       border-radius: 50%;
       background: $primary-dark;
-      box-shadow: 0 0 8px rgba($primary-dark, 0.8);
+      box-shadow: 0 0 8px rgba($primary-dark-rgb, 0.8);
     }
   }
 
   &.ring3 {
     inset: -1.5rem;
-    border: 1px dashed rgba($primary-light, 0.06);
+    border: 1px solid rgba($primary-light-rgb, 0.06);
     animation: orbitSpin 8s linear infinite;
 
     &::after {
@@ -111,8 +111,8 @@
       width: 3px;
       height: 3px;
       border-radius: 50%;
-      background: rgba($primary-light, 0.5);
-      box-shadow: 0 0 6px rgba($primary-light, 0.4);
+      background: rgba($primary-light-rgb, 0.5);
+      box-shadow: 0 0 6px rgba($primary-light-rgb, 0.4);
     }
   }
 }
@@ -123,8 +123,8 @@
   inset: -0.25rem;
   border-radius: 50%;
   border: 2px solid transparent;
-  border-top-color: rgba($primary-light, 0.6);
-  border-right-color: rgba($primary-light, 0.2);
+  border-top-color: rgba($primary-light-rgb, 0.6);
+  border-right-color: rgba($primary-light-rgb, 0.2);
   animation: orbitSpin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   filter: blur(0.5px);
 }
@@ -174,7 +174,7 @@
   width: 2px;
   height: 2px;
   border-radius: 50%;
-  background: rgba($primary-light, 0.4);
+  background: rgba($primary-light-rgb, 0.4);
   animation: particleFloat linear infinite;
 
   &:nth-child(1) {
@@ -184,7 +184,7 @@
     animation-delay: 0s;
     width: 3px;
     height: 3px;
-    background: rgba($primary-light, 0.3);
+    background: rgba($primary-light-rgb, 0.3);
   }
   &:nth-child(2) {
     left: 45%;
@@ -199,7 +199,7 @@
     animation-delay: 0.5s;
     width: 3px;
     height: 3px;
-    background: rgba($primary-dark, 0.5);
+    background: rgba($primary-dark-rgb, 0.5);
   }
   &:nth-child(4) {
     left: 25%;
@@ -214,7 +214,7 @@
     animation-delay: 0.3s;
     width: 2.5px;
     height: 2.5px;
-    background: rgba($primary-light, 0.25);
+    background: rgba($primary-light-rgb, 0.25);
   }
   &:nth-child(6) {
     left: 55%;
@@ -249,9 +249,9 @@
     90deg,
     transparent 0%,
     transparent 40%,
-    rgba($primary-light, 0.15) 48%,
-    rgba($primary-light, 0.4) 50%,
-    rgba($primary-light, 0.15) 52%,
+    rgba($primary-light-rgb, 0.15) 48%,
+    rgba($primary-light-rgb, 0.4) 50%,
+    rgba($primary-light-rgb, 0.15) 52%,
     transparent 60%,
     transparent 100%
   );
@@ -269,16 +269,16 @@
   0%, 100% {
     transform: scale(1);
     box-shadow:
-      0 0 20px rgba($primary-light, 0.6),
-      0 0 60px rgba($primary-light, 0.2),
-      0 0 100px rgba($primary-dark, 0.15);
+      0 0 20px rgba($primary-light-rgb, 0.6),
+      0 0 60px rgba($primary-light-rgb, 0.2),
+      0 0 100px rgba($primary-dark-rgb, 0.15);
   }
   50% {
     transform: scale(1.15);
     box-shadow:
-      0 0 30px rgba($primary-light, 0.8),
-      0 0 80px rgba($primary-light, 0.3),
-      0 0 120px rgba($primary-dark, 0.2);
+      0 0 30px rgba($primary-light-rgb, 0.8),
+      0 0 80px rgba($primary-light-rgb, 0.3),
+      0 0 120px rgba($primary-dark-rgb, 0.2);
   }
 }
 

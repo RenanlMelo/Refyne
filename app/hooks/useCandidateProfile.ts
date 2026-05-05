@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { getCookie } from "../utils/cookies";
+import { useAuthContext } from "../context/AuthContext";
 
 export function useCandidateProfile() {
   const router = useRouter();
+  const { refreshUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [errorMSG, setErrorMSG] = useState("");
 
@@ -74,7 +77,7 @@ export function useCandidateProfile() {
 
       console.log("Submitting Profile Payload:", payload);
 
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
 
       const response = await axios.post("http://localhost:8000/api/candidates/create", payload, {
         headers: {
@@ -83,6 +86,8 @@ export function useCandidateProfile() {
         },
       });
 
+      // Refresh user context so AuthGuard sees profileCompleted: true
+      await refreshUser();
       router.push("/home");
     } catch (err: any) {
       if (err.response?.status === 409) {

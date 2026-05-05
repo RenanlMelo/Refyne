@@ -1,0 +1,103 @@
+@use "../../styles/core" as *;
+
+.themePickerContainer {
+  position: relative;
+  z-index: 1000;
+}
+
+.trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba($zinc-800, 0.8);
+  border: 1px solid rgba($primary-light, 0.2);
+  color: $foreground;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background: $zinc-800;
+    border-color: $primary-light;
+    transform: scale(1.05);
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background: $zinc-900;
+  border: 1px solid $zinc-800;
+  border-radius: 12px;
+  padding: 12px;
+  width: 180px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  @include animate-in(zoom-in, 0.2s);
+  @include backdrop-blur(12px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    width: 12px;
+    height: 12px;
+    background: $zinc-900;
+    border-top: 1px solid $zinc-800;
+    border-left: 1px solid $zinc-800;
+    transform: rotate(45deg);
+  }
+}
+
+.header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $zinc-400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  width: 100%;
+  text-align: left;
+  transition: all 0.2s ease;
+  color: $zinc-300;
+  font-size: 0.875rem;
+
+  &:hover {
+    background: rgba($white, 0.05);
+    color: $white;
+  }
+
+  &.active {
+    background: rgba($primary-light, 0.1);
+    color: $primary-light;
+  }
+}
+
+.colorPreview {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

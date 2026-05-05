@@ -5,6 +5,7 @@ $background: #0a0a0a;
 $foreground: #ededed;
 $white: #ffffff;
 $black: #000000;
+$zinc-100: #f1f1f1;
 $zinc-200: #e4e4e7;
 $zinc-300: #d4d4d8;
 $zinc-400: #a1a1aa;
@@ -16,11 +17,17 @@ $zinc-900: #18181b;
 $zinc-950: #0a0a0a;
 
 // Brand Colors
-$purple-light: #CC97FF;
-$purple-dark: #9C48EA;
-$primary-light: $purple-light;
-$primary-dark: $purple-dark;
-$accent-gradient: linear-gradient(to bottom right, $purple-light, $purple-dark);
+$primary-light: var(--primary-light);
+$primary-dark: var(--primary-dark);
+$primary-light-rgb: var(--primary-light-rgb);
+$primary-dark-rgb: var(--primary-dark-rgb);
+
+$purple-light: $primary-light;
+$purple-dark: $primary-dark;
+$purple-light-rgb: $primary-light-rgb;
+$purple-dark-rgb: $primary-dark-rgb;
+
+$accent-gradient: linear-gradient(to bottom right, $primary-light, $primary-dark);
 
 // Spacing & Sizes
 $container-max-width: 80rem;

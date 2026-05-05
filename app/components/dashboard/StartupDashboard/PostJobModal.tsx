@@ -8,8 +8,10 @@ const SimpleMDEditor = dynamic(
 );
 import styles from "./PostJobModal.module.scss";
 import { useCreateJob } from "../../../hooks/useCreateJob";
+import { SkillSelect } from "../../SkillSelect/SkillSelect";
+import { Skill } from "../../SkillSelect/useSkillSearch";
 
-export function PostJobModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
+export function PostJobModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void | Promise<void> }) {
   const { createJob, loading, error } = useCreateJob();
 
   const [formData, setFormData] = useState({
@@ -27,8 +29,20 @@ export function PostJobModal({ onClose, onSuccess }: { onClose: () => void; onSu
     equityMax: "",
   });
 
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectSkill = (skill: Skill) => {
+    if (!selectedSkills.find((s) => s.id === skill.id)) {
+      setSelectedSkills((prev) => [...prev, skill]);
+    }
+  };
+
+  const handleRemoveSkill = (id: number) => {
+    setSelectedSkills((prev) => prev.filter((s) => s.id !== id));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,11 +61,12 @@ export function PostJobModal({ onClose, onSuccess }: { onClose: () => void; onSu
       salaryMax: Number(formData.salaryMax) || 0,
       equityMin: Number(formData.equityMin) || 0,
       equityMax: Number(formData.equityMax) || 0,
+      skillIds: selectedSkills.map((s) => s.id),
     };
 
     const success = await createJob(payload);
     if (success) {
-      onSuccess();
+      await onSuccess();
     }
   };
 
@@ -140,24 +155,29 @@ export function PostJobModal({ onClose, onSuccess }: { onClose: () => void; onSu
 
           <div className={styles.formGroup}>
             <label>Description <span style={{ color: "#ef4444" }}>*</span></label>
-            <div data-color-mode="dark">
-              <SimpleMDEditor
-                value={formData.description}
-                onChange={(val) => setFormData({ ...formData, description: val || "" })}
-                placeholder="Describe the role, responsibilities, and impact..."
-              />
-            </div>
+            <SimpleMDEditor
+              value={formData.description}
+              onChange={(val) => setFormData({ ...formData, description: val || "" })}
+              placeholder="Describe the role, responsibilities, and impact..."
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Skills (Required tags)</label>
+            <SkillSelect
+              selectedSkills={selectedSkills}
+              onSelectSkill={handleSelectSkill}
+              onRemoveSkill={handleRemoveSkill}
+            />
           </div>
 
           <div className={styles.formGroup}>
             <label>Requirements</label>
-            <div data-color-mode="dark">
-              <SimpleMDEditor
-                value={formData.requirements}
-                onChange={(val) => setFormData({ ...formData, requirements: val || "" })}
-                placeholder="List the technical skills, experience, and qualifications..."
-              />
-            </div>
+            <SimpleMDEditor
+              value={formData.requirements}
+              onChange={(val) => setFormData({ ...formData, requirements: val || "" })}
+              placeholder="List the technical skills, experience, and qualifications..."
+            />
           </div>
 
           <div className={styles.footer}>

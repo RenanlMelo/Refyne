@@ -1,13 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useCandidateProfile } from "../../hooks/useCandidateProfile";
 import { ProfileHeader } from "../../components/forms/FormHeader";
 import { ProfileForm } from "../../components/forms/CandidateForm";
+import { useAuthContext } from "../../context/AuthContext";
 import styles from "./candidate.module.scss";
 
 export default function CandidateProfilePage() {
+  const router = useRouter();
   const { state, actions } = useCandidateProfile();
+  const { user, loading } = useAuthContext();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    console.log("[auth/candidate/page.tsx] useEffect triggered. loading:", loading, "user:", user?.email);
+    if (loading) return;
+
+    if (!user || user.userType !== "CANDIDATE") {
+      console.log("[auth/candidate/page.tsx] user not found or not CANDIDATE. redirecting to /auth");
+      router.push("/auth");
+    } else {
+      console.log("[auth/candidate/page.tsx] user authorized. Setting isAuthorized = true");
+      setIsAuthorized(true);
+    }
+  }, [router, user, loading]);
+
+  console.log("[auth/candidate/page.tsx] Rendering. isAuthorized:", isAuthorized, "loading:", loading);
+
+  if (!isAuthorized) {
+    return null;
+  }
 
   return (
     <div className={styles.profilePageWrapper}>

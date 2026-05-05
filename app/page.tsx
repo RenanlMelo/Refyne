@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Star, Building, ShieldCheck, Target, Zap, LayoutDashboard, Filter, CheckCircle, Flame } from "lucide-react";
 import styles from "./page.module.scss";
+import ThemePicker from "./components/ThemePicker/ThemePicker";
 
 export default function Home() {
   return (
@@ -18,9 +19,12 @@ export default function Home() {
             <a href="#pilares">Pillars</a>
             <a href="#funcionalidades">Platform</a>
           </div>
-          <Link href="/auth" className={styles.authButton}>
-            Access Platform
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <ThemePicker />
+            <Link href="/auth" className={styles.authButton}>
+              Access Platform
+            </Link>
+          </div>
         </div>
       </nav>
 

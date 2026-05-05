@@ -15,7 +15,7 @@
 
 .modalContent {
   background: $zinc-900;
-  border: 1px solid rgba($purple-light, 0.1);
+  border: 1px solid rgba($purple-light-rgb, 0.1);
   border-radius: 1rem;
   width: 100%;
   max-width: 48rem;
@@ -105,7 +105,7 @@
 
     &:focus {
       border-color: $purple-light;
-      box-shadow: 0 0 0 2px rgba($purple-light, 0.1);
+      box-shadow: 0 0 0 2px rgba($purple-light-rgb, 0.1);
     }
 
     &::placeholder {
@@ -118,26 +118,25 @@
     min-height: 100px;
   }
 
-  // Markdown editor global overrides
+  // Markdown editor — overrides to match our design system
   :global(.w-md-editor) {
     background-color: $zinc-800 !important;
     border: 1px solid $zinc-700 !important;
     border-radius: 0.5rem !important;
     box-shadow: none !important;
-    color: $white !important;
 
-    :global(.w-md-editor-text-pre > code),
-    :global(.w-md-editor-text-input) {
-      color: $white !important;
-      font-size: 0.875rem !important;
+    &:focus-within {
+      border-color: $purple-light !important;
+      box-shadow: 0 0 0 2px rgba($purple-light-rgb, 0.1) !important;
     }
 
+    // Toolbar styling
     :global(.w-md-editor-toolbar) {
-      background-color: transparent !important;
+      background-color: $zinc-800 !important;
       border-bottom: 1px solid $zinc-700 !important;
       border-radius: 0.5rem 0.5rem 0 0 !important;
 
-      li > button {
+      li>button {
         color: $zinc-300 !important;
 
         &:hover {
@@ -145,6 +144,28 @@
           background-color: $zinc-700 !important;
         }
       }
+    }
+
+    // Text area background
+    :global(.w-md-editor-text-container),
+    :global(.w-md-editor-text) {
+      background-color: $zinc-800 !important;
+    }
+
+    // The <textarea> handles input — must be transparent so the pre/code layer
+    // (rendered on top) shows without doubling. Caret stays visible.
+    :global(.w-md-editor-text-input) {
+      color: $zinc-300 !important;
+      -webkit-text-fill-color: $zinc-300 !important;
+      caret-color: $white !important;
+    }
+
+    // The pre/code layer IS what the user visually reads — force white text here
+    :global(.w-md-editor-text-pre),
+    :global(.w-md-editor-text-pre > code),
+    :global(.w-md-editor-text-pre > code *) {
+      color: $white !important;
+      background: transparent !important;
     }
   }
 }
@@ -188,9 +209,9 @@
   justify-content: center;
 
   &:hover:not(:disabled) {
-    background: lighten($purple-dark, 5%);
+    background: color-mix(in srgb, $purple-dark, white 5%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($purple-dark, 0.4);
+    box-shadow: 0 4px 12px rgba($purple-dark-rgb, 0.4);
   }
 
   &:disabled {
