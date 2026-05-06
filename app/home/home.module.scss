@@ -964,14 +964,14 @@
 
     .banner {
       height: 6rem;
-      background: linear-gradient(135deg, rgba($primary-light, 0.2), rgba($primary-dark, 0.3));
+      background: linear-gradient(135deg, rgba($primary-light-rgb, 0.2), rgba($primary-dark-rgb, 0.3));
       position: relative;
 
       &::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(to right, rgba($primary-light, 0.1), transparent);
+        background: linear-gradient(to right, rgba($primary-light-rgb, 0.1), transparent);
       }
     }
 
@@ -1055,7 +1055,7 @@
 
           &.primary {
             background-color: rgba($primary-light-rgb, 0.1);
-            border-color: rgba($primary-light, 0.2);
+            border-color: rgba($primary-light-rgb, 0.2);
 
             .val {
               color: $primary-light;

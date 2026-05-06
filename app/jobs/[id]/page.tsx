@@ -64,7 +64,7 @@ export default function JobDetailsPage() {
       <div className={styles.pageContainer}>
 
         {/* ── Back button ── */}
-        <button onClick={() => router.back()} className={styles.backButton}>
+        <button onClick={() => router.push("/home")} className={styles.backButton}>
           <ChevronLeft className={styles.backIcon} />
           Voltar para a busca
         </button>

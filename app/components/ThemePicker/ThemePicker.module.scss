@@ -10,7 +10,7 @@
   height: 40px;
   border-radius: 50%;
   background: rgba($zinc-800, 0.8);
-  border: 1px solid rgba($primary-light, 0.2);
+  border: 1px solid rgba($primary-light-rgb, 0.2);
   color: $foreground;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@
   }
 
   &.active {
-    background: rgba($primary-light, 0.1);
+    background: rgba($primary-light-rgb, 0.1);
     color: $primary-light;
   }
 }

@@ -27,7 +27,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba($purple-light, 0.5), transparent);
+  background: linear-gradient(to right, transparent, rgba($primary-light-rgb, 0.5), transparent);
   opacity: 0.5;
 }
 
@@ -68,7 +68,7 @@
   display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  background-color: rgba($purple-light, 0.1);
+  background-color: rgba($primary-light-rgb, 0.1);
   color: $purple-light;
   font-size: 0.75rem;
   font-weight: 500;
@@ -123,8 +123,8 @@
 
     &:focus {
       outline: none;
-      border-color: rgba($purple-light, 0.5);
-      box-shadow: 0 0 0 2px rgba($purple-light, 0.2);
+      border-color: rgba($primary-light-rgb, 0.5);
+      box-shadow: 0 0 0 2px rgba($primary-light-rgb, 0.2);
     }
 
     &.error {
@@ -201,7 +201,7 @@
 
   &:hover {
     transform: scale(1.01);
-    box-shadow: 0 0 20px rgba($purple-light, 0.4);
+    box-shadow: 0 0 20px rgba($primary-light-rgb, 0.4);
   }
 
   &:active {

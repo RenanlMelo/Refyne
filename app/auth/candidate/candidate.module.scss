@@ -18,7 +18,7 @@
   width: 50%;
   height: 50%;
   border-radius: 9999px;
-  background: rgba($purple-light, 0.05);
+  background: rgba($primary-light-rgb, 0.05);
   filter: blur(120px);
   mix-blend-mode: screen;
   pointer-events: none;
@@ -31,7 +31,7 @@
   width: 50%;
   height: 50%;
   border-radius: 9999px;
-  background: rgba($purple-dark, 0.1);
+  background: rgba($primary-dark-rgb, 0.1);
   filter: blur(120px);
   mix-blend-mode: screen;
   pointer-events: none;
@@ -65,7 +65,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba($purple-light, 0.5), transparent);
+  background: linear-gradient(to right, transparent, rgba($primary-light-rgb, 0.5), transparent);
   opacity: 0.5;
 }
 
