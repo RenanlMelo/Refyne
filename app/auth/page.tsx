@@ -8,6 +8,9 @@ import styles from "./auth.module.scss";
 
 export default function LoginPage() {
   const { state, actions } = useAuth();
+  
+  if (state.isInitializing) return null;
+
 
   return (
     <div className={styles.authContainer}>

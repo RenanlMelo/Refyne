@@ -5,7 +5,22 @@
   background-color: $background;
   color: $white;
   overflow-x: hidden;
-  
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba($white, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba($white, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
   &::selection {
     background: rgba($purple-light-rgb, 0.3);
   }
@@ -37,9 +52,16 @@
     gap: 0.5rem;
     font-size: 1.5rem;
     font-weight: 900;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     color: $white;
     text-transform: uppercase;
+    text-shadow: 0 0 20px rgba($white, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      text-shadow: 0 0 30px rgba($primary-light-rgb, 0.5);
+      letter-spacing: 0.3em;
+    }
   }
 
   .navLinks {
@@ -60,19 +82,29 @@
   }
 
   .authButton {
-    padding: 0.625rem 1.25rem;
+    padding: 0.625rem 1.5rem;
     border-radius: 9999px;
-    background-color: rgba($white, 0.05);
-    border: 1px solid rgba($white, 0.1);
+    background: rgba(var(--primary-dark-rgb), 0.1);
+    border: 1px solid var(--primary-dark);
     color: $white;
     font-size: 0.875rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--primary-dark-rgb), 0.2);
 
     &:hover {
-      background-color: rgba($white, 0.1);
+      background: var(--primary-dark);
+      box-shadow: 0 0 25px rgba(var(--primary-dark-rgb), 0.4);
+    }
+
+    &:active {
+      opacity: 0.8;
     }
   }
+
+
 }
 
 /* Hero Section */
@@ -119,30 +151,44 @@
 
   .ambientLightTop {
     position: absolute;
-    top: 25%;
-    left: 0;
-    width: 40%;
-    height: 40%;
+    top: 10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
     border-radius: 9999px;
-    background-color: rgba($primary-light-rgb, 0.1);
-    filter: blur(150px);
+    background: radial-gradient(circle, rgba($primary-light-rgb, 0.15) 0%, transparent 70%);
+    filter: blur(120px);
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 0;
+    animation: pulse 8s infinite alternate ease-in-out;
   }
 
   .ambientLightBottom {
     position: absolute;
-    bottom: 0;
-    right: 25%;
-    width: 40%;
-    height: 40%;
+    bottom: -10%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
     border-radius: 9999px;
-    background-color: rgba($primary-dark-rgb, 0.2);
-    filter: blur(150px);
+    background: radial-gradient(circle, rgba($primary-dark-rgb, 0.2) 0%, transparent 70%);
+    filter: blur(120px);
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 0;
+    animation: pulse 10s infinite alternate-reverse ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.4;
+      transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+      opacity: 0.8;
+      transform: scale(1.1) translate(2%, 2%);
+    }
   }
 
   .heroContent {
@@ -154,7 +200,7 @@
     width: 100%;
 
     .textContent {
-      max-width: 48rem;
+      max-width: 54rem;
     }
 
     .heroBadge {
@@ -179,23 +225,24 @@
     }
 
     .heroTitle {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       color: $white;
-      line-height: 1.1;
+      line-height: 1;
       margin-bottom: 2rem;
       @include animate-in(slide-in-bottom, 1s, 0.15s);
 
       @include media-up('md') {
-        font-size: 4.5rem;
+        font-size: 5.5rem;
       }
 
       .gradientText {
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;
-        background-image: linear-gradient(to right, $purple-light, $purple-dark);
+        background-image: linear-gradient(135deg, $primary-light, $primary-dark);
+        filter: drop-shadow(0 0 20px rgba($primary-light-rgb, 0.3));
       }
     }
 
@@ -250,9 +297,12 @@
           width: auto;
         }
 
+        border: 1px solid transparent;
+
         &:hover {
-          transform: scale(1.05);
+          filter: brightness(0.8);
         }
+
       }
 
       .secondaryBtn {
@@ -275,6 +325,57 @@
 
         &:hover {
           background-color: rgba($white, 0.1);
+        }
+      }
+    }
+
+    .trustedBy {
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba($white, 0.05);
+      @include animate-in(fade-in, 1.5s, 0.8s);
+
+      p {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: $zinc-500;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+      }
+
+      .logoGrid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+
+        @include media-up('md') {
+          justify-content: flex-start;
+          gap: 4rem;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .trustedLogo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 800;
+        font-size: 1.125rem;
+        letter-spacing: 0.05em;
+        color: $white;
+        white-space: nowrap;
+
+        span {
+          color: $primary-light;
+          font-size: 1.25rem;
         }
       }
     }
@@ -321,7 +422,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    
+
     @include media-up('md') {
       font-size: 2.25rem;
     }
@@ -346,17 +447,23 @@
 }
 
 .pillarCard {
-  padding: 2rem;
-  border-radius: 1.5rem;
-  background-color: $background;
-  border: 1px solid rgba($white, 0.05);
-  transition: all 0.3s ease;
+  padding: 2.5rem;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, rgba($white, 0.03) 0%, rgba($white, 0.01) 100%);
+  border: 1px solid rgba($white, 0.08);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
 
   &:hover {
-    border-color: rgba($purple-light-rgb, 0.2);
-    
+    border-color: rgba($primary-light-rgb, 0.3);
+    background: linear-gradient(135deg, rgba($white, 0.05) 0%, rgba($white, 0.02) 100%);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
     .iconWrapper {
-      transform: scale(1.1);
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 0 20px rgba($primary-light-rgb, 0.2);
     }
   }
 
@@ -379,7 +486,7 @@
       background-color: rgba($primary-light-rgb, 0.1);
       color: $purple-light;
     }
-    
+
     &.deepPurple {
       background-color: rgba($primary-dark-rgb, 0.1);
       color: $purple-dark;
@@ -415,14 +522,17 @@
 }
 
 .featureCard {
-  padding: 1.5rem;
-  border-radius: 1.5rem;
-  border: 1px solid rgba($white, 0.05);
-  background: linear-gradient(to bottom right, #141414, #000000);
-  transition: all 0.3s ease;
+  padding: 2rem;
+  border-radius: 2rem;
+  border: 1px solid rgba($white, 0.06);
+  background: rgba($white, 0.02);
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
 
   &:hover {
-    border-color: rgba($primary-light-rgb, 0.2);
+    border-color: rgba($primary-light-rgb, 0.4);
+    background: rgba($white, 0.04);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
   }
 
   &.highlighted {
@@ -455,8 +565,13 @@
     position: relative;
     z-index: 10;
 
-    &.purple { color: $purple-light; }
-    &.deepPurple { color: $purple-dark; }
+    &.purple {
+      color: $purple-light;
+    }
+
+    &.deepPurple {
+      color: $purple-dark;
+    }
   }
 
   .cardTitle {

@@ -30,15 +30,7 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className={styles.heroSection}>
-        <div className={styles.heroBackground}>
-          <Image
-            src="/hero_bg.png"
-            alt="Refyne Abstract Background"
-            fill
-            priority
-            className={styles.bgImage}
-          />
-        </div>
+
 
         {/* Ambient Lights */}
         <div className={styles.ambientLightTop} />
@@ -65,6 +57,18 @@ export default function Home() {
               <a href="#sobre" className={styles.secondaryBtn}>
                 Discover how it works
               </a>
+            </div>
+          </div>
+
+          {/* Trusted By Logos */}
+          <div className={styles.trustedBy}>
+            <p>TRUSTED BY INNOVATIVE STARTUPS</p>
+            <div className={styles.logoGrid}>
+              <div className={styles.trustedLogo}><span>▲</span> NEXUS</div>
+              <div className={styles.trustedLogo}><span>◆</span> QUANTUM</div>
+              <div className={styles.trustedLogo}><span>●</span> VELOCITY</div>
+              <div className={styles.trustedLogo}><span>■</span> SYNAPSE</div>
+              <div className={styles.trustedLogo}><span>★</span> LUMINA</div>
             </div>
           </div>
         </div>

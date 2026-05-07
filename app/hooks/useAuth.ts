@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import axios from "axios";
-import { setCookie } from "../utils/cookies";
+import { setCookie, getCookie, eraseCookie } from "../utils/cookies";
 import { useAuthContext } from "../context/AuthContext";
 
 type UserType = "candidato" | "startup" | null;
@@ -15,8 +15,30 @@ export function useAuth() {
   const { refreshUser } = useAuthContext();
 
   // Auth mode
+  const [isInitializing, setIsInitializing] = useState(true);
   const [isLogin, setIsLogin] = useState(true);
   const [userType, setUserType] = useState<UserType>(null);
+
+  useEffect(() => {
+    const lastType = getCookie("lastAccountType");
+    if (lastType === "CANDIDATE") {
+      setUserType("candidato");
+    } else if (lastType === "STARTUP") {
+      setUserType("startup");
+    }
+    setIsInitializing(false);
+  }, []);
+
+  const handleSetUserType = (type: UserType) => {
+    setUserType(type);
+    if (type === "candidato") {
+      setCookie("lastAccountType", "CANDIDATE", 30);
+    } else if (type === "startup") {
+      setCookie("lastAccountType", "STARTUP", 30);
+    } else {
+      eraseCookie("lastAccountType");
+    }
+  };
 
   // Form fields
   const [email, setEmail] = useState("");
@@ -129,6 +151,7 @@ export function useAuth() {
 
   return {
     state: {
+      isInitializing,
       isLogin,
       userType,
       email,
@@ -144,7 +167,7 @@ export function useAuth() {
     },
     actions: {
       setIsLogin,
-      setUserType,
+      setUserType: handleSetUserType,
       setEmail,
       setPassword,
       setConfirmPassword,
