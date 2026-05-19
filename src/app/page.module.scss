@@ -8,7 +8,7 @@
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background-image:
@@ -16,7 +16,11 @@
       linear-gradient(to bottom, rgba($white, 0.13) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      black,
+      transparent 90%
+    );
     pointer-events: none;
     z-index: 1;
   }
@@ -73,7 +77,7 @@
     font-weight: 500;
     color: $zinc-400;
 
-    @include media-up('md') {
+    @include media-up("md") {
       display: flex;
     }
 
@@ -93,7 +97,9 @@
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--primary-dark-rgb), 0.2);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(var(--primary-dark-rgb), 0.2);
 
     &:hover {
       background: var(--primary-dark);
@@ -104,8 +110,6 @@
       opacity: 0.8;
     }
   }
-
-
 }
 
 /* Hero Section */
@@ -117,7 +121,7 @@
   display: flex;
   align-items: center;
 
-  @include media-up('md') {
+  @include media-up("md") {
     padding-top: 12rem;
     padding-bottom: 8rem;
   }
@@ -129,17 +133,27 @@
     overflow: hidden;
 
     &::before {
-      content: '';
+      content: "";
       @include absolute-inset-0;
       z-index: 10;
-      background: linear-gradient(to top, $background, rgba($background, 0.7), transparent);
+      background: linear-gradient(
+        to top,
+        $background,
+        rgba($background, 0.7),
+        transparent
+      );
     }
 
     &::after {
-      content: '';
+      content: "";
       @include absolute-inset-0;
       z-index: 10;
-      background: linear-gradient(to right, $background, rgba($background, 0.5), transparent);
+      background: linear-gradient(
+        to right,
+        $background,
+        rgba($background, 0.5),
+        transparent
+      );
     }
 
     .bgImage {
@@ -157,7 +171,11 @@
     width: 60%;
     height: 60%;
     border-radius: 9999px;
-    background: radial-gradient(circle, rgba($primary-light-rgb, 0.15) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba($primary-light-rgb, 0.15) 0%,
+      transparent 70%
+    );
     filter: blur(120px);
     mix-blend-mode: screen;
     pointer-events: none;
@@ -172,7 +190,11 @@
     width: 60%;
     height: 60%;
     border-radius: 9999px;
-    background: radial-gradient(circle, rgba($primary-dark-rgb, 0.2) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba($primary-dark-rgb, 0.2) 0%,
+      transparent 70%
+    );
     filter: blur(120px);
     mix-blend-mode: screen;
     pointer-events: none;
@@ -234,7 +256,7 @@
       margin-bottom: 2rem;
       @include animate-in(slide-in-bottom, 1s, 0.15s);
 
-      @include media-up('md') {
+      @include media-up("md") {
         font-size: 5.5rem;
       }
 
@@ -242,7 +264,11 @@
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;
-        background-image: linear-gradient(135deg, $primary-light, $primary-dark);
+        background-image: linear-gradient(
+          135deg,
+          $primary-light,
+          $primary-dark
+        );
         filter: drop-shadow(0 0 20px rgba($primary-light-rgb, 0.3));
       }
     }
@@ -255,7 +281,7 @@
       max-width: 42rem;
       @include animate-in(slide-in-bottom, 1s, 0.3s);
 
-      @include media-up('md') {
+      @include media-up("md") {
         font-size: 1.25rem;
       }
 
@@ -270,7 +296,7 @@
       gap: 1rem;
       @include animate-in(slide-in-bottom, 1s, 0.5s);
 
-      @include media-up('sm') {
+      @include media-up("sm") {
         flex-direction: row;
         align-items: center;
       }
@@ -294,7 +320,7 @@
           width: $icon-md;
         }
 
-        @include media-up('sm') {
+        @include media-up("sm") {
           width: auto;
         }
 
@@ -303,7 +329,6 @@
         &:hover {
           filter: brightness(0.8);
         }
-
       }
 
       .secondaryBtn {
@@ -320,7 +345,7 @@
         gap: 0.5rem;
         transition: all 0.3s ease;
 
-        @include media-up('sm') {
+        @include media-up("sm") {
           width: auto;
         }
 
@@ -354,7 +379,7 @@
         opacity: 1;
         transition: opacity 0.3s ease;
 
-        @include media-up('md') {
+        @include media-up("md") {
           justify-content: flex-start;
           gap: 4rem;
         }
@@ -424,7 +449,7 @@
     font-weight: 700;
     margin-bottom: 1rem;
 
-    @include media-up('md') {
+    @include media-up("md") {
       font-size: 2.25rem;
     }
   }
@@ -442,7 +467,7 @@
   display: grid;
   gap: 2rem;
 
-  @include media-up('md') {
+  @include media-up("md") {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -451,7 +476,11 @@
   backdrop-filter: blur(1px);
   padding: 2.5rem;
   border-radius: 2rem;
-  background: linear-gradient(135deg, rgba($white, 0.03) 0%, rgba($white, 0.01) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba($white, 0.03) 0%,
+    rgba($white, 0.01) 100%
+  );
   border: 1px solid rgba($white, 0.08);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
@@ -459,7 +488,11 @@
 
   &:hover {
     border-color: rgba($primary-light-rgb, 0.3);
-    background: linear-gradient(135deg, rgba($white, 0.05) 0%, rgba($white, 0.02) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba($white, 0.05) 0%,
+      rgba($white, 0.02) 100%
+    );
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 
@@ -514,11 +547,11 @@
   display: grid;
   gap: 1.5rem;
 
-  @include media-up('md') {
+  @include media-up("md") {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @include media-up('lg') {
+  @include media-up("lg") {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -543,7 +576,7 @@
     overflow: hidden;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       right: 0;
@@ -604,7 +637,11 @@
 
   .glow {
     @include absolute-inset-0;
-    background: linear-gradient(to bottom, transparent, rgba($primary-dark-rgb, 0.05));
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba($primary-dark-rgb, 0.05)
+    );
     opacity: 0.5;
   }
 
@@ -623,7 +660,7 @@
     color: $white;
     margin-bottom: 1.5rem;
 
-    @include media-up('md') {
+    @include media-up("md") {
       font-size: 3rem;
     }
   }
@@ -649,7 +686,7 @@
     box-shadow: 0 0 40px rgba($white, 0.2);
     transition: all 0.3s ease;
 
-    @include media-up('sm') {
+    @include media-up("sm") {
       width: auto;
     }
 
@@ -676,7 +713,7 @@
     justify-content: space-between;
     gap: 1rem;
 
-    @include media-up('md') {
+    @include media-up("md") {
       flex-direction: row;
     }
   }
@@ -693,7 +730,7 @@
     font-size: 0.875rem;
     text-align: center;
 
-    @include media-up('md') {
+    @include media-up("md") {
       text-align: left;
     }
   }
@@ -705,11 +742,11 @@
   gap: 3rem;
   align-items: center;
 
-  @include media-up('md') {
+  @include media-up("md") {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @include media-up('lg') {
+  @include media-up("lg") {
     gap: 5rem;
   }
 }
@@ -724,7 +761,7 @@
   @include backdrop-blur(4px);
   box-shadow: 0 0 40px rgba($primary-light-rgb, 0.05);
 
-  @include media-up('md') {
+  @include media-up("md") {
     padding: 2.5rem;
   }
 
@@ -783,13 +820,13 @@
   display: none;
 }
 
-@include media-up('md') {
+@include media-up("md") {
   .md-block {
     display: block !important;
   }
 }
 
-@include media-up('sm') {
+@include media-up("sm") {
   .sm-block {
     display: block !important;
   }
@@ -798,7 +835,11 @@
 /* Featured / Showcase Sections */
 .showcaseSection {
   padding: 8rem 0;
-  background: radial-gradient(circle at 50% 0%, rgba($primary-light-rgb, 0.05) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba($primary-light-rgb, 0.05) 0%,
+    transparent 70%
+  );
 
   .header {
     text-align: center;
@@ -883,7 +924,7 @@
   gap: 3rem;
   margin-top: 4rem;
 
-  @include media-up('md') {
+  @include media-up("md") {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -949,7 +990,11 @@
   .imageGlow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba($primary-light-rgb, 0.2) 0%, transparent 70%);
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba($primary-light-rgb, 0.2) 0%,
+      transparent 70%
+    );
     pointer-events: none;
     mix-blend-mode: screen;
   }
@@ -984,14 +1029,18 @@
 
   // Ambient glow behind the card
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 50rem;
     height: 30rem;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba($primary-light-rgb, 0.08) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba($primary-light-rgb, 0.08) 0%,
+      transparent 70%
+    );
     filter: blur(80px);
     pointer-events: none;
     z-index: 0;
@@ -1035,7 +1084,7 @@
       line-height: 1.15;
       margin-bottom: 0.875rem;
 
-      @include media-up('md') {
+      @include media-up("md") {
         font-size: 2.5rem;
       }
 
@@ -1043,7 +1092,11 @@
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;
-        background-image: linear-gradient(135deg, $primary-light, $primary-dark);
+        background-image: linear-gradient(
+          135deg,
+          $primary-light,
+          $primary-dark
+        );
       }
     }
 
@@ -1057,14 +1110,20 @@
   }
 
   .formCard {
-    background: linear-gradient(135deg, rgba($white, 0.04) 0%, rgba($white, 0.015) 100%);
+    backdrop-filter: blur(6px);
+    background: linear-gradient(
+      135deg,
+      rgba($white, 0.04) 0%,
+      rgba($white, 0.015) 100%
+    );
     border: 1px solid rgba($white, 0.08);
     border-radius: 2rem;
     padding: 2.5rem;
-    @include backdrop-blur(12px);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba($primary-light-rgb, 0.05);
+    box-shadow:
+      0 40px 80px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba($primary-light-rgb, 0.05);
 
-    @include media-up('md') {
+    @include media-up("md") {
       padding: 3rem;
     }
   }
