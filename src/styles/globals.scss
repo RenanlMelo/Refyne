@@ -1,0 +1,124 @@
+@use "core" as *;
+
+:root {
+  --primary-light: #10e4f3;
+  --primary-dark: #19b5c0;
+  --primary-light-rgb: 16, 228, 243;
+  --primary-dark-rgb: 25, 181, 192;
+}
+
+[data-theme="purple"] {
+  --primary-light: #9333ea;
+  --primary-dark: #7e22ce;
+  --primary-light-rgb: 147, 51, 234;
+  --primary-dark-rgb: 126, 34, 206;
+}
+
+[data-theme="orange"] {
+  --primary-light: #ff5a1f;
+  --primary-dark: #d03801;
+  --primary-light-rgb: 255, 90, 31;
+  --primary-dark-rgb: 208, 56, 1;
+}
+
+[data-theme="green"] {
+  --primary-light: #22c55e;
+  --primary-dark: #16a34a;
+  --primary-light-rgb: 34, 197, 94;
+  --primary-dark-rgb: 22, 163, 74;
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+  border-radius: 10px;
+  border: 2px solid #0a0a0a;
+
+  &:hover {
+    background: var(--primary-light);
+  }
+}
+
+// Standard for Firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-dark) #0a0a0a;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $background;
+  color: $foreground;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
+// Global selection style
+::selection {
+  background: rgba($purple-light-rgb, 0.3);
+  color: $white;
+}
+
+// Global utilities that might still be needed in modules but defined globally if simple
+.hidden {
+  display: none;
+}
+
+.root-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

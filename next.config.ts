@@ -3,7 +3,7 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   sassOptions: {
-    includePaths: [path.join(__dirname, "app")],
+    includePaths: [path.join(__dirname, "src")],
   },
   async rewrites() {
     return [
