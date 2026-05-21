@@ -5,6 +5,7 @@ import { Mail, ArrowRight, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "@/styles/password-flow.module.scss";
+import { API_BASE_URL } from "@/utils/api";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/forgot-password", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

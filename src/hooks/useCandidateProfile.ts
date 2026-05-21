@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
 import { useAuthContext } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/utils/api";
 
 export function useCandidateProfile() {
   const router = useRouter();
@@ -96,7 +97,7 @@ export function useCandidateProfile() {
       const token = getCookie("token");
 
       const response = await axios.post(
-        "http://localhost:8000/api/candidates/create",
+        `${API_BASE_URL}/api/candidates/create`,
         formData,
         {
           headers: {

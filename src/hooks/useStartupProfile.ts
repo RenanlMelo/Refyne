@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
 import { useAuthContext } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/utils/api";
 
 export function useStartupProfile() {
   const router = useRouter();
@@ -78,7 +79,7 @@ export function useStartupProfile() {
 
       const token = getCookie("token");
 
-      const response = await axios.post("http://localhost:8000/api/startups/create", payload, {
+      const response = await axios.post(`${API_BASE_URL}/api/startups/create`, payload, {
         headers: {
           "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),

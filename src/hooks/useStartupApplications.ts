@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface StartupApplication {
   applicationId: string;
@@ -31,7 +32,7 @@ export function useStartupApplications(jobPublicId?: string) {
         throw new Error("No authentication token found");
       }
 
-      const response = await axios.get(`http://localhost:8000/api/applications/job/${jobPublicId}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/applications/job/${jobPublicId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

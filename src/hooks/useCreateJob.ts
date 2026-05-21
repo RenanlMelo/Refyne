@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface CreateJobPayload {
   title: string;
@@ -29,7 +30,7 @@ export function useCreateJob() {
     try {
       const token = getCookie("token");
 
-      await axios.post("http://localhost:8000/api/jobs/create", payload, {
+      await axios.post(`${API_BASE_URL}/api/jobs/create`, payload, {
         headers: {
           "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),

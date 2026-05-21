@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export type Skill = {
   id: number;
@@ -32,7 +33,7 @@ export function useSkillSearch(searchTerm: string) {
 
       try {
         const response = await axios.get<Skill[]>(
-          "http://localhost:8000/api/skills/search",
+          `${API_BASE_URL}/api/skills/search`,
           {
             params: { input: term },
             headers: {

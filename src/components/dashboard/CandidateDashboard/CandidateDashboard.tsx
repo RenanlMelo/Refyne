@@ -36,7 +36,10 @@ import {
 
 import styles from "../../../app/home/home.module.scss";
 import { ApplyModal } from "../../modals/ApplyModal/ApplyModal";
-import { useMyApplications, CandidateApplication } from "@/hooks/useMyApplications";
+import {
+  useMyApplications,
+  CandidateApplication,
+} from "@/hooks/useMyApplications";
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 
@@ -51,7 +54,6 @@ const MOCK_USER = {
   savedCount: 7,
   profileViews: 128,
 };
-
 
 const MOCK_APPLICATIONS = [
   {
@@ -163,8 +165,8 @@ function JobCard({
   return (
     <div
       className={styles.jobCard}
-      onClick={() => window.location.href = `/jobs/${job.publicId}`}
-      style={{ cursor: 'pointer' }}
+      onClick={() => (window.location.href = `/jobs/${job.publicId}`)}
+      style={{ cursor: "pointer" }}
     >
       {/* Header */}
       <div className={styles.cardHeader}>
@@ -209,31 +211,89 @@ function JobCard({
       </div>
 
       {/* Meta info */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem 1rem', marginTop: '0.75rem', marginBottom: '0.75rem', fontSize: '0.8rem', color: '#d4d4d8' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <Clock size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Posted:</strong> {job.posted}</span>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.5rem 1rem",
+          marginTop: "0.75rem",
+          marginBottom: "0.75rem",
+          fontSize: "0.8rem",
+          color: "#d4d4d8",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <Clock size={14} style={{ color: "#a1a1aa", flexShrink: 0 }} />
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <strong>Posted:</strong> {job.posted}
+          </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <MapPin size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Location:</strong> {job.location}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <MapPin size={14} style={{ color: "#a1a1aa", flexShrink: 0 }} />
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <strong>Location:</strong> {job.location}
+          </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <Briefcase size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Model:</strong> {job.tags.join(', ')}</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <DollarSign size={14} style={{ color: '#a1a1aa', flexShrink: 0 }} />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><strong>Salary:</strong> {job.salary}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <Briefcase size={14} style={{ color: "#a1a1aa", flexShrink: 0 }} />
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <strong>Model:</strong> {job.tags.join(", ")}
+          </span>
         </div>
       </div>
 
       {/* Skills */}
       {job.skills && job.skills.length > 0 && (
-        <div className={styles.tags} style={{ gap: '0.35rem', alignItems: 'center', marginBottom: "0.5rem" }}>
-          <span style={{ fontSize: '0.7rem', color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 'bold', marginRight: '0.25rem' }}>Skills:</span>
+        <div
+          className={styles.tags}
+          style={{
+            gap: "0.35rem",
+            alignItems: "center",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "0.7rem",
+              color: "#a1a1aa",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              fontWeight: "bold",
+              marginRight: "0.25rem",
+            }}
+          >
+            Skills:
+          </span>
           {job.skills.map((skill) => (
-            <span key={`skill-${skill}`} className={styles.tag} style={{ padding: '0.15rem 0.5rem', fontSize: '0.7rem', background: "rgba(var(--primary-light-rgb), 0.1)", color: "var(--primary-light)", borderColor: "rgba(var(--primary-light-rgb), 0.2)" }}>
+            <span
+              key={`skill-${skill}`}
+              className={styles.tag}
+              style={{
+                padding: "0.15rem 0.5rem",
+                fontSize: "0.7rem",
+                background: "rgba(var(--primary-light-rgb), 0.1)",
+                color: "var(--primary-light)",
+                borderColor: "rgba(var(--primary-light-rgb), 0.2)",
+              }}
+            >
               {skill}
             </span>
           ))}
@@ -242,22 +302,56 @@ function JobCard({
 
       {/* Description toggle */}
       {expanded && (
-        <div className={styles.expandedContent} style={{ marginTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1.5rem" }}>
+        <div
+          className={styles.expandedContent}
+          style={{
+            marginTop: "1.5rem",
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            paddingTop: "1.5rem",
+          }}
+        >
           {job.equity && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <strong style={{ color: "var(--primary-light)", fontSize: "0.9rem", display: "block", marginBottom: "0.25rem" }}>Equity</strong>
-              <span style={{ fontSize: "0.9rem", color: "#fff" }}>{job.equity}</span>
+              <strong
+                style={{
+                  color: "var(--primary-light)",
+                  fontSize: "0.9rem",
+                  display: "block",
+                  marginBottom: "0.25rem",
+                }}
+              >
+                Equity
+              </strong>
+              <span style={{ fontSize: "0.9rem", color: "#fff" }}>
+                {job.equity}
+              </span>
             </div>
           )}
           <div style={{ marginBottom: "1.5rem" }}>
-            <h4 style={{ color: "var(--primary-light)", marginBottom: "0.5rem", fontSize: "0.9rem" }}>Description</h4>
+            <h4
+              style={{
+                color: "var(--primary-light)",
+                marginBottom: "0.5rem",
+                fontSize: "0.9rem",
+              }}
+            >
+              Description
+            </h4>
             <p className={styles.description} style={{ marginTop: 0 }}>
               {job.description}
             </p>
           </div>
           {job.requirements && (
             <div>
-              <h4 style={{ color: "var(--primary-light)", marginBottom: "0.5rem", fontSize: "0.9rem" }}>Requirements</h4>
+              <h4
+                style={{
+                  color: "var(--primary-light)",
+                  marginBottom: "0.5rem",
+                  fontSize: "0.9rem",
+                }}
+              >
+                Requirements
+              </h4>
               <p className={styles.description} style={{ marginTop: 0 }}>
                 {job.requirements}
               </p>
@@ -267,7 +361,15 @@ function JobCard({
       )}
 
       {/* Actions */}
-      <div className={styles.actions} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginTop: '0.25rem' }}>
+      <div
+        className={styles.actions}
+        style={{
+          display: "flex",
+          gap: "0.75rem",
+          alignItems: "center",
+          marginTop: "0.25rem",
+        }}
+      >
         <button
           className={styles.applyBtn}
           onClick={(e) => {
@@ -275,7 +377,16 @@ function JobCard({
             if (!isApplied) onApply(job);
           }}
           disabled={isApplied}
-          style={isApplied ? { opacity: 0.5, cursor: 'not-allowed', background: 'rgba(255,255,255,0.1)', color: '#a1a1aa' } : {}}
+          style={
+            isApplied
+              ? {
+                  opacity: 0.5,
+                  cursor: "not-allowed",
+                  background: "rgba(255,255,255,0.1)",
+                  color: "#a1a1aa",
+                }
+              : {}
+          }
         >
           {isApplied ? "Applied" : "Apply Now"}
         </button>
@@ -288,7 +399,18 @@ function JobCard({
             window.location.href = `/jobs/${job.publicId}`;
           }}
           className={styles.moreBtn}
-          style={{ marginLeft: 'auto', background: "transparent", border: "none", color: "var(--primary-light)", cursor: "pointer", fontWeight: "600", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.25rem" }}
+          style={{
+            marginLeft: "auto",
+            background: "transparent",
+            border: "none",
+            color: "var(--primary-light)",
+            cursor: "pointer",
+            fontWeight: "600",
+            fontSize: "0.85rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.25rem",
+          }}
         >
           View details
           <ChevronRight size={16} />
@@ -308,12 +430,8 @@ function ProfileView() {
         <div className={styles.mainInfo}>
           {/* Avatar */}
           <div className={styles.avatarRow}>
-            <div className={styles.avatar}>
-              {MOCK_USER.initials}
-            </div>
-            <button className={styles.editBtn}>
-              Edit profile
-            </button>
+            <div className={styles.avatar}>{MOCK_USER.initials}</div>
+            <button className={styles.editBtn}>Edit profile</button>
           </div>
           <h2>{MOCK_USER.name}</h2>
           <p className={styles.role}>{MOCK_USER.role}</p>
@@ -341,7 +459,17 @@ function ProfileView() {
       <div className={styles.skillsCard}>
         <h3>Skills</h3>
         <div className={styles.skillsGrid}>
-          {["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Go", "GraphQL", "AWS"].map((skill) => (
+          {[
+            "React",
+            "Next.js",
+            "TypeScript",
+            "Node.js",
+            "PostgreSQL",
+            "Docker",
+            "Go",
+            "GraphQL",
+            "AWS",
+          ].map((skill) => (
             <span key={skill} className={styles.skillTag}>
               {skill}
             </span>
@@ -354,8 +482,18 @@ function ProfileView() {
         <h3>Experience</h3>
         <div className={styles.experienceList}>
           {[
-            { role: "Senior Full Stack Developer", company: "Deco.cx", period: "Jan 2024 – Present", desc: "Technical leadership of the platform squad. Stack: React, Deno, TypeScript." },
-            { role: "Frontend Engineer", company: "Nuvemshop", period: "Jun 2022 – Dec 2023", desc: "Development of Design System components and admin panel features." },
+            {
+              role: "Senior Full Stack Developer",
+              company: "Deco.cx",
+              period: "Jan 2024 – Present",
+              desc: "Technical leadership of the platform squad. Stack: React, Deno, TypeScript.",
+            },
+            {
+              role: "Frontend Engineer",
+              company: "Nuvemshop",
+              period: "Jun 2022 – Dec 2023",
+              desc: "Development of Design System components and admin panel features.",
+            },
           ].map((exp, i) => (
             <div key={i} className={styles.expItem}>
               <div className={styles.expLogo}>
@@ -378,13 +516,12 @@ function ProfileView() {
 function ApplicationsView({
   applications,
   loading,
-  error
+  error,
 }: {
-  applications: CandidateApplication[],
-  loading: boolean,
-  error: string | null
+  applications: CandidateApplication[];
+  loading: boolean;
+  error: string | null;
 }) {
-
   if (loading) {
     return (
       <div className={styles.applicationsView}>
@@ -425,10 +562,18 @@ function ApplicationsView({
           let StatusIcon = AlertCircle;
 
           const statusLower = app.status?.toLowerCase() || "";
-          if (statusLower.includes("approved") || statusLower.includes("hired") || statusLower.includes("accepted")) {
+          if (
+            statusLower.includes("approved") ||
+            statusLower.includes("hired") ||
+            statusLower.includes("accepted")
+          ) {
             statusVariant = "approved";
             StatusIcon = CircleCheck;
-          } else if (statusLower.includes("rejected") || statusLower.includes("closed") || statusLower.includes("declined")) {
+          } else if (
+            statusLower.includes("rejected") ||
+            statusLower.includes("closed") ||
+            statusLower.includes("declined")
+          ) {
             statusVariant = "closed";
             StatusIcon = X;
           }
@@ -437,15 +582,17 @@ function ApplicationsView({
             <div
               key={app.applicationId}
               className={styles.appCard}
-              onClick={() => window.location.href = `/jobs/${app.jobPublicId}`}
-              style={{ cursor: 'pointer' }}
+              onClick={() =>
+                (window.location.href = `/jobs/${app.jobPublicId}`)
+              }
+              style={{ cursor: "pointer" }}
             >
               <div className={styles.row}>
                 <div
                   className={styles.logo}
                   style={{
                     backgroundColor: "rgba(var(--primary-light-rgb), 0.1)",
-                    color: "var(--primary-light)"
+                    color: "var(--primary-light)",
                   }}
                 >
                   {app.companyName?.charAt(0) || "C"}
@@ -453,14 +600,20 @@ function ApplicationsView({
                 <div className={styles.info}>
                   <p className={styles.role}>{app.jobTitle}</p>
                   <p className={styles.company}>{app.companyName}</p>
-                  <p className={styles.stage}>Applied on {new Date(app.appliedAt).toLocaleDateString()}</p>
+                  <p className={styles.stage}>
+                    Applied on {new Date(app.appliedAt).toLocaleDateString()}
+                  </p>
                 </div>
                 <div className={styles.statusCol}>
-                  <span className={`${styles.statusBadge} ${styles[statusVariant]}`}>
+                  <span
+                    className={`${styles.statusBadge} ${styles[statusVariant]}`}
+                  >
                     <StatusIcon className={styles.icon} />
                     {app.status}
                   </span>
-                  <p className={styles.date}>{new Date(app.appliedAt).toLocaleDateString()}</p>
+                  <p className={styles.date}>
+                    {new Date(app.appliedAt).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
             </div>
@@ -487,16 +640,26 @@ function NotificationsView() {
         const Icon = notif.icon;
         // Simple mapping for icon container styling
         const iconContainerStyle = {
-          backgroundColor: notif.iconBg.includes('CC97FF') || notif.iconBg.includes('primary-light') ? 'rgba(var(--primary-light-rgb), 0.1)' :
-            notif.iconBg.includes('yellow') ? 'rgba(234, 179, 8, 0.1)' :
-              notif.iconBg.includes('emerald') ? 'rgba(16, 185, 129, 0.1)' :
-                'rgba(251, 146, 60, 0.1)'
+          backgroundColor:
+            notif.iconBg.includes("CC97FF") ||
+            notif.iconBg.includes("primary-light")
+              ? "rgba(var(--primary-light-rgb), 0.1)"
+              : notif.iconBg.includes("yellow")
+                ? "rgba(234, 179, 8, 0.1)"
+                : notif.iconBg.includes("emerald")
+                  ? "rgba(16, 185, 129, 0.1)"
+                  : "rgba(251, 146, 60, 0.1)",
         };
         const iconStyle = {
-          color: notif.iconColor.includes('CC97FF') || notif.iconColor.includes('primary-light') ? 'var(--primary-light)' :
-            notif.iconColor.includes('yellow') ? '#eab308' :
-              notif.iconColor.includes('emerald') ? '#10b981' :
-                '#fb923c'
+          color:
+            notif.iconColor.includes("CC97FF") ||
+            notif.iconColor.includes("primary-light")
+              ? "var(--primary-light)"
+              : notif.iconColor.includes("yellow")
+                ? "#eab308"
+                : notif.iconColor.includes("emerald")
+                  ? "#10b981"
+                  : "#fb923c",
         };
 
         return (
@@ -509,16 +672,16 @@ function NotificationsView() {
             </div>
             <div className={styles.content}>
               <div className={styles.topRow}>
-                <p className={`${styles.title} ${notif.read ? styles.read : styles.unread}`}>
+                <p
+                  className={`${styles.title} ${notif.read ? styles.read : styles.unread}`}
+                >
                   {notif.title}
                 </p>
                 <span className={styles.time}>{notif.time}</span>
               </div>
               <p className={styles.desc}>{notif.desc}</p>
             </div>
-            {!notif.read && (
-              <div className={styles.unreadDot} />
-            )}
+            {!notif.read && <div className={styles.unreadDot} />}
           </div>
         );
       })}
@@ -535,9 +698,15 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
   const { jobs, loading, error, setJobs } = useLatestJobs();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
-  const { suggestions, loading: suggestionsLoading } = useSearchSuggestions({ q: searchQuery });
+  const { suggestions, loading: suggestionsLoading } = useSearchSuggestions({
+    q: searchQuery,
+  });
 
-  const { applications, loading: appsLoading, refetch: refetchApps } = useMyApplications();
+  const {
+    applications,
+    loading: appsLoading,
+    refetch: refetchApps,
+  } = useMyApplications();
   const [applyingJob, setApplyingJob] = useState<Job | null>(null);
 
   const unreadNotifications = MOCK_NOTIFICATIONS.filter((n) => !n.read).length;
@@ -546,19 +715,19 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
   const filteredJobs =
     activeTab === "saved"
       ? savedJobs.filter(
-        (j) =>
-          j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          j.company.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+          (j) =>
+            j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            j.company.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
       : jobs.filter(
-        (j) =>
-          j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          j.company.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+          (j) =>
+            j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            j.company.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
 
   const handleSaveToggle = (id: number) => {
     setJobs((prev) =>
-      prev.map((j) => (j.id === id ? { ...j, saved: !j.saved } : j))
+      prev.map((j) => (j.id === id ? { ...j, saved: !j.saved } : j)),
     );
   };
 
@@ -568,19 +737,23 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
     icon: React.ElementType;
     badge?: number;
   }[] = [
-      { id: "feed", label: "Jobs", icon: Briefcase },
-      { id: "saved", label: "Saved", icon: Bookmark, badge: savedJobs.length },
-      { id: "applications", label: "Applications", icon: Layers },
-      { id: "notifications", label: "Notifications", icon: Bell, badge: unreadNotifications },
-      { id: "profile", label: "Profile", icon: User },
-    ];
+    { id: "feed", label: "Jobs", icon: Briefcase },
+    { id: "saved", label: "Saved", icon: Bookmark, badge: savedJobs.length },
+    { id: "applications", label: "Applications", icon: Layers },
+    {
+      id: "notifications",
+      label: "Notifications",
+      icon: Bell,
+      badge: unreadNotifications,
+    },
+    { id: "profile", label: "Profile", icon: User },
+  ];
 
   return (
     <div className={styles.body} style={{ paddingTop: 0 }}>
       {/* ── Main Content ── */}
       <main className={styles.main} style={{ marginLeft: 0 }}>
         <div className={styles.contentWrapper}>
-
           {/* Feed & Saved: header + filter bar */}
           {(activeTab === "feed" || activeTab === "saved") && (
             <>
@@ -603,7 +776,14 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
               {/* Quick filter pills */}
               {activeTab === "feed" && (
                 <div className={styles.filterPills}>
-                  {["All", "Remote", "Series A", "Series B", "Seed", "Full-time"].map((f) => (
+                  {[
+                    "All",
+                    "Remote",
+                    "Series A",
+                    "Series B",
+                    "Seed",
+                    "Full-time",
+                  ].map((f) => (
                     <button
                       key={f}
                       className={`${styles.pill} ${f === "All" ? styles.active : ""}`}
@@ -631,7 +811,9 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
                       job={job}
                       onSaveToggle={handleSaveToggle}
                       onApply={(j) => setApplyingJob(j)}
-                      isApplied={applications.some(app => app.jobPublicId === job.publicId)}
+                      isApplied={applications.some(
+                        (app) => app.jobPublicId === job.publicId,
+                      )}
                     />
                   ))
                 ) : (
@@ -668,15 +850,32 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
             <h3>Your Activity</h3>
             <div className={styles.statList}>
               {[
-                { label: "Applications", value: applications.length, icon: Layers, variant: "primary" },
-                { label: "Saved jobs", value: savedJobs.length, icon: Bookmark, variant: "emerald" },
-                { label: "Profile views", value: MOCK_USER.profileViews, icon: Globe, variant: "blue" },
+                {
+                  label: "Applications",
+                  value: applications.length,
+                  icon: Layers,
+                  variant: "primary",
+                },
+                {
+                  label: "Saved jobs",
+                  value: savedJobs.length,
+                  icon: Bookmark,
+                  variant: "emerald",
+                },
+                {
+                  label: "Profile views",
+                  value: MOCK_USER.profileViews,
+                  icon: Globe,
+                  variant: "blue",
+                },
               ].map((stat) => {
                 const Icon = stat.icon;
                 return (
                   <div key={stat.label} className={styles.statItem}>
                     <div className={styles.labelGroup}>
-                      <Icon className={`${styles.icon} ${styles[stat.variant]}`} />
+                      <Icon
+                        className={`${styles.icon} ${styles[stat.variant]}`}
+                      />
                       <span>{stat.label}</span>
                     </div>
                     <span className={styles.value}>{stat.value}</span>
@@ -694,14 +893,15 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
                 <div key={job.id} className={styles.companyItem}>
                   <div
                     className={styles.logo}
-                    style={{ backgroundColor: job.logoBg, color: job.logoColor }}
+                    style={{
+                      backgroundColor: job.logoBg,
+                      color: job.logoColor,
+                    }}
                   >
                     {job.logo}
                   </div>
                   <div className={styles.info}>
-                    <p className={styles.name}>
-                      {job.company}
-                    </p>
+                    <p className={styles.name}>{job.company}</p>
                     <p className={styles.stage}>{job.stage}</p>
                   </div>
                   <ChevronRight className={styles.chevron} />
@@ -711,18 +911,60 @@ export function CandidateDashboard({ activeTab }: CandidateDashboardProps) {
           </div>
 
           {/* Skill tip */}
-          <div className={`${styles.widget} ${styles.skillTip}`} style={{
-            background: 'linear-gradient(135deg, rgba(var(--primary-light-rgb), 0.1), rgba(var(--primary-dark-rgb), 0.05))',
-            borderColor: 'rgba(var(--primary-light-rgb), 0.15)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-              <Zap className="h-4 w-4" style={{ color: 'var(--primary-light)' }} />
-              <span style={{ color: 'var(--primary-light)', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Refyne Tip</span>
+          <div
+            className={`${styles.widget} ${styles.skillTip}`}
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(var(--primary-light-rgb), 0.1), rgba(var(--primary-dark-rgb), 0.05))",
+              borderColor: "rgba(var(--primary-light-rgb), 0.15)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginBottom: "0.75rem",
+              }}
+            >
+              <Zap
+                className="h-4 w-4"
+                style={{ color: "var(--primary-light)" }}
+              />
+              <span
+                style={{
+                  color: "var(--primary-light)",
+                  fontSize: "0.75rem",
+                  fontWeight: "bold",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                Refyne Tip
+              </span>
             </div>
-            <p style={{ color: '#d4d4d8', fontSize: '0.75rem', lineHeight: '1.5' }}>
-              Candidates with a complete profile are <strong style={{ color: '#fff' }}>3x more likely</strong> to be contacted by startups.
+            <p
+              style={{
+                color: "#d4d4d8",
+                fontSize: "0.75rem",
+                lineHeight: "1.5",
+              }}
+            >
+              Candidates with a complete profile are{" "}
+              <strong style={{ color: "#fff" }}>3x more likely</strong> to be
+              contacted by startups.
             </p>
-            <button style={{ marginTop: '0.75rem', color: 'var(--primary-light)', fontSize: '0.75rem', fontWeight: '600', border: 'none', background: 'none', cursor: 'pointer' }}>
+            <button
+              style={{
+                marginTop: "0.75rem",
+                color: "var(--primary-light)",
+                fontSize: "0.75rem",
+                fontWeight: "600",
+                border: "none",
+                background: "none",
+                cursor: "pointer",
+              }}
+            >
               Complete profile →
             </button>
           </div>

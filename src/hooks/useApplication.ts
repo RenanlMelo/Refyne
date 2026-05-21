@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface ApplicationRequest {
   publicId: string;
@@ -45,7 +46,7 @@ export function useApplication() {
 
       const token = getCookie("token");
 
-      const response = await axios.post("http://localhost:8000/api/applications/apply", formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/applications/apply`, formData, {
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
