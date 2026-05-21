@@ -5,6 +5,7 @@ import { Lock, ArrowRight, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import styles from "@/styles/password-flow.module.scss";
+import { API_BASE_URL } from "@/utils/api";
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -52,7 +53,7 @@ function ResetPasswordForm() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/reset-password", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

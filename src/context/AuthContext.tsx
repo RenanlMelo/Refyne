@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { getCookie, eraseCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface User {
   userId: number;
@@ -39,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       console.log("[AuthContext.tsx] refreshUser: Fetching user data. Setting loading = true");
       setLoading(true);
-      const response = await axios.get("http://localhost:8000/api/auth/me", {
+      const response = await axios.get(`${API_BASE_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const userData = response.data;

@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface JobDetails {
   jobPostingId: number;
   publicId: string;
   startupId: number;
   startupName: string;
+  companyName: string;
   title: string;
   description: string;
   requirements: string;
@@ -26,6 +28,7 @@ export interface JobDetails {
 
 export interface StartupDetails {
   companyName: string;
+  startupName: string;
   description: string;
   industry: string;
   stage: string;
@@ -59,17 +62,27 @@ export function useJobDetails(id: string | string[] | undefined) {
         };
 
         // Fetch Job Details using publicId (UUID)
-        const jobResponse = await axios.get(`http://localhost:8000/api/jobs/${id}`, { headers });
+        const jobResponse = await axios.get(
+          `${API_BASE_URL}/api/jobs/${id}`,
+          { headers },
+        );
         const jobData = jobResponse.data;
         setJob(jobData);
 
         // 2. Fetch Startup Details
         if (jobData.startupId) {
-          const startupResponse = await axios.get(`http://localhost:8000/api/startups/${jobData.startupId}`, { headers });
+          const startupResponse = await axios.get(
+            `${API_BASE_URL}/api/startups/${jobData.startupId}`,
+            { headers },
+          );
           setStartup(startupResponse.data);
         }
       } catch (err: any) {
-        setError(err.response?.data?.message || err.message || "Failed to load job details");
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to load job details",
+        );
       } finally {
         setLoading(false);
       }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getCookie } from '@/utils/cookies';
+import { API_BASE_URL } from '@/utils/api';
 
 export interface CandidateApplication {
   applicationId: string;
@@ -20,7 +21,7 @@ export function useMyApplications() {
     setLoading(true);
     try {
       const token = getCookie('token');
-      const response = await axios.get('http://localhost:8000/api/applications/me', {
+      const response = await axios.get(`${API_BASE_URL}/api/applications/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

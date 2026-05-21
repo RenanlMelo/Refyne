@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthGuard } from "@/components/auth/AuthGuard/AuthGuard";
 import { AuthProvider } from "@/context/AuthContext";
+import EnvIndicator from "@/components/layout/EnvIndicator/EnvIndicator";
 import "@/styles/globals.scss";
 
 const geistSans = Geist({
@@ -44,7 +45,9 @@ export default function RootLayout({
         <AuthProvider>
           <AuthGuard>{children}</AuthGuard>
         </AuthProvider>
+        <EnvIndicator />
       </body>
     </html>
   );
 }
+

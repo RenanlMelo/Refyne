@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import axios from "axios";
 import { setCookie, getCookie, eraseCookie } from "@/utils/cookies";
 import { useAuthContext } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/utils/api";
 
 type UserType = "candidato" | "startup" | null;
 type SocialProvider = "github" | "google" | "linkedin";
@@ -102,7 +103,7 @@ export function useAuth() {
     try {
       if (!isLogin) {
         // SIGN UP
-        const response = await axios.post("http://localhost:8000/api/auth/register", {
+        const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
           email: email,
           password: password,
           userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",
@@ -118,7 +119,7 @@ export function useAuth() {
         router.push("/home");
       } else {
         // LOGIN
-        const response = await axios.post("http://localhost:8000/api/auth/login", {
+        const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
           email: email,
           password: password,
           userType: userType === "candidato" ? "CANDIDATE" : "STARTUP",

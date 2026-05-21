@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface Job {
   id: number;
@@ -37,7 +38,7 @@ export function useLatestJobs() {
     try {
       const token = getCookie("token");
       // Fallback assumption: GET /api/jobs/latest will fetch the last 5 jobs
-      const response = await axios.get("http://localhost:8000/api/jobs", {
+      const response = await axios.get(`${API_BASE_URL}/api/jobs`, {
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
@@ -54,10 +55,14 @@ export function useLatestJobs() {
       const mappedJobs: Job[] = rawJobs.map((apiJob: any) => {
         console.log(apiJob);
 
-        const companyName = apiJob.startupName || "Company";
+        const companyName = apiJob.companyName || "Company";
 
         let salaryStr = "To be discussed";
-        if (apiJob.salaryMin && apiJob.salaryMax && apiJob.salaryMin !== apiJob.salaryMax) {
+        if (
+          apiJob.salaryMin &&
+          apiJob.salaryMax &&
+          apiJob.salaryMin !== apiJob.salaryMax
+        ) {
           salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k – ${(apiJob.salaryMax / 1000).toFixed(0)}k`;
         } else if (apiJob.salaryMin && apiJob.salaryMin === apiJob.salaryMax) {
           salaryStr = `R$ ${(apiJob.salaryMin / 1000).toFixed(0)}k (Exact)`;
@@ -69,26 +74,44 @@ export function useLatestJobs() {
 
         const formatEnum = (str?: string) => {
           if (!str) return "";
-          return str.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('-');
+          return str
+            .split("_")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+            .join("-");
         };
 
         const workModel = formatEnum(apiJob.workModel);
         const employmentType = formatEnum(apiJob.employmentType);
 
-        const locationParts = [apiJob.city, apiJob.state, apiJob.country].filter(Boolean).join(", ");
-        const locationStr = [locationParts, workModel].filter(Boolean).join(" · ");
+        const locationParts = [apiJob.city, apiJob.state, apiJob.country]
+          .filter(Boolean)
+          .join(", ");
+        const locationStr = [locationParts, workModel]
+          .filter(Boolean)
+          .join(" · ");
 
         let equityStr = "";
-        if (apiJob.equityMin !== undefined && apiJob.equityMax !== undefined && apiJob.equityMin > 0 && apiJob.equityMin !== apiJob.equityMax) {
+        if (
+          apiJob.equityMin !== undefined &&
+          apiJob.equityMax !== undefined &&
+          apiJob.equityMin > 0 &&
+          apiJob.equityMin !== apiJob.equityMax
+        ) {
           equityStr = `${apiJob.equityMin}% – ${apiJob.equityMax}% equity`;
-        } else if (apiJob.equityMin !== undefined && apiJob.equityMin === apiJob.equityMax && apiJob.equityMin > 0) {
+        } else if (
+          apiJob.equityMin !== undefined &&
+          apiJob.equityMin === apiJob.equityMax &&
+          apiJob.equityMin > 0
+        ) {
           equityStr = `${apiJob.equityMin}% equity`;
         } else if (apiJob.equityMin !== undefined && apiJob.equityMin > 0) {
           equityStr = `${apiJob.equityMin}% equity`;
         }
 
-        const extractedSkills = Array.isArray(apiJob.skills) 
-          ? apiJob.skills.map((s: any) => typeof s === 'string' ? s : s.skill?.name || s.name || "Skill")
+        const extractedSkills = Array.isArray(apiJob.skills)
+          ? apiJob.skills.map((s: any) =>
+              typeof s === "string" ? s : s.skill?.name || s.name || "Skill",
+            )
           : [];
 
         return {
@@ -105,7 +128,9 @@ export function useLatestJobs() {
           type: employmentType || "Full-time",
           equity: equityStr,
           tags: [workModel, employmentType].filter(Boolean),
-          posted: apiJob.createdAt ? new Date(apiJob.createdAt).toLocaleDateString() : "Recent",
+          posted: apiJob.createdAt
+            ? new Date(apiJob.createdAt).toLocaleDateString()
+            : "Recent",
           match: Math.floor(Math.random() * 20) + 80,
           hot: apiJob.jobStatus === "OPEN",
           saved: false,
@@ -117,7 +142,9 @@ export function useLatestJobs() {
 
       setJobs(mappedJobs);
     } catch (err: any) {
-      setError(err.response?.data?.message || err.message || "Failed to load jobs");
+      setError(
+        err.response?.data?.message || err.message || "Failed to load jobs",
+      );
     } finally {
       setLoading(false);
     }

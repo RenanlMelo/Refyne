@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
+import { API_BASE_URL } from "@/utils/api";
 
 export interface JobSuggestionDTO {
   id: number;
   publicId: string;
   title: string;
   companyName?: string;
-  startupName?: string;
   location?: string;
   [key: string]: any;
 }
@@ -45,21 +45,27 @@ export function useSearchSuggestions({
         const params = new URLSearchParams();
         params.append("q", q);
         if (workModel) params.append("workModel", workModel);
-        if (equityMin !== undefined) params.append("equityMin", equityMin.toString());
-        if (equityMax !== undefined) params.append("equityMax", equityMax.toString());
+        if (equityMin !== undefined)
+          params.append("equityMin", equityMin.toString());
+        if (equityMax !== undefined)
+          params.append("equityMax", equityMax.toString());
 
         const response = await axios.get(
-          `http://localhost:8000/api/jobs/search/suggestions?${params.toString()}`,
+          `${API_BASE_URL}/api/jobs/search/suggestions?${params.toString()}`,
           {
             headers: {
               ...(token ? { Authorization: `Bearer ${token}` } : {}),
             },
-          }
+          },
         );
 
         setSuggestions(response.data);
       } catch (err: any) {
-        setError(err.response?.data?.message || err.message || "Failed to load suggestions");
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to load suggestions",
+        );
         setSuggestions([]);
       } finally {
         setLoading(false);

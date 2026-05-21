@@ -9,9 +9,16 @@ export const setCookie = (name: string, value: string, days: number = 7) => {
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const expires = "; expires=" + date.toUTCString();
   
-  // Set cookie with basic security attributes
-  // Note: Secure attribute requires HTTPS
-  document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+  const isSecure =
+    typeof window !== "undefined" && window.location.protocol === "https:";
+  // Set cookie with security attributes; Secure flag only applies in HTTPS (production)
+  document.cookie =
+    name +
+    "=" +
+    (value || "") +
+    expires +
+    "; path=/; SameSite=Lax" +
+    (isSecure ? "; Secure" : "");
 };
 
 export const getCookie = (name: string): string | null => {

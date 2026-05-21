@@ -21,7 +21,7 @@ interface CandidateData {
 }
 
 interface StartupData {
-  startupName: string;
+  companyName: string;
   stage: string;
   hoursLost: string;
   offersEquity: string;
@@ -88,7 +88,7 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
   });
 
   const [startupData, setStartupData] = useState<StartupData>({
-    startupName: "",
+    companyName: "",
     stage: "",
     hoursLost: "",
     offersEquity: "",
@@ -96,7 +96,9 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
     email: "",
   });
 
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const updateCandidate = (field: keyof CandidateData, value: string) =>
@@ -188,7 +190,9 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor="wl-equity">Would you accept lower salary for Equity?</label>
+            <label htmlFor="wl-equity">
+              Would you accept lower salary for Equity?
+            </label>
             <CustomSelect
               id="wl-equity"
               placeholder="Select…"
@@ -201,7 +205,9 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="wl-frustration">What frustrates you most in traditional job platforms?</label>
+          <label htmlFor="wl-frustration">
+            What frustrates you most in traditional job platforms?
+          </label>
           <textarea
             id="wl-frustration"
             rows={3}
@@ -258,8 +264,8 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
             type="text"
             placeholder="Acme Corp"
             required
-            value={startupData.startupName}
-            onChange={(e) => updateStartup("startupName", e.target.value)}
+            value={startupData.companyName}
+            onChange={(e) => updateStartup("companyName", e.target.value)}
           />
         </div>
         <div className={styles.field}>
@@ -277,7 +283,9 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="wl-hours">Hours/week lost interviewing wrong-fit candidates?</label>
+          <label htmlFor="wl-hours">
+            Hours/week lost interviewing wrong-fit candidates?
+          </label>
           <CustomSelect
             id="wl-hours"
             placeholder="Select range…"
@@ -288,7 +296,9 @@ export default function ResearchForm({ variant }: ResearchFormProps) {
           />
         </div>
         <div className={styles.field}>
-          <label htmlFor="wl-offers-equity">Would you offer Equity to attract senior talent?</label>
+          <label htmlFor="wl-offers-equity">
+            Would you offer Equity to attract senior talent?
+          </label>
           <CustomSelect
             id="wl-offers-equity"
             placeholder="Select…"

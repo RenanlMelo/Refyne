@@ -30,9 +30,16 @@ export default function JobDetailsPage() {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const { applications, refetch: refetchApps } = useMyApplications();
 
-  const isApplied = applications.some(app => app.jobPublicId === id);
+  const isApplied = applications.some((app) => app.jobPublicId === id);
 
-  console.log("[jobs/[id]/page.tsx] Rendering. loading:", loading, "error:", error, "job:", job?.title);
+  console.log(
+    "[jobs/[id]/page.tsx] Rendering. loading:",
+    loading,
+    "error:",
+    error,
+    "job:",
+    job?.title,
+  );
 
   if (loading) {
     console.log("[jobs/[id]/page.tsx] Loading is true, rendering spinner");
@@ -69,19 +76,19 @@ export default function JobDetailsPage() {
   return (
     <DashboardLayout>
       <div className={styles.pageContainer}>
-
         {/* ── Back button ── */}
-        <button onClick={() => router.push("/home")} className={styles.backButton}>
+        <button
+          onClick={() => router.push("/home")}
+          className={styles.backButton}
+        >
           <ChevronLeft className={styles.backIcon} />
           Back to search
         </button>
 
         {/* ── Two-column layout ── */}
         <div className={styles.layout}>
-
           {/* ── LEFT: Main content ── */}
           <div className={styles.mainCol}>
-
             {/* Hero card */}
             <div className={styles.heroCard}>
               <div className={styles.companySection}>
@@ -90,7 +97,7 @@ export default function JobDetailsPage() {
                 </div>
                 <div className={styles.titleBlock}>
                   <h1>{job.title}</h1>
-                  <p className={styles.companyName}>{job.startupName}</p>
+                  <p className={styles.startupName}>{job.startupName}</p>
                 </div>
               </div>
               <div className={styles.heroActions}>
@@ -100,7 +107,16 @@ export default function JobDetailsPage() {
                     if (!isApplied) setIsApplyModalOpen(true);
                   }}
                   disabled={isApplied}
-                  style={isApplied ? { opacity: 0.5, cursor: 'not-allowed', background: 'rgba(255,255,255,0.1)', color: '#a1a1aa' } : {}}
+                  style={
+                    isApplied
+                      ? {
+                          opacity: 0.5,
+                          cursor: "not-allowed",
+                          background: "rgba(255,255,255,0.1)",
+                          color: "#a1a1aa",
+                        }
+                      : {}
+                  }
                 >
                   {isApplied ? "Applied" : "Apply now"}
                 </button>
@@ -113,31 +129,45 @@ export default function JobDetailsPage() {
             {/* Stats row */}
             <div className={styles.statsRow}>
               <div className={styles.statCard}>
-                <div className={styles.statIcon}><MapPin /></div>
+                <div className={styles.statIcon}>
+                  <MapPin />
+                </div>
                 <div className={styles.statInfo}>
                   <span className={styles.statLabel}>Location</span>
-                  <span className={styles.statValue}>{job.city}, {job.state}</span>
+                  <span className={styles.statValue}>
+                    {job.city}, {job.state}
+                  </span>
                 </div>
               </div>
               <div className={styles.statCard}>
-                <div className={styles.statIcon}><Briefcase /></div>
+                <div className={styles.statIcon}>
+                  <Briefcase />
+                </div>
                 <div className={styles.statInfo}>
                   <span className={styles.statLabel}>Model</span>
                   <span className={styles.statValue}>{job.workModel}</span>
                 </div>
               </div>
               <div className={styles.statCard}>
-                <div className={styles.statIcon}><DollarSign /></div>
+                <div className={styles.statIcon}>
+                  <DollarSign />
+                </div>
                 <div className={styles.statInfo}>
                   <span className={styles.statLabel}>Salary</span>
-                  <span className={styles.statValue}>{formatSalary(job.salaryMin, job.salaryMax)}</span>
+                  <span className={styles.statValue}>
+                    {formatSalary(job.salaryMin, job.salaryMax)}
+                  </span>
                 </div>
               </div>
               <div className={styles.statCard}>
-                <div className={styles.statIcon}><TrendingUp /></div>
+                <div className={styles.statIcon}>
+                  <TrendingUp />
+                </div>
                 <div className={styles.statInfo}>
                   <span className={styles.statLabel}>Equity</span>
-                  <span className={styles.statValue}>{job.equityMin}% – {job.equityMax}%</span>
+                  <span className={styles.statValue}>
+                    {job.equityMin}% – {job.equityMax}%
+                  </span>
                 </div>
               </div>
             </div>
@@ -167,13 +197,14 @@ export default function JobDetailsPage() {
 
           {/* ── RIGHT: Sidebar ── */}
           <div className={styles.sidebarCol}>
-
             {/* Skills */}
             <div className={styles.widget}>
               <h3>Required Skills</h3>
               <div className={styles.skillTags}>
                 {job.skills.map((skill) => (
-                  <span key={skill} className={styles.skillTag}>{skill}</span>
+                  <span key={skill} className={styles.skillTag}>
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -184,21 +215,27 @@ export default function JobDetailsPage() {
                 <h3>Company Information</h3>
                 <div className={styles.companyInfoList}>
                   <div className={styles.companyInfoItem}>
-                    <div className={styles.ciIcon}><Building2 /></div>
+                    <div className={styles.ciIcon}>
+                      <Building2 />
+                    </div>
                     <div>
                       <div className={styles.ciLabel}>Industry</div>
                       <div className={styles.ciValue}>{startup.industry}</div>
                     </div>
                   </div>
                   <div className={styles.companyInfoItem}>
-                    <div className={styles.ciIcon}><Layers /></div>
+                    <div className={styles.ciIcon}>
+                      <Layers />
+                    </div>
                     <div>
                       <div className={styles.ciLabel}>Stage</div>
                       <div className={styles.ciValue}>{startup.stage}</div>
                     </div>
                   </div>
                   <div className={styles.companyInfoItem}>
-                    <div className={styles.ciIcon}><Users /></div>
+                    <div className={styles.ciIcon}>
+                      <Users />
+                    </div>
                     <div>
                       <div className={styles.ciLabel}>Size</div>
                       <div className={styles.ciValue}>{startup.size}</div>
@@ -211,10 +248,14 @@ export default function JobDetailsPage() {
                       rel="noopener noreferrer"
                       className={styles.companyInfoItem}
                     >
-                      <div className={styles.ciIcon}><Globe /></div>
+                      <div className={styles.ciIcon}>
+                        <Globe />
+                      </div>
                       <div>
                         <div className={styles.ciLabel}>Website</div>
-                        <div className={styles.ciValue}>{startup.websiteUrl.replace(/^https?:\/\//, "")}</div>
+                        <div className={styles.ciValue}>
+                          {startup.websiteUrl.replace(/^https?:\/\//, "")}
+                        </div>
                       </div>
                     </a>
                   )}
@@ -229,13 +270,11 @@ export default function JobDetailsPage() {
                 <span>Refyne Tip</span>
               </div>
               <p>
-                This startup is in the{" "}
-                <strong>{startup?.stage}</strong> stage and highly values
-                professionals with experience in{" "}
+                This startup is in the <strong>{startup?.stage}</strong> stage
+                and highly values professionals with experience in{" "}
                 <strong>{job.skills[0]}</strong>.
               </p>
             </div>
-
           </div>
         </div>
       </div>
